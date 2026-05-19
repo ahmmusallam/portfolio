@@ -1,0 +1,90 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SuperPay Dashboard — merchant KPIs">
+  <defs>
+    <pattern id="sp-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="0.7" fill="#1f1f1f"/>
+    </pattern>
+  </defs>
+
+  <rect width="800" height="500" fill="#0a0a0a"/>
+  <rect width="800" height="500" fill="url(#sp-dots)" opacity="0.6"/>
+
+  <!-- Corner marks -->
+  <g stroke="#525252" stroke-width="1" fill="none" opacity="0.6">
+    <path d="M 36 50 L 36 36 L 50 36"/>
+    <path d="M 750 36 L 764 36 L 764 50"/>
+    <path d="M 36 450 L 36 464 L 50 464"/>
+    <path d="M 750 464 L 764 464 L 764 450"/>
+  </g>
+
+  <!-- Header -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace">
+    <text x="80" y="95" font-size="13" letter-spacing="3" font-weight="500" fill="#888888">SUPERPAY</text>
+    <text x="184" y="95" font-size="13" letter-spacing="3" fill="#3a3a3a">·</text>
+    <text x="200" y="95" font-size="13" letter-spacing="3" fill="#525252">MERCHANT DASHBOARD</text>
+    <line x1="80" y1="116" x2="720" y2="116" stroke="#1a1a1a"/>
+  </g>
+
+  <!-- KPI Cards row -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace">
+    <!-- Card 1 — DUE TRANSFERS -->
+    <g transform="translate(80, 144)">
+      <rect width="148" height="132" fill="none" stroke="#262626"/>
+      <text x="14" y="22" font-size="9" letter-spacing="2" fill="#666666">DUE TRANSFERS</text>
+      <text x="14" y="64" font-size="22" font-weight="600" letter-spacing="0.5" fill="#fafafa">$12.8K</text>
+      <text x="14" y="84" font-size="9" letter-spacing="1.5" fill="#666666">▲ 12.4%</text>
+      <polyline points="14,118 36,112 58,116 80,106 102,108 124,98 134,94" fill="none" stroke="#bbbbbb" stroke-width="1.5"/>
+      <circle cx="134" cy="94" r="2" fill="#fafafa"/>
+    </g>
+    <!-- Card 2 — SALES TODAY -->
+    <g transform="translate(244, 144)">
+      <rect width="148" height="132" fill="none" stroke="#262626"/>
+      <text x="14" y="22" font-size="9" letter-spacing="2" fill="#666666">SALES TODAY</text>
+      <text x="14" y="64" font-size="22" font-weight="600" letter-spacing="0.5" fill="#fafafa">$4,210</text>
+      <text x="14" y="84" font-size="9" letter-spacing="1.5" fill="#666666">▲ 8.1%</text>
+      <polyline points="14,116 36,118 58,108 80,110 102,100 124,96 134,92" fill="none" stroke="#bbbbbb" stroke-width="1.5"/>
+      <circle cx="134" cy="92" r="2" fill="#fafafa"/>
+    </g>
+    <!-- Card 3 — BALANCE -->
+    <g transform="translate(408, 144)">
+      <rect width="148" height="132" fill="none" stroke="#262626"/>
+      <text x="14" y="22" font-size="9" letter-spacing="2" fill="#666666">BALANCE</text>
+      <text x="14" y="64" font-size="22" font-weight="600" letter-spacing="0.5" fill="#fafafa">$58.9K</text>
+      <text x="14" y="84" font-size="9" letter-spacing="1.5" fill="#666666">▲ 3.2%</text>
+      <polyline points="14,108 36,106 58,110 80,104 102,108 124,100 134,102" fill="none" stroke="#888888" stroke-width="1.5"/>
+      <circle cx="134" cy="102" r="2" fill="#a3a3a3"/>
+    </g>
+    <!-- Card 4 — NEW CUSTOMERS -->
+    <g transform="translate(572, 144)">
+      <rect width="148" height="132" fill="none" stroke="#262626"/>
+      <text x="14" y="22" font-size="9" letter-spacing="2" fill="#666666">NEW CUSTOMERS</text>
+      <text x="14" y="64" font-size="22" font-weight="600" letter-spacing="0.5" fill="#fafafa">+27</text>
+      <text x="14" y="84" font-size="9" letter-spacing="1.5" fill="#666666">▲ 14.6%</text>
+      <polyline points="14,120 36,114 58,114 80,108 102,100 124,96 134,90" fill="none" stroke="#bbbbbb" stroke-width="1.5"/>
+      <circle cx="134" cy="90" r="2" fill="#fafafa"/>
+    </g>
+  </g>
+
+  <!-- Payment progress chart -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" transform="translate(80, 304)">
+    <rect width="640" height="124" fill="none" stroke="#262626"/>
+    <text x="14" y="22" font-size="9" letter-spacing="2" fill="#666666">PAYMENT PROGRESS · LAST 14 DAYS</text>
+    <text x="540" y="22" font-size="9" letter-spacing="1.5" fill="#525252">▬ INCOME  ▬ EXPENSES</text>
+
+    <!-- Grid baselines -->
+    <line x1="14" y1="60" x2="626" y2="60" stroke="#1a1a1a" stroke-dasharray="2 4"/>
+    <line x1="14" y1="86" x2="626" y2="86" stroke="#1a1a1a" stroke-dasharray="2 4"/>
+    <line x1="14" y1="112" x2="626" y2="112" stroke="#1a1a1a"/>
+
+    <!-- Income line (brighter) -->
+    <polyline
+      points="20,96 60,86 100,76 140,70 180,62 220,68 260,58 300,50 340,56 380,46 420,42 460,52 500,40 540,38 580,32 620,28"
+      fill="none" stroke="#fafafa" stroke-width="1.6"/>
+    <!-- Expenses line (dimmer, dashed) -->
+    <polyline
+      points="20,102 60,96 100,98 140,88 180,92 220,84 260,80 300,82 340,76 380,78 420,72 460,74 500,68 540,72 580,66 620,64"
+      fill="none" stroke="#666666" stroke-width="1.4" stroke-dasharray="3 3"/>
+  </g>
+
+  <!-- Footer -->
+  <text x="80" y="470" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="10" letter-spacing="3" fill="#3a3a3a">KPI OVERVIEW · 03</text>
+</svg>

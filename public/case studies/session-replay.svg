@@ -1,0 +1,104 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Session Replay — severity hierarchy">
+  <defs>
+    <pattern id="sr-dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="12" cy="12" r="0.7" fill="#1f1f1f"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#0a0a0a"/>
+  <rect width="800" height="500" fill="url(#sr-dots)" opacity="0.6"/>
+
+  <!-- Corner marks -->
+  <g stroke="#525252" stroke-width="1" fill="none" opacity="0.6">
+    <path d="M 36 50 L 36 36 L 50 36"/>
+    <path d="M 750 36 L 764 36 L 764 50"/>
+    <path d="M 36 450 L 36 464 L 50 464"/>
+    <path d="M 750 464 L 764 464 L 764 450"/>
+  </g>
+
+  <!-- Header -->
+  <g font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace">
+    <text x="80" y="95" font-size="13" letter-spacing="3" font-weight="500" fill="#888888">SESSION REPLAY</text>
+    <text x="232" y="95" font-size="13" letter-spacing="3" fill="#3a3a3a">·</text>
+    <text x="248" y="95" font-size="13" letter-spacing="3" fill="#525252">09 SESSIONS</text>
+    <line x1="80" y1="116" x2="720" y2="116" stroke="#1a1a1a"/>
+  </g>
+
+  <!-- Rows -->
+  <g transform="translate(80, 160)" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace">
+
+    <!-- Row 1 : CRASHING -->
+    <g>
+      <circle cx="10" cy="14" r="8" fill="#fafafa"/>
+      <text x="34" y="20" font-size="17" letter-spacing="2.5" font-weight="600" fill="#fafafa">CRASHING</text>
+      <g transform="translate(220, 4)">
+        <rect width="62" height="22" rx="1" fill="none" stroke="#404040"/>
+        <text x="14" y="16" font-size="11" letter-spacing="1.5" fill="#bbbbbb">OOM</text>
+      </g>
+      <g transform="translate(294, 4)">
+        <rect width="78" height="22" rx="1" fill="none" stroke="#404040"/>
+        <text x="14" y="16" font-size="11" letter-spacing="1.5" fill="#bbbbbb">FLOWS</text>
+      </g>
+      <text x="600" y="20" font-size="12" letter-spacing="1.5" fill="#525252">0s</text>
+      <line x1="0" y1="46" x2="640" y2="46" stroke="#1a1a1a"/>
+    </g>
+
+    <!-- Row 2 : FRUSTRATING -->
+    <g transform="translate(0, 66)">
+      <circle cx="10" cy="14" r="8" fill="#a3a3a3"/>
+      <text x="34" y="20" font-size="17" letter-spacing="2.5" font-weight="600" fill="#d4d4d4">FRUSTRATING</text>
+      <g transform="translate(252, 4)">
+        <rect width="62" height="22" rx="1" fill="none" stroke="#404040"/>
+        <text x="14" y="16" font-size="11" letter-spacing="1.5" fill="#888888">OOM</text>
+      </g>
+      <g transform="translate(326, 4)">
+        <rect width="88" height="22" rx="1" fill="none" stroke="#404040"/>
+        <text x="14" y="16" font-size="11" letter-spacing="1.5" fill="#888888">APP HANG</text>
+      </g>
+      <g transform="translate(426, 4)">
+        <rect width="84" height="22" rx="1" fill="none" stroke="#404040"/>
+        <text x="14" y="16" font-size="11" letter-spacing="1.5" fill="#888888">NETWORK</text>
+      </g>
+      <text x="600" y="20" font-size="12" letter-spacing="1.5" fill="#525252">1h</text>
+      <line x1="0" y1="46" x2="640" y2="46" stroke="#1a1a1a"/>
+    </g>
+
+    <!-- Row 3 : TOLERABLE -->
+    <g transform="translate(0, 132)">
+      <circle cx="10" cy="14" r="8" fill="none" stroke="#666666" stroke-width="1.6"/>
+      <circle cx="10" cy="14" r="3.4" fill="#666666"/>
+      <text x="34" y="20" font-size="17" letter-spacing="2.5" font-weight="600" fill="#a3a3a3">TOLERABLE</text>
+      <g transform="translate(234, 4)">
+        <rect width="78" height="22" rx="1" fill="none" stroke="#404040"/>
+        <text x="14" y="16" font-size="11" letter-spacing="1.5" fill="#666666">FLOWS</text>
+      </g>
+      <g transform="translate(324, 4)">
+        <rect width="80" height="22" rx="1" fill="none" stroke="#404040"/>
+        <text x="14" y="16" font-size="11" letter-spacing="1.5" fill="#666666">VISUAL</text>
+      </g>
+      <text x="600" y="20" font-size="12" letter-spacing="1.5" fill="#525252">2h</text>
+      <line x1="0" y1="46" x2="640" y2="46" stroke="#1a1a1a"/>
+    </g>
+
+    <!-- Row 4 : SATISFYING -->
+    <g transform="translate(0, 198)">
+      <circle cx="10" cy="14" r="8" fill="none" stroke="#525252" stroke-width="1.6"/>
+      <text x="34" y="20" font-size="17" letter-spacing="2.5" font-weight="600" fill="#666666">SATISFYING</text>
+      <text x="234" y="20" font-size="12" letter-spacing="1.5" fill="#404040">N/A</text>
+      <text x="600" y="20" font-size="12" letter-spacing="1.5" fill="#525252">2h</text>
+      <line x1="0" y1="46" x2="640" y2="46" stroke="#1a1a1a"/>
+    </g>
+
+    <!-- Ghost row (fades into bottom) -->
+    <g transform="translate(0, 264)" opacity="0.5">
+      <circle cx="10" cy="14" r="8" fill="none" stroke="#262626" stroke-width="1.5"/>
+      <rect x="34" y="11" width="120" height="8" rx="1" fill="#1a1a1a"/>
+      <rect x="220" y="11" width="60" height="8" rx="1" fill="#1a1a1a"/>
+      <rect x="290" y="11" width="60" height="8" rx="1" fill="#1a1a1a"/>
+    </g>
+  </g>
+
+  <!-- Footnote -->
+  <text x="80" y="470" font-family="ui-monospace, 'JetBrains Mono', Menlo, monospace" font-size="10" letter-spacing="3" fill="#3a3a3a">SEVERITY HIERARCHY · 01</text>
+</svg>

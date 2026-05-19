@@ -62,8 +62,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 pt-8 border-t border-ink-800 flex flex-col md:flex-row justify-between gap-4 text-sm">
-          <p className="mono-label">© {year} Ahmed Hamdy Musallam · Cairo, EG</p>
-          <p className="mono-label">Designed & built from scratch · Next.js</p>
+          <p className="mono-label">© {year}</p>
         </div>
       </div>
     </footer>

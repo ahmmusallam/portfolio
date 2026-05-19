@@ -8,7 +8,7 @@ const channels = [
     label: 'Email',
     value: 'ahmed.hamdy.musallam@gmail.com',
     href: 'mailto:ahmed.hamdy.musallam@gmail.com',
-    note: 'Fastest way · Reply within 24h on weekdays',
+    note: 'Fastest way · Reply within 24h',
   },
   {
     label: 'LinkedIn',
@@ -28,7 +28,7 @@ export default function ContactPage() {
             Let&apos;s make something <span className="text-ink-400">useful</span> together.
           </h1>
           <p className="mt-8 text-xl text-ink-300 max-w-2xl text-pretty leading-snug">
-            I&apos;m open to senior product design roles, contract work, and collaborations on AI-powered tools, dev products, and fintech platforms.
+            Open to senior product design roles and collaborations on AI-powered tools, dev products, and fintech platforms.
           </p>
         </div>
       </section>
@@ -55,14 +55,6 @@ export default function ContactPage() {
                 </div>
               </a>
             ))}
-          </div>
-
-          <div className="mt-20 max-w-3xl">
-            <p className="mono-label mb-4">Based in</p>
-            <p className="text-2xl md:text-3xl text-ink-200 font-light tracking-tight">
-              Cairo, Egypt · GMT+2
-            </p>
-            <p className="mt-3 text-ink-400">Open to remote, hybrid, or relocation for the right team.</p>
           </div>
         </div>
       </section>
