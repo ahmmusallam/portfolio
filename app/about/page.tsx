@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 const experience = [
   {
@@ -66,17 +67,14 @@ export default function AboutPage() {
             <div className="md:col-span-5">
               <div className="relative aspect-[4/5] border border-ink-800 bg-ink-900/40 corner-marks overflow-hidden">
                 <span />
-                {/* Profile placeholder */}
-                <div className="absolute inset-0 grid place-items-center">
-                  <div className="text-center px-6">
-                    <p className="mono-label">Portrait</p>
-                    <p className="text-ink-500 text-sm mt-2">Add /public/ahmed.jpg</p>
-                  </div>
-                </div>
-                <div className="absolute inset-0 opacity-30" style={{
-                  backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
-                  backgroundSize: '24px 24px',
-                }} />
+                <Image
+                  src="/ahmed.JPG"
+                  alt="Portrait of Ahmed Hamdy Musallam"
+                  fill
+                  priority
+                  sizes="(min-width: 768px) 40vw, 100vw"
+                  className="object-cover"
+                />
               </div>
             </div>
             <div className="md:col-span-7 space-y-6 text-lg md:text-xl text-ink-200 leading-relaxed text-pretty">

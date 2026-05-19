@@ -72,29 +72,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* COMPANIES MARQUEE */}
-      <section className="py-12 border-y border-ink-800 overflow-hidden">
-        <div className="container-x mb-6">
-          <p className="mono-label">Selected experience</p>
-        </div>
-        <div className="marquee">
-          <div className="marquee__content">
-            {['VOIS · Vodafone Intelligent Solutions', 'Luciq · formerly Instabug', 'e& · Etisalat Egypt', 'AI Design System', 'Developer Tools', 'B2B SaaS', 'Fintech Platforms'].map((item, i) => (
-              <span key={i} className="font-mono text-xl md:text-3xl text-ink-700 whitespace-nowrap">
-                {item} <span className="text-ink-800 mx-4">/</span>
-              </span>
-            ))}
-          </div>
-          <div className="marquee__content" aria-hidden="true">
-            {['VOIS · Vodafone Intelligent Solutions', 'Luciq · formerly Instabug', 'e& · Etisalat Egypt', 'AI Design System', 'Developer Tools', 'B2B SaaS', 'Fintech Platforms'].map((item, i) => (
-              <span key={i} className="font-mono text-xl md:text-3xl text-ink-700 whitespace-nowrap">
-                {item} <span className="text-ink-800 mx-4">/</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* WORK */}
       <section id="work" className="py-24 md:py-32">
         <div className="container-x">
