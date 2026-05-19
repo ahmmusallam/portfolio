@@ -46,7 +46,7 @@ export default function AdoptionChart() {
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="relative border border-ink-800 bg-ink-900/40 p-6 md:p-8"
+      className="relative rounded-3xl border border-ink-800 bg-ink-900/40 p-6 md:p-8"
     >
       <div className="flex items-baseline justify-between mb-6 flex-wrap gap-2">
         <div>

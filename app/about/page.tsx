@@ -65,8 +65,7 @@ export default function AboutPage() {
         <div className="container-x">
           <div className="grid md:grid-cols-12 gap-10">
             <div className="md:col-span-5">
-              <div className="relative aspect-[4/5] border border-ink-800 bg-ink-900/40 corner-marks overflow-hidden">
-                <span />
+              <div className="relative aspect-[4/5] rounded-[1.75rem] border border-ink-800 bg-ink-900/40 overflow-hidden">
                 <Image
                   src="/ahmed.JPG"
                   alt="Portrait of Ahmed Hamdy Musallam"
@@ -93,19 +92,19 @@ export default function AboutPage() {
                   href="https://www.linkedin.com/in/ahmmusallam/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 mono-label border border-ink-700 px-4 py-2 hover:border-ink-300 hover:text-ink-50 transition-colors"
+                  className="inline-flex items-center gap-2 mono-label rounded-full border border-ink-700 px-5 py-2.5 hover:border-ink-300 hover:text-ink-50 transition-colors"
                 >
                   LinkedIn ↗
                 </a>
                 <a
                   href="mailto:ahmed.hamdy.musallam@gmail.com"
-                  className="inline-flex items-center gap-2 mono-label border border-ink-700 px-4 py-2 hover:border-ink-300 hover:text-ink-50 transition-colors"
+                  className="inline-flex items-center gap-2 mono-label rounded-full border border-ink-700 px-5 py-2.5 hover:border-ink-300 hover:text-ink-50 transition-colors"
                 >
                   Email ↗
                 </a>
                 <Link
                   href="/resume.pdf"
-                  className="inline-flex items-center gap-2 mono-label border border-ink-700 px-4 py-2 hover:border-ink-300 hover:text-ink-50 transition-colors"
+                  className="inline-flex items-center gap-2 mono-label rounded-full border border-ink-700 px-5 py-2.5 hover:border-ink-300 hover:text-ink-50 transition-colors"
                 >
                   Resume ↗
                 </Link>
@@ -173,8 +172,7 @@ export default function AboutPage() {
               <p className="mono-label sticky top-32">Recognition</p>
             </div>
             <div className="md:col-span-9">
-              <div className="border border-ink-800 p-8 md:p-10 bg-ink-900/30 corner-marks relative">
-                <span />
+              <div className="rounded-3xl border border-ink-800 p-8 md:p-10 bg-ink-900/30 relative">
                 <p className="mono-label mb-3">2025 · Q2</p>
                 <h3 className="text-2xl md:text-3xl font-medium text-ink-50">Instabug Ultimate Team</h3>
                 <p className="mt-4 text-ink-300 text-pretty leading-relaxed max-w-2xl">

@@ -16,9 +16,8 @@ export default function MetricGrid({ metrics }: { metrics: Metric[] }) {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative corner-marks border border-ink-800 bg-ink-900/30 p-8 hover-lift"
+          className="relative rounded-3xl border border-ink-800 bg-ink-900/30 p-8 hover-lift"
         >
-          <span />
           <div className="mono-label mb-6">/ {String(i + 1).padStart(2, '0')}</div>
           <p className="text-5xl md:text-6xl font-medium text-ink-50 tabular-nums tracking-tight">{m.value}</p>
           <p className="text-base text-ink-200 mt-3 font-medium">{m.label}</p>

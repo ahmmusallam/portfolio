@@ -11,14 +11,14 @@ export default function InsightsGrid({ insights }: { insights: Insight[] }) {
   const cols = insights.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2';
 
   return (
-    <div ref={ref} className={`grid ${cols} gap-px bg-ink-800`}>
+    <div ref={ref} className={`grid ${cols} gap-4`}>
       {insights.map((insight, i) => (
         <motion.div
           key={i}
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: i * 0.1 }}
-          className="bg-ink-950 p-8 group hover:bg-ink-900 transition-colors duration-500"
+          className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8 group hover:bg-ink-900/50 transition-colors duration-500"
         >
           <div className="flex items-baseline gap-3 mb-4">
             <span className="mono-label">/ {String(i + 1).padStart(2, '0')}</span>

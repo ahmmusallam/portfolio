@@ -4,8 +4,7 @@
 
 @layer base {
   :root {
-    --grid-line: rgba(255, 255, 255, 0.04);
-    --noise-opacity: 0.025;
+    --noise-opacity: 0.02;
   }
 
   html {
@@ -16,11 +15,6 @@
 
   body {
     @apply bg-ink-950 text-ink-200 font-sans;
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 64px 64px;
-    background-position: -1px -1px;
     min-height: 100vh;
   }
 

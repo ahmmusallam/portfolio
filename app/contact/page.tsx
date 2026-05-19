@@ -35,14 +35,14 @@ export default function ContactPage() {
 
       <section className="pb-24 md:pb-32">
         <div className="container-x">
-          <div className="grid md:grid-cols-2 gap-px bg-ink-800 border border-ink-800">
+          <div className="grid md:grid-cols-2 gap-4">
             {channels.map((c) => (
               <a
                 key={c.label}
                 href={c.href}
                 target={c.href.startsWith('http') ? '_blank' : undefined}
                 rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="group block bg-ink-950 p-10 md:p-14 hover:bg-ink-900 transition-colors duration-500"
+                className="group block rounded-[1.75rem] bg-ink-900/40 border border-ink-800 p-10 md:p-14 hover:bg-ink-900 hover:-translate-y-0.5 transition-all duration-500"
               >
                 <p className="mono-label mb-6">{c.label}</p>
                 <p className="text-2xl md:text-3xl font-medium text-ink-50 tracking-tight break-all link-underline inline-block">

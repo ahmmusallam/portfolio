@@ -24,7 +24,7 @@ export default function BadgeDataTable({
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      className="border border-ink-800 bg-ink-900/30"
+      className="rounded-3xl border border-ink-800 bg-ink-900/30 overflow-hidden"
     >
       <table className="w-full text-left tabular-nums">
         <thead>

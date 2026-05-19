@@ -16,32 +16,26 @@ export default function CaseStudyCard({ study, index }: { study: CaseStudy; inde
     >
       <Link
         href={`/case-study/${study.slug}`}
-        className="group relative flex h-full flex-col border border-ink-800 bg-ink-900/30 backdrop-blur hover:border-ink-600 transition-all duration-500"
+        className="group relative flex h-full flex-col bg-white rounded-[1.75rem] ring-1 ring-ink-200/70 shadow-[0_4px_18px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_24px_48px_-24px_rgba(0,0,0,0.18)] hover:-translate-y-1 transition-all duration-500 overflow-hidden"
       >
-        {/* Thumbnail */}
-        <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-ink-800 bg-ink-900/50">
+        {/* Thumbnail — dark "product screen" inset */}
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-ink-950">
           {study.thumbnail ? (
             <Image
               src={study.thumbnail}
               alt={`${study.title} thumbnail`}
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
           ) : (
             <div className="absolute inset-0 grid place-items-center">
               <div className="text-center px-6">
-                <p className="mono-label">Placeholder · {study.title}</p>
-                <p className="text-ink-500 text-sm mt-2">Add thumbnail in /public</p>
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink-500">
+                  Placeholder · {study.title}
+                </p>
+                <p className="text-ink-600 text-sm mt-2">Add thumbnail in /public</p>
               </div>
-              <div
-                className="absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)',
-                  backgroundSize: '28px 28px',
-                }}
-              />
             </div>
           )}
         </div>
@@ -50,41 +44,36 @@ export default function CaseStudyCard({ study, index }: { study: CaseStudy; inde
         <div className="flex flex-col flex-1 p-8 md:p-10">
           {/* Top meta strip */}
           <div className="flex items-baseline justify-between mb-8 md:mb-10">
-            <span className="mono-label text-ink-100">{study.number}</span>
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-900">{study.number}</span>
             <div className="flex items-center gap-3">
               {study.nda && (
-                <span className="mono-label border border-ink-700 px-2 py-1 text-ink-400">NDA</span>
+                <span className="font-mono text-xs uppercase tracking-[0.2em] rounded-full border border-ink-300 px-2.5 py-0.5 text-ink-500">NDA</span>
               )}
-              <span className="mono-label">{study.year}</span>
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-500">{study.year}</span>
             </div>
           </div>
 
-          {/* Title + subtitle — flex-1 to push bottom meta down */}
+          {/* Title + subtitle */}
           <div className="flex-1">
-            <h3 className="text-3xl md:text-5xl font-medium text-ink-50 tracking-tight text-balance">
+            <h3 className="text-3xl md:text-5xl font-semibold text-ink-950 tracking-tight text-balance">
               {study.title}
             </h3>
-            <p className="mt-3 text-base md:text-lg text-ink-300 text-pretty max-w-xl">{study.subtitle}</p>
+            <p className="mt-3 text-base md:text-lg text-ink-600 text-pretty max-w-xl">{study.subtitle}</p>
           </div>
 
           {/* Bottom meta */}
           <div className="mt-10 flex items-center justify-between flex-wrap gap-4">
             <div className="flex flex-wrap gap-x-6 gap-y-1">
-              <span className="mono-label">{study.company}</span>
-              <span className="mono-label">·</span>
-              <span className="mono-label">{study.category}</span>
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-500">{study.company}</span>
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-300">·</span>
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-500">{study.category}</span>
             </div>
 
-            <div className="flex items-center gap-2 text-ink-100">
-              <span className="mono-label text-ink-100">Read case study</span>
+            <div className="flex items-center gap-2 text-ink-950">
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-950">Read case study</span>
               <span className="font-mono text-base transition-transform duration-500 group-hover:translate-x-1">→</span>
             </div>
           </div>
-        </div>
-
-        {/* Hover scan line */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute -inset-y-1/2 left-0 right-0 h-32 bg-gradient-to-b from-transparent via-ink-100/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ animation: 'scan 4s linear infinite' }} />
         </div>
       </Link>
     </motion.div>

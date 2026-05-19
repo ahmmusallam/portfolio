@@ -42,7 +42,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             <span className="text-ink-700">/</span>
             <span className="mono-label">Case {study.number}</span>
             {study.nda && (
-              <span className="mono-label border border-ink-700 px-2 py-1 text-ink-400">NDA</span>
+              <span className="mono-label rounded-full border border-ink-700 px-3 py-0.5 text-ink-400">NDA</span>
             )}
           </div>
 
@@ -196,14 +196,14 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             </div>
 
             {study.userResearch && (
-              <div className="mb-12 grid sm:grid-cols-2 gap-px bg-ink-800 border border-ink-800">
-                <div className="bg-ink-950 p-8">
+              <div className="mb-12 grid sm:grid-cols-2 gap-4">
+                <div className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8">
                   <p className="mono-label mb-3">Interviews</p>
                   <p className="text-2xl md:text-3xl text-ink-50 font-medium tracking-tight">
                     {study.userResearch.headline}
                   </p>
                 </div>
-                <div className="bg-ink-950 p-8">
+                <div className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8">
                   <p className="mono-label mb-3">Roles</p>
                   <p className="text-ink-200 leading-relaxed text-pretty">
                     {study.userResearch.detail}
@@ -293,9 +293,9 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-ink-800 border border-ink-800">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {study.goals.map((goal, i) => (
-                <div key={i} className="bg-ink-950 p-8">
+                <div key={i} className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8">
                   <p className="mono-label mb-4">{goal.number}</p>
                   <p className="text-lg text-ink-200 leading-relaxed text-pretty">{goal.content}</p>
                 </div>

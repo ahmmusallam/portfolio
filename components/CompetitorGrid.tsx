@@ -30,12 +30,13 @@ export default function CompetitorGrid({ competitors }: { competitors: Competito
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="border border-ink-800 bg-ink-900/30 flex flex-col"
+          className="rounded-3xl border border-ink-800 bg-ink-900/30 flex flex-col overflow-hidden"
         >
           <ImagePlaceholder
             label={c.image.label}
             caption={c.image.caption}
             aspect="aspect-[4/3]"
+            rounded={false}
           />
           <div className="p-6 border-t border-ink-800">
             <h4 className="text-lg font-medium text-ink-50 mb-5">{c.name}</h4>

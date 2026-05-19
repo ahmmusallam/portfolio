@@ -22,7 +22,7 @@ export default function IADiagram({ root, sections, note }: Props) {
           initial={{ opacity: 0, y: -10 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-baseline gap-3 border border-ink-700 bg-ink-900/60 backdrop-blur px-5 py-3"
+          className="inline-flex items-baseline gap-3 rounded-full border border-ink-700 bg-ink-900/60 backdrop-blur px-5 py-3"
         >
           <span className="mono-label">Root</span>
           <span className="text-ink-50 font-medium tracking-tight">{root}</span>
@@ -47,7 +47,7 @@ export default function IADiagram({ root, sections, note }: Props) {
             initial={{ opacity: 0, y: 12 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-            className="border border-ink-800 bg-ink-900/30 p-6 flex flex-col"
+            className="rounded-3xl border border-ink-800 bg-ink-900/30 p-6 flex flex-col"
           >
             <header className="border-b border-ink-800 pb-3 mb-4">
               <span className="mono-label">/ {String(i + 1).padStart(2, '0')}</span>

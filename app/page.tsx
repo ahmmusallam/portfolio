@@ -6,13 +6,13 @@ import HeroAnimation from '@/components/HeroAnimation';
 export default function Home() {
   return (
     <>
-      {/* HERO */}
+      {/* HERO — dark */}
       <section className="relative min-h-screen flex items-center pt-32 pb-20">
         <div className="container-x relative z-10 w-full">
           <div className="grid lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8">
               {/* Status badge */}
-              <div className="inline-flex items-center gap-2 border border-ink-800 px-3 py-1.5 mb-10 group">
+              <div className="inline-flex items-center gap-2 border border-ink-800 rounded-full px-3.5 py-1.5 mb-10 group">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inset-0 rounded-full bg-ink-100 animate-pulse-slow" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-ink-100" />
@@ -33,7 +33,7 @@ export default function Home() {
               <div className="mt-12 flex flex-wrap items-center gap-6 md:gap-8">
                 <Link
                   href="#work"
-                  className="group inline-flex items-center gap-3 bg-ink-100 text-ink-950 px-6 py-3 font-mono text-xs uppercase tracking-[0.2em] hover:bg-ink-50 transition-colors"
+                  className="group inline-flex items-center gap-3 bg-ink-100 text-ink-950 rounded-full px-7 py-3.5 font-mono text-xs uppercase tracking-[0.2em] hover:bg-ink-50 transition-colors"
                 >
                   View work
                   <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
@@ -72,17 +72,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WORK */}
-      <section id="work" className="py-24 md:py-32">
+      {/* WORK — light */}
+      <section id="work" className="bg-ink-50 text-ink-950 py-24 md:py-32">
         <div className="container-x">
           <div className="flex items-end justify-between mb-12 md:mb-16 flex-wrap gap-4">
             <div>
-              <p className="mono-label mb-3">Selected work · {String(caseStudies.length).padStart(2, '0')}</p>
-              <h2 className="text-display font-medium text-ink-50 tracking-tight">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink-500 mb-3">
+                Selected work · {String(caseStudies.length).padStart(2, '0')}
+              </p>
+              <h2 className="text-display font-semibold text-ink-950 tracking-tight">
                 Case studies
               </h2>
             </div>
-            <p className="mono-label text-ink-500 max-w-xs">Detailed breakdowns of process, problems, and outcomes</p>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink-500 max-w-xs">
+              Detailed breakdowns of process, problems, and outcomes
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -93,25 +97,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 md:py-32 border-t border-ink-800">
+      {/* CTA — light */}
+      <section className="bg-ink-50 text-ink-950 pt-8 pb-24 md:pb-32">
         <div className="container-x">
-          <div className="max-w-4xl">
-            <p className="mono-label mb-6">Let&apos;s talk</p>
-            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
-              Have a project that needs design thinking and execution?
-            </h2>
-            <div className="mt-10 flex flex-wrap items-center gap-8">
-              <a
-                href="mailto:ahmed.hamdy.musallam@gmail.com"
-                className="group inline-flex items-center gap-3 bg-ink-100 text-ink-950 px-6 py-3 font-mono text-xs uppercase tracking-[0.2em] hover:bg-ink-50 transition-colors"
-              >
-                Get in touch
-                <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
-              </a>
-              <Link href="/contact" className="mono-label link-underline text-ink-200 hover:text-ink-50">
-                More ways to reach me
-              </Link>
+          <div className="relative rounded-[2rem] bg-white px-8 py-16 md:px-16 md:py-24 shadow-[0_24px_60px_-32px_rgba(0,0,0,0.18)] ring-1 ring-ink-200/60">
+            <div className="max-w-4xl">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink-500 mb-6">
+                Let&apos;s talk
+              </p>
+              <h2 className="text-display font-semibold text-ink-950 tracking-tight text-balance">
+                Have a project that needs design thinking and execution?
+              </h2>
+              <div className="mt-10 flex flex-wrap items-center gap-8">
+                <a
+                  href="mailto:ahmed.hamdy.musallam@gmail.com"
+                  className="group inline-flex items-center gap-3 bg-ink-950 text-ink-50 rounded-full px-7 py-3.5 font-mono text-xs uppercase tracking-[0.2em] hover:bg-ink-800 transition-colors"
+                >
+                  Get in touch
+                  <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+                </a>
+                <Link
+                  href="/contact"
+                  className="font-mono text-xs uppercase tracking-[0.2em] text-ink-600 link-underline hover:text-ink-950"
+                >
+                  More ways to reach me
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -93,7 +93,7 @@ export default function ProcessDiagram({ stages }: Props) {
                 }}
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
-                <div className="border border-ink-800 bg-ink-900/50 backdrop-blur p-6 max-w-2xl mx-auto">
+                <div className="rounded-2xl border border-ink-800 bg-ink-900/50 backdrop-blur p-6 max-w-2xl mx-auto">
                   <div className="flex items-baseline gap-3 mb-3">
                     <span className="mono-label">stage {String(i + 1).padStart(2, '0')}</span>
                     <span className="text-ink-700">·</span>
