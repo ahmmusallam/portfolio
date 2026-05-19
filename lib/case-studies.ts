@@ -109,6 +109,27 @@ export type NextSteps = {
   note?: string;
 };
 
+export type IAFeature = {
+  label: string;
+  items?: string[];
+  highlight?: boolean;
+  subFeature?: {
+    label: string;
+    items?: string[];
+  };
+};
+
+export type IASection = {
+  label: string;
+  features: IAFeature[];
+};
+
+export type InformationArchitecture = {
+  root: string;
+  sections: IASection[];
+  note?: string;
+};
+
 export type CaseStudy = {
   slug: string;
   number: string;
@@ -145,6 +166,7 @@ export type CaseStudy = {
   finalSolution?: FinalSolution;
   usabilityTesting?: UsabilityTesting;
   nextSteps?: NextSteps;
+  informationArchitecture?: InformationArchitecture;
   images?: {
     overview?: ImagePlaceholder;
     insights?: ImagePlaceholder;
@@ -660,6 +682,158 @@ export const caseStudies: CaseStudy[] = [
         items: ['Delivered a high-fidelity UI with clear card layout for KPIs', 'Established a design system for fintech modules'],
       },
     ],
+    informationArchitecture: {
+      root: 'SuperPay (Merchant)',
+      sections: [
+        {
+          label: 'Sign In',
+          features: [
+            { label: 'Username / email' },
+            { label: 'Password' },
+            { label: 'Forgot password' },
+          ],
+        },
+        {
+          label: 'Start Now',
+          features: [
+            { label: 'Register by service call' },
+            {
+              label: 'Register by fill form',
+              items: [
+                'Phone number (OTP)',
+                'User name',
+                'Email',
+                'Password creation',
+                'Password validation',
+              ],
+              subFeature: {
+                label: 'Complete account info (optional)',
+                items: [
+                  'Company / shop name',
+                  'National ID',
+                  'Tax ID',
+                  'Commercial registration',
+                  'SuperPay contract',
+                  'Bank account details',
+                ],
+              },
+            },
+          ],
+        },
+        {
+          label: 'Home (Dashboard)',
+          features: [
+            {
+              label: 'Header',
+              items: [
+                'Logo',
+                'Menu',
+                'Notifications',
+                'Account settings',
+                'Language (Arabic & English)',
+              ],
+            },
+            { label: 'Create product' },
+            { label: 'Create invoice' },
+            {
+              label: 'Statistics (overview by date)',
+              items: [
+                'Balance (in wallet)',
+                'Sales progress',
+                'Conversion rate (money transferred)',
+                'Successful & failed payments',
+                'New customers',
+              ],
+            },
+            { label: 'Recent transactions' },
+            { label: 'Support form (Contact us)' },
+          ],
+        },
+        {
+          label: 'Payments',
+          features: [
+            {
+              label: 'Transactions',
+              items: ['View transactions', 'Export transactions', 'Search'],
+            },
+            {
+              label: 'Transfers',
+              items: [
+                'Bank account (details)',
+                'Bills balance (details)',
+                'Transfers summary',
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Payment share links',
+          features: [
+            { label: 'View share links' },
+            { label: 'Export share links' },
+            { label: 'Create share link' },
+          ],
+        },
+        {
+          label: 'Reports',
+          features: [
+            {
+              label: 'Reports types',
+              items: ['Transactions', 'Orders', 'Invoices', 'Transfers'],
+            },
+            { label: 'View reports' },
+            { label: 'Filter / search by report type & date range' },
+            { label: 'Add new report layout', highlight: true },
+          ],
+        },
+        {
+          label: 'Customers',
+          features: [
+            { label: 'Add new customer' },
+            { label: 'View customers' },
+            { label: 'Quick search' },
+          ],
+        },
+        {
+          label: 'Charge-back management',
+          features: [
+            { label: 'View charge-backs' },
+            { label: 'View total amount' },
+            { label: 'Search' },
+          ],
+        },
+        {
+          label: 'Product management',
+          features: [
+            { label: 'Add new products (manually & bulk)' },
+            {
+              label: 'My products',
+              items: [
+                'View products',
+                'Export products',
+                'Filter / search for a product',
+              ],
+            },
+            { label: 'Add promo codes', highlight: true },
+          ],
+        },
+        {
+          label: 'Invoices management',
+          features: [
+            { label: 'Create invoices (manually & bulk)' },
+            {
+              label: 'My invoices',
+              items: ['View invoices', 'Export invoices', 'Filter / search for invoice'],
+            },
+            {
+              label: 'Subscription (pricing model)',
+              items: ['View subscriptions'],
+            },
+          ],
+        },
+      ],
+      note: 'Payment share links can also be generated from the Invoices and Products contexts — cross-linked entry points support the same primary task surface.',
+    },
     solution:
       'Established a scalable design system of components, typography, and patterns. The dashboard surfaces KPI cards at the top (Due Transfers, Sales Today, Balance, New Customers) for at-a-glance performance. A payment progress chart shows monthly income vs expenses for spotting trends. Top Customers & Products sections support upselling. Recent Transactions stays clean with clear status indicators (Completed, Pending, Refund). The system supports responsive layouts across desktop and mobile.',
     metrics: [

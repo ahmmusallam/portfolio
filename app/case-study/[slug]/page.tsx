@@ -8,6 +8,7 @@ import AdoptionChart from '@/components/AdoptionChart';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
 import BadgeDataTable from '@/components/BadgeDataTable';
 import CompetitorGrid from '@/components/CompetitorGrid';
+import IADiagram from '@/components/IADiagram';
 
 export async function generateStaticParams() {
   return caseStudies.map((c) => ({ slug: c.slug }));
@@ -300,6 +301,31 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {/* INFORMATION ARCHITECTURE */}
+      {study.informationArchitecture && (
+        <section className="py-20 md:py-28 border-t border-ink-800">
+          <div className="container-x">
+            <div className="mb-12 md:mb-16 max-w-2xl">
+              <p className="mono-label mb-3">Information architecture</p>
+              <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+                Mapping the surface.
+              </h2>
+              <p className="mt-4 text-ink-400 text-pretty leading-relaxed">
+                A merchant-first IA structured around the core jobs — sign-in, onboarding,
+                dashboards, payments, and management modules — with cross-linked entry points
+                where tasks overlap.
+              </p>
+            </div>
+
+            <IADiagram
+              root={study.informationArchitecture.root}
+              sections={study.informationArchitecture.sections}
+              note={study.informationArchitecture.note}
+            />
           </div>
         </section>
       )}

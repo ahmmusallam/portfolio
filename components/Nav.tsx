@@ -35,14 +35,22 @@ export default function Nav() {
       }`}
     >
       <div className="container-x flex items-center justify-between py-4 md:py-5">
-        <Link href="/" className="group flex items-center gap-3" aria-label="Home">
-          <div className="relative w-8 h-8 grid place-items-center">
-            <div className="absolute inset-0 border border-ink-700 group-hover:border-ink-300 transition-colors duration-500" />
-            <span className="font-mono text-sm font-bold text-ink-100">A</span>
-          </div>
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-400 hidden sm:inline">
-            Musallam
-          </span>
+        <Link
+          href="/"
+          aria-label="Home"
+          className="group inline-flex items-center text-ink-100 hover:text-ink-50 transition-colors duration-500"
+        >
+          <svg
+            width="32"
+            height="22"
+            viewBox="0 0 24 17"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            className="block"
+          >
+            <path d="M24 3.57715L14.373 5.10156L23.2559 13.9844L20.6953 16.5449L13.4727 9.32227L7.14453 15.6523L4.58301 13.0918L12.2344 5.43945L0.566407 7.28809L7.23202e-07 3.71192L23.4336 1.04907e-06L24 3.57715Z" />
+          </svg>
         </Link>
 
         <nav className="flex items-center gap-6 md:gap-10">

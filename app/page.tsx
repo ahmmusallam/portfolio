@@ -17,7 +17,7 @@ export default function Home() {
                   <span className="absolute inset-0 rounded-full bg-ink-100 animate-pulse-slow" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-ink-100" />
                 </span>
-                <span className="mono-label text-ink-200">Available · Q3 2026</span>
+                <span className="mono-label text-ink-200">Senior Product Designer</span>
               </div>
 
               <h1 className="text-hero font-medium text-ink-50 text-balance">
@@ -50,16 +50,16 @@ export default function Home() {
                   <p className="text-ink-100 text-sm mt-1">Senior PD @ VOIS</p>
                 </div>
                 <div>
-                  <p className="mono-label">Based in</p>
-                  <p className="text-ink-100 text-sm mt-1">Cairo, Egypt</p>
+                  <p className="mono-label">Experience</p>
+                  <p className="text-ink-100 text-sm mt-1">4+ Years</p>
                 </div>
                 <div>
                   <p className="mono-label">Focus</p>
                   <p className="text-ink-100 text-sm mt-1">AI · SaaS · Fintech</p>
                 </div>
                 <div>
-                  <p className="mono-label">Years</p>
-                  <p className="text-ink-100 text-sm mt-1">3+ in product</p>
+                  <p className="mono-label">Based in</p>
+                  <p className="text-ink-100 text-sm mt-1">Cairo, Egypt</p>
                 </div>
               </div>
             </div>
@@ -105,7 +105,7 @@ export default function Home() {
                 Case studies
               </h2>
             </div>
-            <p className="mono-label text-ink-500 max-w-xs">Detailed breakdowns of process, problems, and outcomes across 4 industries.</p>
+            <p className="mono-label text-ink-500 max-w-xs">Detailed breakdowns of process, problems, and outcomes</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">

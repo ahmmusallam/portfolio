@@ -60,7 +60,7 @@ export default function HeroAnimation() {
       <span className="absolute top-0 left-0 mono-label text-ink-600">N · 30.04</span>
       <span className="absolute top-0 right-0 mono-label text-ink-600">E · 31.23</span>
       <span className="absolute bottom-0 left-0 mono-label text-ink-600">CAI / EG</span>
-      <span className="absolute bottom-0 right-0 mono-label text-ink-600">2026.05</span>
+      <span className="absolute bottom-0 right-0 mono-label text-ink-600">2026</span>
     </div>
   );
 }
