@@ -10,6 +10,105 @@ export type Metric = {
   context?: string;
 };
 
+export type Goal = {
+  number: string;
+  content: string;
+};
+
+export type SolutionBullet = {
+  text: string;
+  ref?: string;
+};
+
+export type DataTableRow = {
+  label: string;
+  count: string;
+  percentage: string;
+};
+
+export type DataAnalysis = {
+  title: string;
+  intro: string;
+  bullets?: string[];
+  conclusion?: string;
+  table: DataTableRow[];
+  tableHeaders?: [string, string, string];
+  tableCaption?: string;
+};
+
+export type FinalSolutionBullet = {
+  highlight?: string;
+  text: string;
+};
+
+export type FinalSolution = {
+  title: string;
+  intro: string;
+  bullets: FinalSolutionBullet[];
+};
+
+export type TimelineDetail = {
+  summary: string;
+  weeks: string[];
+};
+
+export type ImagePlaceholder = {
+  label: string;
+  caption?: string;
+};
+
+export type Insight = {
+  title: string;
+  content?: string;
+  bullets?: string[];
+  quotes?: string[];
+};
+
+export type UserResearch = {
+  headline: string;
+  detail: string;
+};
+
+export type CompetitorFeature = {
+  label: string;
+  value: string;
+  status?: 'positive' | 'negative' | 'partial' | 'neutral';
+};
+
+export type CompetitorCard = {
+  name: string;
+  image: ImagePlaceholder;
+  features: CompetitorFeature[];
+};
+
+export type CompetitiveBenchmark = {
+  title?: string;
+  intro?: string;
+  competitors: CompetitorCard[];
+};
+
+export type ImprovementOpportunities = {
+  title: string;
+  intro?: string;
+  items: string[];
+};
+
+export type UsabilityTesting = {
+  title: string;
+  intro: string;
+  items: string[];
+  outcomeLabel?: string;
+  outcome: string;
+};
+
+export type NextSteps = {
+  title: string;
+  impactLabel?: string;
+  impactNote?: string;
+  items: string[];
+  note?: string;
+};
+
 export type CaseStudy = {
   slug: string;
   number: string;
@@ -23,25 +122,48 @@ export type CaseStudy = {
   team: string[];
   tools: string[];
   nda: boolean;
+  thumbnail?: string;
   overview: string;
   problem: string[];
+  problemIntro?: string;
+  problemOutro?: string;
   process: ProcessStage[];
-  insights?: {
-    title: string;
-    content: string;
-  }[];
+  insights?: Insight[];
   solution: string;
+  solutionTitle?: string;
+  solutionBullets?: SolutionBullet[];
+  solutionOutro?: string;
   metrics: Metric[];
   reflection?: string;
+  // Optional extended sections
+  timelineDetail?: TimelineDetail;
+  goals?: Goal[];
+  userResearch?: UserResearch;
+  competitiveBenchmark?: CompetitiveBenchmark;
+  improvementOpportunities?: ImprovementOpportunities;
+  dataAnalysis?: DataAnalysis;
+  finalSolution?: FinalSolution;
+  usabilityTesting?: UsabilityTesting;
+  nextSteps?: NextSteps;
+  images?: {
+    overview?: ImagePlaceholder;
+    insights?: ImagePlaceholder;
+    solution?: ImagePlaceholder;
+    postData?: ImagePlaceholder;
+    finalSolution?: ImagePlaceholder[];
+    usabilityTesting?: ImagePlaceholder;
+    nextSteps?: ImagePlaceholder;
+  };
 };
 
 export const caseStudies: CaseStudy[] = [
   {
     slug: 'session-replay',
     number: '01',
-    title: 'Session Replay',
-    subtitle: 'Redesigning a developer debugging tool to double enterprise adoption',
-    company: 'Luciq (formerly Instabug)',
+    title: 'Redesigning Session Replay List',
+    subtitle:
+      'As a Product Designer, I worked closely with PM, Researcher, EM, Developers, and Marketing to ensure we met both user and business needs.',
+    company: 'Instabug',
     category: 'Developer Tool / SaaS',
     year: '2024',
     role: 'Product Designer',
@@ -50,64 +172,207 @@ export const caseStudies: CaseStudy[] = [
     tools: ['Figma', 'FigJam'],
     nda: false,
     overview:
-      'Session Replay is a core tool for developers and product teams to diagnose user behavior and issues. The list view lacked clarity and immediate interpretability — especially for new users. This project restructured the IA and terminology to make critical signals scannable at a glance.',
+      'At Instabug, Session Replay is a core tool for developers and product teams to diagnose user behavior and issues. However, the Session Replay list view lacked clarity and immediate interpretability, especially for new users. This project aimed to enhance the readability and usefulness of the list by making parameter labels more intuitive and visually restructuring key components based on user data and feedback.',
+    problemIntro:
+      'The Session Replay (SR) list view was populated with ambiguous parameters, especially on the left side, making it difficult for users to:',
     problem: [
-      'Ambiguous parameters in the list view made labels hard to interpret',
-      'Users could not understand session severity without opening individual sessions',
-      '"Unidentified User" messaging was misleading when an ID was actually present',
-      'Badges and metrics had no consistent meaning across customer interviews',
+      'Recognize the meaning of badges and metrics',
+      'Identify what each piece of information represents',
+      'Understand session severity levels without diving into session details',
+      'Clarify user identity without "Unidentified User" messages',
     ],
+    timelineDetail: {
+      summary:
+        'One cycle, split in 2 sprints (one for design and one for implementation), each one is 3 weeks.',
+      weeks: [
+        'Week 1: Research, define the problem',
+        'Week 2: Ideate, prototype, get feedback',
+        'Week 3: Test, iterate, handoff',
+      ],
+    },
     process: [
       {
         label: 'Empathize',
         detail: 'Research',
-        items: ['Dig into complaints, logs, usability data', 'PM sync to align on customer insights'],
+        items: [
+          'Dig into complaints, logs, usability data',
+          'PM sync — define problems from customer insights or competitive gaps',
+        ],
       },
       {
         label: 'Define',
         detail: 'Problem Framing',
-        items: ['Frame the problem space and clarify scope', 'Technical alignment with EM to avoid blockers'],
+        items: [
+          'Frame the problem space and clarify scope',
+          'Technical alignment — early check with EM to avoid blockers',
+        ],
       },
       {
         label: 'Ideate',
         detail: 'Squad Pre-planning',
-        items: ['Refinement and sync with PM and squad', 'Design Chapter feedback across designers'],
+        items: [
+          'Refinement and sync with PM and squad',
+          'Design Chapter feedback — share with designers for cross-product impact',
+        ],
       },
       {
         label: 'Test',
         detail: 'Usability Testing',
-        items: ['Run light tests in customer sync calls', 'Product Review with PM, EM, CPO, CTO'],
+        items: [
+          'Run light tests in customer sync calls',
+          'Product Review — present to PMs, EMs, CPO, CTO for feedback',
+        ],
       },
       {
         label: 'Implement',
         detail: 'Iteration & Handoff',
-        items: ['Refine, handoff to devs, support implementation'],
+        items: ['Refine, handoff to devs, and support implementation'],
       },
     ],
     insights: [
       {
         title: 'User ID Confusion',
-        content: '"I always thought it was the ID of the session and not the ID of the user." — CarMax',
+        content:
+          '"I always thought it was the ID of the session and not the ID of the user." — CarMax · "This ID is not clear to me. Is it the anonymous user ID or the ID of the session?" — Cummins',
       },
       {
         title: 'Badges Misunderstood',
-        content: '"Could you explain what network 9+ means? I don\'t know." — CarMax',
+        content:
+          '"Could you explain what network 9+ means? I don\'t know." — CarMax · "Until I play the session, I can\'t understand what these badges represent." — Cummins',
       },
       {
-        title: 'Severity Isn\'t Obvious',
-        content: '"I\'m not sure how these \'frustrating\' tags are calculated." — Property Finder',
+        title: "Severity Isn't Obvious",
+        content:
+          '"I\'m not sure how these \'frustrating\' tags are calculated." — Property Finder',
       },
       {
         title: 'Unidentified User',
-        content: '"Even though we\'re identifying users with an ID, the UI still says \'Unidentified user\' — which is misleading." — CarMax',
+        content:
+          '"Even though we\'re identifying users with an ID, the UI still says \'Unidentified user\' — which is misleading." — CarMax',
       },
     ],
+    goals: [
+      {
+        number: '#1',
+        content:
+          'Increase the clarity of session information by making labels more descriptive.',
+      },
+      {
+        number: '#2',
+        content: 'Improve scannability through layout improvements.',
+      },
+      {
+        number: '#3',
+        content: 'Reduce the need to open individual sessions for context.',
+      },
+      {
+        number: '#4',
+        content:
+          'Clarify ambiguous terminology like "Unidentified User" and badges.',
+      },
+    ],
+    solutionTitle: 'Solution (iteration #1)',
     solution:
-      'Restructured the IA of the Session Replay table to establish a clearer hierarchy and reduce cognitive load. Introduced dedicated columns for user ID, email, session status, and badges. Added severity colors to issue badges so users could spot critical signals without navigating into cluttered details. Replaced "Unidentified User" with "Anonymous" when email/name isn\'t available. Capped badges to 4–5 per session based on real session data analysis (89.65% of sessions had 0 badges, validating the cap).',
+      'We focused on restructuring the information architecture of the Session Replay table to establish a clearer hierarchy and reduce cognitive load.',
+    solutionBullets: [
+      {
+        text: 'Introduced dedicated columns for user ID, email, session status, and badges.',
+        ref: 'Problem 1, 3',
+      },
+      {
+        text: 'Provided consistent explanations across the interface using tooltips to minimize guesswork.',
+      },
+      {
+        text: 'Added severity colors to the issues badges to quickly spot critical signals without navigating cluttered details.',
+        ref: 'Problem 2',
+      },
+      {
+        text: 'If email/name isn\'t available, display "Anonymous" instead of "Unidentified User".',
+        ref: 'Problem 4',
+      },
+    ],
+    dataAnalysis: {
+      title: 'How many badges can be displayed, and in what order?',
+      intro: 'We analyzed real session data to determine:',
+      bullets: [
+        'Which metrics were most frequently used across sessions?',
+        'The optimal number of badges to display to preserve clarity without overwhelming users.',
+      ],
+      conclusion:
+        'We then validated the top-shown badges and prioritized a consistent max count of 4–5 badges per session, based on recurrence and perceived importance across real data sets.',
+      tableHeaders: ['Tags', 'Count', 'Percentage'],
+      table: [
+        { label: '0', count: '12,239,357,019', percentage: '89.65%' },
+        { label: '1', count: '950,137,856', percentage: '6.96%' },
+        { label: '2', count: '315,704,193', percentage: '2.31%' },
+        { label: '3', count: '100,464,919', percentage: '0.88%' },
+        { label: '4', count: '23,122,338', percentage: '1.17%' },
+        { label: '5', count: '3,312,312', percentage: '0.124%' },
+        { label: '6', count: '656,086', percentage: '0.0047%' },
+        { label: '7', count: '17,833', percentage: '0.0003%' },
+        { label: '8', count: '46', percentage: '0.0000003%' },
+      ],
+      tableCaption: 'Data from 1 month of sessions',
+    },
+    finalSolution: {
+      title: 'The Final Solution',
+      intro:
+        'Following feedback from the product review and usability testing (including a color-blind participant), we refined the design to improve clarity and accessibility:',
+      bullets: [
+        {
+          highlight: 'User Info Column',
+          text: 'Combined user ID and email into one field, with a fallback to "Anonymous."',
+        },
+        {
+          highlight: 'Issues column',
+          text: 'Provided tooltips to support accessibility.',
+        },
+      ],
+    },
+    images: {
+      overview: {
+        label: 'Session Replay List (Before)',
+        caption: 'Original list view — ambiguous labels and badges',
+      },
+      insights: {
+        label: 'Annotated Session Replay List',
+        caption: 'Problem callouts captured from customer interviews',
+      },
+      solution: {
+        label: 'Iteration #1 — Restructured table',
+        caption: 'Dedicated columns, severity colors, and Anonymous fallback',
+      },
+      postData: {
+        label: 'Updated Session Replay List',
+        caption: 'New SR list view with the 4–5 badge cap applied',
+      },
+      finalSolution: [
+        {
+          label: 'Final design — Combined User Info column',
+          caption: 'User ID + email merged with Anonymous fallback',
+        },
+        {
+          label: 'Final design — Tooltips on Issues column',
+          caption: 'Accessibility-focused refinements from usability testing',
+        },
+      ],
+    },
     metrics: [
-      { value: '30%', label: 'Drop in support tickets', context: 'Related to SR list confusion' },
-      { value: '2x', label: 'Enterprise customer growth', context: '7 → 14 active customers in 4 months' },
-      { value: '4–5', label: 'Max badges per session', context: 'Data-validated cap' },
+      {
+        value: '30%',
+        label: 'Drop in support tickets',
+        context: 'Related to SR list confusion',
+      },
+      {
+        value: '2×',
+        label: 'Enterprise customer growth',
+        context: '7 → 14 active customers in 4 months',
+      },
+      {
+        value: '4–5',
+        label: 'Max badges per session',
+        context: 'Data-validated cap from 1 month of sessions',
+      },
     ],
     reflection:
       'Real data validation early in the process gave the team confidence to make opinionated cuts to the UI without endless debate.',
@@ -115,9 +380,10 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'smartresolve',
     number: '02',
-    title: 'SmartResolve',
-    subtitle: 'Evolving an AI crash-fix agent from static suggestions to a contextual workflow',
-    company: 'Luciq (formerly Instabug)',
+    title: 'SmartResolve — AI Developer Tool',
+    subtitle:
+      'As a Product Designer, I worked closely with PM, Researcher, EM, Developers, and Marketing to ensure we met both user and business needs.',
+    company: 'Instabug',
     category: 'AI Developer Tool / SaaS',
     year: '2024',
     role: 'Product Designer',
@@ -126,61 +392,219 @@ export const caseStudies: CaseStudy[] = [
     tools: ['Figma', 'FigJam'],
     nda: false,
     overview:
-      'SmartResolve accelerates crash resolution by generating AI-powered code fixes. Early versions only provided 3 to 5 static suggestions per crash, often missing context from developers that may help generate more relevant fixes tailored to their project structure.',
+      'SmartResolve accelerates crash resolution by generating AI-powered code fixes. Early versions only provided 3 to 5 static suggestions per crash, often missing context from developers, which may help generate more relevant fixes tailored to their project structure.',
     problem: [
       'AI-generated fixes lacked accuracy without additional context',
       'Competitors like Sentry AutoFix, Firebase Gemini, and Raygun AI set higher expectations for interactive AI tools',
-      'Developers wanted to guide the AI with project context, similar to chat-like interactions in other tools',
-      'Multiple fix suggestions caused confusion when differences were subtle',
     ],
+    problemOutro:
+      'We needed to evolve SmartResolve from static suggestions to an iterative, developer-guided AI workflow.',
+    timelineDetail: {
+      summary:
+        'One cycle, split into 2 sprints (one for design and one for implementation), each one is 3 weeks.',
+      weeks: [
+        'Week 1: Research, define the problem',
+        'Week 2: Ideate, prototype, get feedback',
+        'Week 3: Test, iterate, handoff',
+      ],
+    },
     process: [
       {
         label: 'Empathize',
         detail: 'Research',
-        items: ['6 developer interviews with Staff & Senior Engineers', 'Competitive analysis of AI dev tools'],
+        items: [
+          'Conduct interviews and competitive analysis',
+          'PM Sync — define problems from interview themes and competitor gaps',
+        ],
       },
       {
         label: 'Define',
         detail: 'Problem Framing',
-        items: ['Frame the problem space and clarify scope', 'Technical alignment with EM'],
+        items: [
+          'Frame the problem space and clarify scope',
+          'Technical Alignment — early check with EM to avoid blockers',
+        ],
       },
       {
         label: 'Ideate',
         detail: 'Squad Pre-planning',
-        items: ['Apply feedback and sync with PM and squad', 'Design Chapter feedback for cross-product impact'],
+        items: [
+          'Refinement & Squad Pre-planning — apply feedback and sync with PM and squad',
+          'Design Chapter Feedback — share with designers for cross-product impact',
+        ],
       },
       {
         label: 'Test',
         detail: 'Product Review',
-        items: ['Present to PMs, EMs, CPO, CTO for feedback', 'Usability testing with internal developers'],
+        items: [
+          'Product Review — present to PMs, EMs, CPO, CTO for feedback',
+          'Usability Testing — conduct usability testing',
+        ],
       },
       {
         label: 'Implement',
         detail: 'Iteration & Handoff',
-        items: ['Refine, handoff to devs, support implementation'],
+        items: ['Refine, handoff to devs, and support implementation'],
       },
     ],
+    userResearch: {
+      headline: '6 Developer Interviews',
+      detail:
+        'Roles: Staff & Senior Frontend Engineers, Backend Developers, Android Developers, Engineering Managers',
+    },
     insights: [
       {
         title: 'AI Usage',
-        content: 'Developers use Cursor, Claude, ChatGPT daily. "I use Cursor daily, it\'s lightweight with great autocomplete."',
+        bullets: [
+          'Developers frequently use Cursor, Claude, and ChatGPT for assistance',
+          'AI is expected to support autocomplete, refactoring, and logic debugging',
+        ],
+        quotes: ['"I use Cursor daily, it\'s lightweight with great autocomplete."'],
       },
       {
         title: 'Multiple Fix Confusion',
-        content: 'Subtle or incorrect fixes reduced trust quickly. "If the differences are subtle, I won\'t waste time reviewing." "One bad experience and I might never use it again."',
+        bullets: [
+          'Multiple fix suggestions often caused confusion',
+          'Subtle or incorrect fixes reduced trust quickly',
+        ],
+        quotes: [
+          '"If the differences are subtle, I won\'t waste time reviewing."',
+          '"One bad experience and I might never use it again."',
+        ],
       },
       {
         title: 'Contextual Feedback',
-        content: 'Developers wanted to guide the AI with project context. "I think three blind guesses don\'t help."',
+        bullets: [
+          'Developers wanted to guide the AI with the project context',
+          'Expectations were shaped by chat-like interactions in other tools',
+        ],
+        quotes: ['"I think three blind guesses don\'t help."'],
       },
     ],
+    competitiveBenchmark: {
+      title: 'Competitive Benchmark',
+      intro:
+        'We benchmarked SmartResolve against the AI crash-fix landscape to find clear improvement opportunities.',
+      competitors: [
+        {
+          name: 'Sentry',
+          image: {
+            label: 'Sentry AutoFix UI',
+            caption: 'Line-level feedback with PR integration',
+          },
+          features: [
+            { label: 'Contextual Feedback', value: 'Line-level feedback', status: 'positive' },
+            { label: 'AI Code Fix', value: 'Yes', status: 'positive' },
+            { label: 'PR Integration', value: 'Yes', status: 'positive' },
+          ],
+        },
+        {
+          name: 'Firebase',
+          image: {
+            label: 'Firebase Gemini UI',
+            caption: 'Context-aware insights without inline fixes',
+          },
+          features: [
+            { label: 'Contextual Feedback', value: 'Insights improve with context', status: 'positive' },
+            { label: 'AI Code Fix', value: 'No', status: 'negative' },
+            { label: 'PR Integration', value: 'No', status: 'negative' },
+          ],
+        },
+        {
+          name: 'Raygun AI',
+          image: {
+            label: 'Raygun AI UI',
+            caption: 'Chat-based fix suggestions',
+          },
+          features: [
+            { label: 'Contextual Feedback', value: 'Chat-based suggestions', status: 'positive' },
+            { label: 'AI Code Fix', value: 'Partial', status: 'partial' },
+            { label: 'PR Integration', value: 'No', status: 'negative' },
+          ],
+        },
+      ],
+    },
+    improvementOpportunities: {
+      title: 'Improvement Opportunities',
+      items: [
+        'Provide one initial fix with options to regenerate based on feedback',
+        'Allow project-specific context input',
+        'Combine AI-generated fixes, contextual feedback, and pull request automation all in a focused and developer-friendly experience.',
+      ],
+    },
+    solutionTitle: 'Design Iteration: Evolving the Context Input',
     solution:
-      'Pivoted from a drawer-based context input to an inline context field directly inside the fix flow. This kept the experience focused, prepared for future automation, and aligned with the long-term vision of SmartResolve as a fully automated crash-to-store pipeline. Developers can now provide crash context, regenerate tailored fixes based on feedback, iterate up to 5 times per crash, use example prompts, and rate fixes with thumbs up/down.',
-    metrics: [
-      { value: '12', label: 'New customers onboarded', context: 'Within 3 months of rollout' },
-      { value: '20', label: 'Pull requests generated', context: 'Using SmartResolve' },
-      { value: '5×', label: 'Iterations per crash', context: 'Up from a single static fix' },
+      'The first version of the design placed the context input field inside a drawer with the code fix details. But after design team discussions and a product review with PMs, Engineering Managers, CTO, CPO, and Designers, we pivoted to an inline context input:',
+    solutionBullets: [
+      { text: 'Keeps the experience focused' },
+      { text: 'Prepares for future automation stages where not every action requires context' },
+      { text: 'Keeps the drawer space flexible for future features like deploying fixes to the store' },
     ],
+    solutionOutro:
+      'The inline approach aligned better with the long-term vision of SmartResolve evolving into a fully automated crash-to-store pipeline, minimizing user friction along the way.',
+    finalSolution: {
+      title: 'The Final Solution',
+      intro: 'Following feedback from the product review, developers can:',
+      bullets: [
+        { text: 'Provide crash context, assumptions, or project details' },
+        { text: 'Regenerate tailored fixes based on feedback' },
+        { text: 'Iterate up to 5 times per crash' },
+        { text: 'Use example prompts to guide effective input' },
+        { text: 'Use "thumbs up/down" as a quick feedback per fix' },
+      ],
+    },
+    usabilityTesting: {
+      title: 'Usability Testing & Outcome',
+      intro: 'After rollout, we tested the new experience with internal developers:',
+      items: [
+        'Feedback input felt intuitive and easy to use',
+        'Regenerated fixes aligned better with project needs',
+        'Higher satisfaction compared to static suggestions',
+      ],
+      outcomeLabel: 'Outcome',
+      outcome:
+        "Positive developer feedback led to a full rollout. However, we received feedback on the agent's reasoning. Thus, in the final iteration, we enhanced the agent experience by adding micro-interactions and reasoning.",
+    },
+    metrics: [
+      { value: '12', label: 'New customers onboarded', context: 'Within 3 months from rollout' },
+      { value: '20', label: 'Pull requests generated', context: 'Using SmartResolve' },
+      { value: '5×', label: 'Max iterations per crash', context: 'Up from a single static fix' },
+    ],
+    nextSteps: {
+      title: 'Next Steps',
+      impactLabel: 'Impact',
+      impactNote: 'Within 3 months from rollout',
+      items: [
+        'Full rollout to active SmartResolve users',
+        'Monitor success rates, regeneration quality, and adoption',
+        'Gather ongoing developer feedback to plan next iterations',
+      ],
+      note: 'If adoption and numbers are promising, we plan to introduce a wider code preview for better change visibility, as this was a clear developer request during interviews.',
+    },
+    images: {
+      overview: {
+        label: 'SmartResolve — Original UI',
+        caption: 'List of possible fixes with crash summary (Before)',
+      },
+      solution: {
+        label: 'Design Iteration — Inline context input',
+        caption: 'Pivoted from a drawer to inline for focus and future automation',
+      },
+      finalSolution: [
+        {
+          label: 'Final design — Fix flow with iterations',
+          caption: 'Context input, regenerate, thumbs up/down',
+        },
+      ],
+      usabilityTesting: {
+        label: 'Final agent experience — micro-interactions & reasoning',
+        caption: 'Step-by-step reasoning added in the final iteration',
+      },
+      nextSteps: {
+        label: 'Future direction — wider code preview',
+        caption: 'Planned enhancement based on developer interviews',
+      },
+    },
     reflection:
       'This evolution turned SmartResolve into an adaptive AI assistant that blends automation with developer control to improve accuracy, build trust, and streamline the crash fix workflow.',
   },
