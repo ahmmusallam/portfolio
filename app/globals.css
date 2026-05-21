@@ -11,11 +11,15 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Prevent horizontal scroll on mobile Safari from any minor overflow.
+       `clip` (not `hidden`) preserves `position: sticky` on descendants. */
+    overflow-x: clip;
   }
 
   body {
     @apply bg-ink-950 text-ink-200 font-sans;
     min-height: 100vh;
+    overflow-x: clip;
   }
 
   /* Subtle noise texture overlay */
@@ -76,26 +80,6 @@
   }
   .hover-lift:hover {
     transform: translateY(-4px);
-  }
-
-  /* Marquee animation for company strip */
-  .marquee {
-    display: flex;
-    overflow: hidden;
-    user-select: none;
-    gap: 4rem;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  }
-  .marquee__content {
-    flex-shrink: 0;
-    display: flex;
-    gap: 4rem;
-    min-width: 100%;
-    animation: scroll 40s linear infinite;
-  }
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-100%); }
   }
 
   /* Process diagram node pulse */

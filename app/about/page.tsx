@@ -1,29 +1,41 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { VoisLogo, LuciqLogo, EtisalatLogo } from '@/components/CompanyLogos';
 
 const experience = [
   {
     period: 'Nov 2025 — Present',
     role: 'Senior Product Designer',
     company: 'VOIS',
+    Logo: VoisLogo,
+    // Wide, thin wordmark — reads light, but the lockup is tall; keep it modest.
+    logoClass: 'h-[20px]',
     detail: 'Collaborating with Vodafone Germany to design AI-powered tools that enhance employee workflows and productivity. Contributing to the AI design system.',
   },
   {
     period: 'Aug 2024 — Oct 2025',
     role: 'Product Designer',
     company: 'Luciq (Formerly Instabug)',
+    Logo: LuciqLogo,
+    // Letters sit low under the star — bump height so the wordmark matches.
+    logoClass: 'h-[26px]',
     detail: 'Designed AI-driven features and scalable systems within the AI squads. Led the Session Replay redesign and SmartResolve crash-fix workflow.',
   },
   {
     period: 'Apr 2023 — Jun 2024',
     role: 'Product Designer',
     company: 'e& Egypt (Etisalat Egypt)',
+    Logo: EtisalatLogo,
+    // Dense, solid symbol — reads heavy, so render it smaller.
+    logoClass: 'h-[21px]',
     detail: 'Contributed to SuperPay, a large-scale fintech product. Built intuitive, on-brand interfaces and collaborated closely with developers.',
   },
   {
     period: 'Jul 2022 — Feb 2023',
     role: 'UX Researcher',
     company: 'e& Egypt (Etisalat Egypt)',
+    Logo: EtisalatLogo,
+    logoClass: 'h-[21px]',
     detail: 'Part of the EUX team. Tested digital products, conducted UX research, and shared insights through reports and videos.',
   },
 ];
@@ -128,8 +140,13 @@ export default function AboutPage() {
                     <p className="mono-label">{job.period}</p>
                   </div>
                   <div className="md:col-span-8">
-                    <h3 className="text-xl md:text-2xl font-medium text-ink-50">{job.role}</h3>
-                    <p className="mono-label mt-1 text-ink-200">@ {job.company}</p>
+                    <div className="flex items-start justify-between gap-5">
+                      <div>
+                        <h3 className="text-xl md:text-2xl font-medium text-ink-50">{job.role}</h3>
+                        <p className="mono-label mt-2 text-ink-200">@ {job.company}</p>
+                      </div>
+                      <job.Logo className={`${job.logoClass} w-auto shrink-0 mt-1.5 text-ink-200`} />
+                    </div>
                     <p className="mt-4 text-ink-300 text-pretty leading-relaxed">{job.detail}</p>
                   </div>
                 </div>

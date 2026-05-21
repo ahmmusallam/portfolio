@@ -103,19 +103,16 @@ export default function Home() {
           <div className="max-w-4xl">
             <p className="mono-label mb-6">Let&apos;s talk</p>
             <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
-              Have a project that needs design thinking and execution?
+              Have a project?
             </h2>
             <div className="mt-10 flex flex-wrap items-center gap-8">
               <a
-                href="mailto:ahmed.hamdy.musallam@gmail.com"
+                href="https://www.linkedin.com/in/ahmmusallam/"
                 className="group inline-flex items-center gap-3 bg-ink-100 text-ink-950 rounded-full px-7 py-3.5 font-mono text-xs uppercase tracking-[0.2em] hover:bg-ink-50 transition-colors"
               >
-                Get in touch
+                LinkedIn
                 <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
               </a>
-              <Link href="/contact" className="mono-label link-underline text-ink-200 hover:text-ink-50">
-                More ways to reach me
-              </Link>
             </div>
           </div>
         </div>
