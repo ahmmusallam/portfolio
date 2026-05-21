@@ -18,14 +18,14 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Ahmed Hamdy Musallam — Product Designer',
+  title: 'Ahmed Hamdy Musallam - Senior Product Designer',
   description:
     'Product Designer crafting AI-powered tools, developer products, and B2B platforms across SaaS and fintech. Currently designing AI tools at VOIS (Vodafone Intelligent Solutions).',
   keywords: ['Product Designer', 'UX Designer', 'AI tools', 'SaaS', 'Fintech', 'Cairo'],
   authors: [{ name: 'Ahmed Hamdy Musallam' }],
   metadataBase: new URL('https://ahmmusallam.com'),
   openGraph: {
-    title: 'Ahmed Hamdy Musallam — Product Designer',
+    title: 'Ahmed Hamdy Musallam - Senior Product Designer',
     description: 'AI tools, developer products, and B2B platforms across SaaS and fintech.',
     url: 'https://ahmmusallam.com',
     siteName: 'Ahmed Hamdy Musallam',
