@@ -180,17 +180,76 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: 'session-replay',
+    slug: 'tender-assist',
     number: '01',
+    title: 'AI Tender Assist Bid Management',
+    subtitle:
+      'AI-powered bid management platform for contractual review and team collaboration. Anchoring a product with €5.2M of projected value at scale.',
+    company: 'VOIS',
+    category: 'AI Platform / SaaS',
+    year: '2026',
+    role: 'Senior Product Designer',
+    timeline: 'Ongoing · 2025–present',
+    thumbnail: '/case studies/tender-assist.svg',
+    team: ['PM', 'Researcher', 'EM', 'Developers', 'Data/AI'],
+    tools: ['Figma', 'FigJam'],
+    nda: true,
+    overview:
+      'Tender Assist is an AI-powered bid management platform that helps teams review contractual documents, surface risks, and respond to tenders faster. As Senior Product Designer at VOIS, I shaped the end-to-end experience for an enterprise product projected to drive €5.2M of value at scale.',
+    problem: [
+      'Contractual review was manual, slow, and error-prone across large bid documents',
+      'Risk and compliance signals were buried, making them easy to miss',
+      'Teams lacked a single, structured workspace to manage tenders end to end',
+    ],
+    process: [
+      {
+        label: 'Empathize',
+        detail: 'Research',
+        items: ['Stakeholder and user interviews', 'Map the current bid-review workflow'],
+      },
+      {
+        label: 'Define',
+        detail: 'Problem Framing',
+        items: ['Frame risk & compliance pain points', 'Technical alignment with EM and the data/AI team'],
+      },
+      {
+        label: 'Ideate',
+        detail: 'Concepts',
+        items: ['Explore AI-assisted review flows', 'Squad and Design Chapter feedback'],
+      },
+      {
+        label: 'Test',
+        detail: 'Validation',
+        items: ['Usability testing with bid teams', 'Product reviews with stakeholders'],
+      },
+      {
+        label: 'Implement',
+        detail: 'Iteration & Handoff',
+        items: ['Refine, handoff to devs, and support delivery'],
+      },
+    ],
+    solution:
+      'Placeholder — the detailed solution write-up is in progress.',
+    metrics: [
+      { value: '€5.2M', label: 'Projected value at scale', context: 'Enterprise bid management' },
+      { value: 'AI', label: 'Assisted contractual review', context: 'Automated risk surfacing' },
+      { value: 'Live', label: 'In active development', context: 'VOIS · Vodafone' },
+    ],
+    reflection:
+      'Placeholder — reflection to be added as the project matures.',
+  },
+  {
+    slug: 'session-replay',
+    number: '02',
     title: 'Redesigning Session Replay List',
     subtitle:
-      'As a Product Designer, I worked closely with PM, Researcher, EM, Developers, and Marketing to ensure we met both user and business needs.',
+      'Optimizing the developer debugging flow for enterprise adoption. The redesign doubled active enterprise customers from 7 to 14 within four months.',
     company: 'Instabug',
     category: 'Developer Tool / SaaS',
     year: '2024',
     role: 'Product Designer',
     timeline: '3 weeks · 1 cycle, 2 sprints',
-    thumbnail: '/case studies/session-replay.svg',
+    thumbnail: '/case studies/session-replay-ui.png',
     team: ['PM', 'Researcher', 'EM', 'Developers', 'Marketing'],
     tools: ['Figma', 'FigJam'],
     nda: false,
@@ -402,16 +461,16 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'smartresolve',
-    number: '02',
-    title: 'SmartResolve — AI Developer Tool',
+    number: '03',
+    title: 'SmartResolve AI Developer Tool',
     subtitle:
-      'As a Product Designer, I worked closely with PM, Researcher, EM, Developers, and Marketing to ensure we met both user and business needs.',
+      'Designing an autonomous agent that generates fixes for app crashes. The workflow onboarded 12 new customers and facilitated 20 automated pull requests.',
     company: 'Instabug',
     category: 'AI Developer Tool / SaaS',
     year: '2024',
     role: 'Product Designer',
     timeline: '3 weeks · 1 cycle, 2 sprints',
-    thumbnail: '/case studies/smartresolve.svg',
+    thumbnail: '/case studies/smartresolve-ui.png',
     team: ['PM', 'Researcher', 'EM', 'Developers', 'Marketing'],
     tools: ['Figma', 'FigJam'],
     nda: false,
@@ -634,16 +693,16 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'superpay-dashboard',
-    number: '03',
-    title: 'SuperPay Dashboard',
-    subtitle: 'A fintech merchant dashboard balancing simplicity, scale, and ambition',
+    number: '04',
+    title: 'SuperPay Merchant Platform',
+    subtitle: 'A fintech dashboard for online merchants, balancing simplicity and scale.',
     company: 'e& (Etisalat Egypt)',
     category: 'Fintech / SaaS',
     year: '2023',
     role: 'Product Designer',
     timeline: '12+ weeks · 3+ weeks research, 9 weeks design',
     team: ['3 Product Designers', '2 Developers', '1 Project Manager'],
-    thumbnail: '/case studies/superpay-dashboard.svg',
+    thumbnail: '/case studies/superpay-dashboard-ui.png',
     tools: ['Adobe', 'Figma', 'Google Slides'],
     nda: true,
     overview:
@@ -849,7 +908,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'superpay-website',
-    number: '04',
+    number: '05',
     title: 'SuperPay Website',
     subtitle: 'A marketing site to launch e&\'s fintech entry into the Egyptian market',
     company: 'e& (Etisalat Egypt)',
@@ -907,7 +966,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'bits-and-pixels',
-    number: '05',
+    number: '06',
     title: 'Bits & Pixels',
     subtitle: 'Gamifying coding education for a unique mobile learning experience',
     company: 'Personal Project',

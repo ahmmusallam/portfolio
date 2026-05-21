@@ -140,23 +140,23 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* EDUCATION */}
-      <section className="py-20 md:py-24 border-t border-ink-800 bg-gradient-to-b from-ink-950 via-ink-800 to-ink-950">
+      {/* EDUCATION — muted light band */}
+      <section className="py-20 md:py-24 bg-ink-200">
         <div className="container-x">
           <div className="grid md:grid-cols-12 gap-8">
             <div className="md:col-span-3">
-              <p className="mono-label sticky top-32">Education</p>
+              <p className="mono-label text-ink-700 sticky top-32">Education</p>
             </div>
             <div className="md:col-span-9 space-y-12">
               {education.map((edu, i) => (
-                <div key={i} className="grid md:grid-cols-12 gap-6 pb-12 border-b border-ink-800 last:border-0 last:pb-0">
+                <div key={i} className="grid md:grid-cols-12 gap-6 pb-12 border-b border-ink-900/10 last:border-0 last:pb-0">
                   <div className="md:col-span-4">
-                    <p className="mono-label">{edu.period}</p>
+                    <p className="mono-label text-ink-700">{edu.period}</p>
                   </div>
                   <div className="md:col-span-8">
-                    <h3 className="text-xl md:text-2xl font-medium text-ink-50">{edu.title}</h3>
-                    <p className="mono-label mt-1 text-ink-200">{edu.place}</p>
-                    <p className="mt-4 text-ink-300 text-pretty leading-relaxed">{edu.detail}</p>
+                    <h3 className="text-xl md:text-2xl font-medium text-ink-950">{edu.title}</h3>
+                    <p className="mono-label mt-1 text-ink-600">{edu.place}</p>
+                    <p className="mt-4 text-ink-700 text-pretty leading-relaxed">{edu.detail}</p>
                   </div>
                 </div>
               ))}
@@ -173,22 +173,37 @@ export default function AboutPage() {
               <p className="mono-label sticky top-32">Recognition</p>
             </div>
             <div className="md:col-span-9">
-              <div className="rounded-3xl border border-ink-800 p-8 md:p-10 bg-ink-900/30 relative">
-                <p className="mono-label mb-3">2025 · Q2</p>
-                <h3 className="text-2xl md:text-3xl font-medium text-ink-50">Instabug Ultimate Team</h3>
-                <p className="mt-4 text-ink-300 text-pretty leading-relaxed max-w-2xl">
-                  Recognized as part of Instabug&apos;s Ultimate Team for contributions across multiple squads:
-                </p>
-                <ul className="mt-4 space-y-3 max-w-2xl">
-                  <li className="flex gap-3">
-                    <span className="mono-label text-ink-600 mt-1.5 shrink-0">/</span>
-                    <p className="text-ink-200"><span className="text-ink-50 font-medium">Feedback Squad:</span> Led the redesign and enhancements of Session Replay, significantly increasing enterprise adoption.</p>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="mono-label text-ink-600 mt-1.5 shrink-0">/</span>
-                    <p className="text-ink-200"><span className="text-ink-50 font-medium">AI Squad:</span> Designed SmartResolve, an AI-powered agent that automatically generates fixes for app crashes.</p>
-                  </li>
-                </ul>
+              <div className="rounded-3xl border border-ink-800 p-6 md:p-8 bg-ink-900/30 relative">
+                <div className="grid md:grid-cols-12 gap-6 md:gap-8 items-center">
+                  <div className="md:col-span-5">
+                    <div className="relative aspect-square rounded-2xl overflow-hidden">
+                      <Image
+                        src="/instabugq2.png"
+                        alt="Instabug Q2 Ultimate Team recognition badge for Ahmed Hamdy"
+                        fill
+                        sizes="(min-width: 768px) 30vw, 100vw"
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div className="md:col-span-7">
+                    <p className="mono-label mb-3">2025 · Q2</p>
+                    <h3 className="text-2xl md:text-3xl font-medium text-ink-50">Instabug Ultimate Team</h3>
+                    <p className="mt-4 text-ink-300 text-pretty leading-relaxed">
+                      Recognized as part of Instabug&apos;s Ultimate Team for contributions across multiple squads:
+                    </p>
+                    <ul className="mt-4 space-y-3">
+                      <li className="flex gap-3">
+                        <span className="mono-label text-ink-600 mt-1.5 shrink-0">/</span>
+                        <p className="text-ink-200"><span className="text-ink-50 font-medium">Feedback Squad:</span> Led the redesign and enhancements of Session Replay, significantly increasing enterprise adoption.</p>
+                      </li>
+                      <li className="flex gap-3">
+                        <span className="mono-label text-ink-600 mt-1.5 shrink-0">/</span>
+                        <p className="text-ink-200"><span className="text-ink-50 font-medium">AI Squad:</span> Designed SmartResolve, an AI-powered agent that automatically generates fixes for app crashes.</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -28,11 +28,8 @@ export default function Home() {
                   href="#work"
                   className="group inline-flex items-center gap-2.5 bg-ink-100 text-ink-950 rounded-full px-7 py-3.5 font-sans text-base font-medium hover:bg-ink-50 transition-colors"
                 >
-                  View work
+                  View Work
                   <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
-                </Link>
-                <Link href="/about" className="font-sans text-base text-ink-300 link-underline hover:text-ink-50">
-                  About me
                 </Link>
               </div>
 

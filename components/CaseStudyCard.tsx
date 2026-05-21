@@ -3,9 +3,29 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import type { ComponentType } from 'react';
 import type { CaseStudy } from '@/lib/case-studies';
+import { VoisLogo, LuciqLogo, SuperPayLogo } from '@/components/CompanyLogos';
+
+type CompanyMeta = {
+  Logo?: ComponentType<{ className?: string }>;
+  logoClass?: string;
+  label: string;
+};
+
+// Maps a case study's company to its logo for the card badge (logo-only).
+// `label` is the text fallback for companies without a logo.
+const companyMeta: Record<string, CompanyMeta> = {
+  VOIS: { Logo: VoisLogo, logoClass: 'h-3.5', label: 'VOIS' },
+  Instabug: { Logo: LuciqLogo, logoClass: 'h-4', label: 'Instabug' },
+  'e& (Etisalat Egypt)': { Logo: SuperPayLogo, logoClass: 'h-4', label: 'SuperPay' },
+  'Personal Project': { label: 'Personal Project' },
+};
 
 export default function CaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {
+  const types = study.category.split('/').map((t) => t.trim()).filter(Boolean);
+  const company = companyMeta[study.company] ?? { label: study.company };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -40,15 +60,25 @@ export default function CaseStudyCard({ study, index }: { study: CaseStudy; inde
 
         {/* Body */}
         <div className="flex flex-col flex-1 p-8 md:p-10">
-          {/* Top meta strip */}
-          <div className="flex items-baseline justify-between mb-8 md:mb-10">
-            <span className="mono-label text-ink-100">{study.number}</span>
-            <div className="flex items-center gap-3">
-              {study.nda && (
-                <span className="mono-label rounded-full border border-ink-700 px-3 py-0.5 text-ink-400">NDA</span>
-              )}
-              <span className="mono-label">{study.year}</span>
+          {/* Top strip: product-type badges (left) + company badge (right) */}
+          <div className="flex items-start justify-between gap-3 mb-8 md:mb-10">
+            <div className="flex flex-wrap gap-2">
+              {types.map((t) => (
+                <span
+                  key={t}
+                  className="rounded-full border border-ink-700 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-ink-300"
+                >
+                  {t}
+                </span>
+              ))}
             </div>
+            <span className="inline-flex items-center shrink-0 rounded-full border border-ink-700 px-3 py-1.5">
+              {company.Logo ? (
+                <company.Logo className={`${company.logoClass} w-auto text-ink-200`} />
+              ) : (
+                <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-ink-200">{company.label}</span>
+              )}
+            </span>
           </div>
 
           {/* Title + subtitle */}
@@ -59,18 +89,10 @@ export default function CaseStudyCard({ study, index }: { study: CaseStudy; inde
             <p className="mt-3 text-base md:text-lg text-ink-300 text-pretty max-w-xl">{study.subtitle}</p>
           </div>
 
-          {/* Bottom meta */}
-          <div className="mt-10 flex items-center justify-between flex-wrap gap-4">
-            <div className="flex flex-wrap gap-x-6 gap-y-1">
-              <span className="mono-label">{study.company}</span>
-              <span className="mono-label">·</span>
-              <span className="mono-label">{study.category}</span>
-            </div>
-
-            <div className="flex items-center gap-2 text-ink-100">
-              <span className="font-sans text-sm font-medium text-ink-100">Read case study</span>
-              <span className="text-base transition-transform duration-500 group-hover:translate-x-1">→</span>
-            </div>
+          {/* CTA */}
+          <div className="mt-10 flex items-center gap-2 text-ink-100">
+            <span className="font-sans text-sm font-medium text-ink-100">Read case study</span>
+            <span className="text-base transition-transform duration-500 group-hover:translate-x-1">→</span>
           </div>
         </div>
       </Link>
