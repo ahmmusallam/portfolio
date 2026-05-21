@@ -30,7 +30,7 @@ export default function ContactPage() {
         <div className="container-x">
           <p className="mono-label mb-6">Contact</p>
           <h1 className="text-display font-medium text-ink-50 tracking-tight text-balance max-w-4xl">
-            Let's share
+            Let&apos;s share
  <span className="text-ink-400"> ideas</span> & discuss ways to collaborate
           </h1>
         </div>

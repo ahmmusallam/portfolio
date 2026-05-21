@@ -567,7 +567,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           <div className="container-x">
             <div className="grid md:grid-cols-12 gap-8">
               <div className="md:col-span-3">
-                <p className="mono-label sticky top-32">What's next</p>
+                <p className="mono-label sticky top-32">What&apos;s next</p>
               </div>
               <div className="md:col-span-9">
                 <h2 className="text-3xl md:text-4xl font-medium text-ink-50 tracking-tight text-balance">

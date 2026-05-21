@@ -22,7 +22,7 @@ export default function ProcessDiagram({ stages }: Props) {
     });
     timeouts.push(setTimeout(() => setActive(null), 400 + stages.length * 600 + 2000));
     return () => timeouts.forEach(clearTimeout);
-  }, [inView, stages.length]);
+  }, [inView, stages]);
 
   return (
     <div ref={ref} className="relative">
