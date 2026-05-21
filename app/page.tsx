@@ -11,14 +11,7 @@ export default function Home() {
         <div className="container-x relative z-10 w-full">
           <div className="grid lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-8">
-              {/* Status badge */}
-              <div className="inline-flex items-center gap-2 border border-ink-800 rounded-full px-3.5 py-1.5 mb-10 group">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inset-0 rounded-full bg-ink-100 animate-pulse-slow" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-ink-100" />
-                </span>
-                <span className="mono-label text-ink-200">Senior Product Designer</span>
-              </div>
+
 
               <h1 className="text-hero font-medium text-ink-50 text-balance">
                 Ahmed
@@ -27,18 +20,18 @@ export default function Home() {
               </h1>
 
               <p className="mt-8 text-xl md:text-2xl text-ink-200 max-w-2xl text-pretty leading-snug">
-                Product Designer crafting <span className="text-ink-50">AI tools</span>, <span className="text-ink-50">developer products</span>, and <span className="text-ink-50">fintech platforms</span> through systems thinking.
+                Senior Product Designer crafting <span className="text-ink-50">AI tools</span>, <span className="text-ink-50">developer products</span>, and <span className="text-ink-50">fintech platforms</span> through systems thinking.
               </p>
 
               <div className="mt-12 flex flex-wrap items-center gap-6 md:gap-8">
                 <Link
                   href="#work"
-                  className="group inline-flex items-center gap-3 bg-ink-100 text-ink-950 rounded-full px-7 py-3.5 font-mono text-xs uppercase tracking-[0.2em] hover:bg-ink-50 transition-colors"
+                  className="group inline-flex items-center gap-2.5 bg-ink-100 text-ink-950 rounded-full px-7 py-3.5 font-sans text-base font-medium hover:bg-ink-50 transition-colors"
                 >
                   View work
                   <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
                 </Link>
-                <Link href="/about" className="mono-label link-underline text-ink-200 hover:text-ink-50">
+                <Link href="/about" className="font-sans text-base text-ink-300 link-underline hover:text-ink-50">
                   About me
                 </Link>
               </div>
@@ -77,16 +70,10 @@ export default function Home() {
         <div className="container-x">
           <div className="flex items-end justify-between mb-12 md:mb-16 flex-wrap gap-4">
             <div>
-              <p className="mono-label mb-3">
-                Selected work · {String(caseStudies.length).padStart(2, '0')}
-              </p>
               <h2 className="text-display font-medium text-ink-50 tracking-tight">
                 Case studies
               </h2>
             </div>
-            <p className="mono-label text-ink-500 max-w-xs">
-              Detailed breakdowns of process, problems, and outcomes
-            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -108,10 +95,12 @@ export default function Home() {
             <div className="mt-10 flex flex-wrap items-center gap-8">
               <a
                 href="https://www.linkedin.com/in/ahmmusallam/"
-                className="group inline-flex items-center gap-3 bg-ink-100 text-ink-950 rounded-full px-7 py-3.5 font-mono text-xs uppercase tracking-[0.2em] hover:bg-ink-50 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2.5 bg-ink-100 text-ink-950 rounded-full px-7 py-3.5 font-sans text-base font-medium hover:bg-ink-50 transition-colors"
               >
                 LinkedIn
-                <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+                <span className="transition-transform duration-500 group-hover:translate-x-1">↗</span>
               </a>
             </div>
           </div>

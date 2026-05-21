@@ -53,17 +53,26 @@ export default function Nav() {
           </svg>
         </Link>
 
-        <nav className="flex items-center gap-6 md:gap-10">
-          <Link href="/#work" className="mono-label hover:text-ink-100 transition-colors">
+        <nav className="flex items-center gap-5 md:gap-8">
+          <Link href="/#work" className="font-sans text-sm text-ink-400 hover:text-ink-50 transition-colors">
             Work
           </Link>
-          <Link href="/about" className="mono-label hover:text-ink-100 transition-colors">
+          <Link href="/about" className="font-sans text-sm text-ink-400 hover:text-ink-50 transition-colors">
             About
           </Link>
-          <Link href="/contact" className="mono-label hover:text-ink-100 transition-colors">
+          <Link href="/contact" className="font-sans text-sm text-ink-400 hover:text-ink-50 transition-colors">
             Contact
           </Link>
-          <span className="mono-label text-ink-600 hidden md:inline tabular-nums">{time}</span>
+          <span className="font-sans text-sm text-ink-600 hidden lg:inline tabular-nums">{time}</span>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-1.5 font-sans text-sm text-ink-100 rounded-full border border-ink-700 px-4 py-1.5 hover:border-ink-400 hover:text-ink-50 transition-colors"
+          >
+            <span className="hidden sm:inline">Download Resume</span>
+            <span aria-hidden className="transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
+          </a>
         </nav>
       </div>
     </header>

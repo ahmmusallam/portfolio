@@ -20,22 +20,19 @@ export default function Footer() {
                 href="https://www.linkedin.com/in/ahmmusallam/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mono-label hover:text-ink-100 transition-colors"
+                className="font-sans text-sm text-ink-400 hover:text-ink-50 transition-colors"
               >
                 LinkedIn ↗
               </a>
+
               <a
-                href="mailto:ahmed.hamdy.musallam@gmail.com"
-                className="mono-label hover:text-ink-100 transition-colors"
-              >
-                Email ↗
-              </a>
-              <Link
                 href="/resume.pdf"
-                className="mono-label hover:text-ink-100 transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-sans text-sm text-ink-400 hover:text-ink-50 transition-colors"
               >
                 Resume ↗
-              </Link>
+              </a>
             </div>
           </div>
 

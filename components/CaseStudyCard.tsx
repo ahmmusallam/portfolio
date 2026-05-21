@@ -68,8 +68,8 @@ export default function CaseStudyCard({ study, index }: { study: CaseStudy; inde
             </div>
 
             <div className="flex items-center gap-2 text-ink-100">
-              <span className="mono-label text-ink-100">Read case study</span>
-              <span className="font-mono text-base transition-transform duration-500 group-hover:translate-x-1">→</span>
+              <span className="font-sans text-sm font-medium text-ink-100">Read case study</span>
+              <span className="text-base transition-transform duration-500 group-hover:translate-x-1">→</span>
             </div>
           </div>
         </div>

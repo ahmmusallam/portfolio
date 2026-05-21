@@ -5,16 +5,21 @@ export const metadata = {
 
 const channels = [
   {
-    label: 'Email',
-    value: 'ahmed.hamdy.musallam@gmail.com',
-    href: 'mailto:ahmed.hamdy.musallam@gmail.com',
-    note: 'Fastest way · Reply within 24h',
-  },
-  {
     label: 'LinkedIn',
     value: 'in/ahmmusallam',
     href: 'https://www.linkedin.com/in/ahmmusallam/',
     note: 'Best for recruiters and intro requests',
+    cta: 'Open',
+    icon: '↗',
+  },
+  {
+    label: 'Resume',
+    value: 'Download CV (PDF)',
+    href: '/resume.pdf',
+    note: 'Full experience, education, and skills',
+    cta: 'Download',
+    icon: '↓',
+    download: true,
   },
 ];
 
@@ -25,11 +30,9 @@ export default function ContactPage() {
         <div className="container-x">
           <p className="mono-label mb-6">Contact</p>
           <h1 className="text-display font-medium text-ink-50 tracking-tight text-balance max-w-4xl">
-            Let&apos;s make something <span className="text-ink-400">useful</span> together.
+            Let's share
+ <span className="text-ink-400"> ideas</span> & discuss ways to collaborate
           </h1>
-          <p className="mt-8 text-xl text-ink-300 max-w-2xl text-pretty leading-snug">
-            Open to senior product design roles and collaborations on AI-powered tools, dev products, and fintech platforms.
-          </p>
         </div>
       </section>
 
@@ -40,18 +43,24 @@ export default function ContactPage() {
               <a
                 key={c.label}
                 href={c.href}
-                target={c.href.startsWith('http') ? '_blank' : undefined}
-                rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="group block rounded-[1.75rem] bg-ink-900/40 border border-ink-800 p-10 md:p-14 hover:bg-ink-900 hover:-translate-y-0.5 transition-all duration-500"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded-[1.75rem] bg-ink-900/40 border border-ink-800 p-10 md:p-14 transition-all duration-300 ease-out hover:bg-ink-800/40 hover:border-ink-500 hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-30px_rgba(0,0,0,0.7)]"
               >
                 <p className="mono-label mb-6">{c.label}</p>
-                <p className="text-2xl md:text-3xl font-medium text-ink-50 tracking-tight break-all link-underline inline-block">
+                <p className="text-2xl md:text-3xl font-medium text-ink-50 tracking-tight break-all">
                   {c.value}
                 </p>
                 <p className="mt-6 mono-label text-ink-500">{c.note}</p>
-                <div className="mt-10 flex items-center gap-2 mono-label text-ink-100">
-                  <span>Open</span>
-                  <span className="transition-transform duration-500 group-hover:translate-x-1">↗</span>
+                <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-ink-700 px-4 py-2 font-sans text-sm text-ink-200 transition-colors duration-300 group-hover:border-ink-100 group-hover:bg-ink-100 group-hover:text-ink-950">
+                  <span>{c.cta}</span>
+                  <span
+                    className={`transition-transform duration-300 ${
+                      c.download ? 'group-hover:translate-y-0.5' : 'group-hover:translate-x-1'
+                    }`}
+                  >
+                    {c.icon}
+                  </span>
                 </div>
               </a>
             ))}

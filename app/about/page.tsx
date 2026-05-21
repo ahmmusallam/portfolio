@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { VoisLogo, LuciqLogo, EtisalatLogo } from '@/components/CompanyLogos';
 
@@ -63,23 +62,14 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="pt-40 pb-20 md:pt-48 md:pb-24">
-        <div className="container-x">
-          <p className="mono-label mb-6">About</p>
-          <h1 className="text-display font-medium text-ink-50 tracking-tight text-balance max-w-4xl">
-            A designer with a <span className="text-ink-400">minimalist</span> philosophy and a systems-first approach.
-          </h1>
-        </div>
-      </section>
-
       {/* BIO */}
-      <section className="pb-20 md:pb-28">
+      <section className="pt-40 pb-20 md:pt-48 md:pb-28">
         <div className="container-x">
-          <div className="grid md:grid-cols-12 gap-10">
+          <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
             <div className="md:col-span-5">
-              <div className="relative aspect-[4/5] rounded-[1.75rem] border border-ink-800 bg-ink-900/40 overflow-hidden">
+              <div className="relative aspect-square rounded-[1.75rem] overflow-hidden">
                 <Image
-                  src="/ahmed.JPG"
+                  src="/ahmedhamdy.png"
                   alt="Portrait of Ahmed Hamdy Musallam"
                   fill
                   priority
@@ -88,15 +78,12 @@ export default function AboutPage() {
                 />
               </div>
             </div>
-            <div className="md:col-span-7 space-y-6 text-lg md:text-xl text-ink-200 leading-relaxed text-pretty">
+            <div className="md:col-span-7 space-y-6 text-base md:text-lg text-ink-200 leading-relaxed text-pretty">
               <p>
                 Product Designer with experience building AI-powered tools, developer products, and B2B platforms across SaaS and fintech.
               </p>
               <p>
                 At <span className="text-ink-50 font-medium">VOIS</span>, I design AI tools for Vodafone Germany that enhance employee productivity and streamline internal workflows, while contributing to the AI design system. Previously at <span className="text-ink-50 font-medium">Luciq (formerly Instabug)</span>, I worked within the AI squads to design features that help developers debug, resolve, and improve app quality through automation and simplified workflows. Earlier at <span className="text-ink-50 font-medium">e& (Etisalat)</span>, I contributed to SuperPay, a large-scale fintech product, and internal tools.
-              </p>
-              <p>
-                With a minimalist design philosophy, the emphasis is on crafting <span className="text-ink-50">clean, intuitive solutions that drive impact</span>.
               </p>
 
               <div className="pt-4 flex flex-wrap gap-3">
@@ -104,22 +91,19 @@ export default function AboutPage() {
                   href="https://www.linkedin.com/in/ahmmusallam/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 mono-label rounded-full border border-ink-700 px-5 py-2.5 hover:border-ink-300 hover:text-ink-50 transition-colors"
+                  className="inline-flex items-center gap-2 font-sans text-sm text-ink-200 rounded-full border border-ink-700 px-5 py-2.5 hover:border-ink-300 hover:text-ink-50 transition-colors"
                 >
                   LinkedIn ↗
                 </a>
+
                 <a
-                  href="mailto:ahmed.hamdy.musallam@gmail.com"
-                  className="inline-flex items-center gap-2 mono-label rounded-full border border-ink-700 px-5 py-2.5 hover:border-ink-300 hover:text-ink-50 transition-colors"
-                >
-                  Email ↗
-                </a>
-                <Link
                   href="/resume.pdf"
-                  className="inline-flex items-center gap-2 mono-label rounded-full border border-ink-700 px-5 py-2.5 hover:border-ink-300 hover:text-ink-50 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 font-sans text-sm text-ink-200 rounded-full border border-ink-700 px-5 py-2.5 hover:border-ink-300 hover:text-ink-50 transition-colors"
                 >
                   Resume ↗
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -157,7 +141,7 @@ export default function AboutPage() {
       </section>
 
       {/* EDUCATION */}
-      <section className="py-20 md:py-24 border-t border-ink-800">
+      <section className="py-20 md:py-24 border-t border-ink-800 bg-gradient-to-b from-ink-950 via-ink-800 to-ink-950">
         <div className="container-x">
           <div className="grid md:grid-cols-12 gap-8">
             <div className="md:col-span-3">
