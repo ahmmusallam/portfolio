@@ -55,6 +55,9 @@ export type TimelineDetail = {
 export type ImagePlaceholder = {
   label: string;
   caption?: string;
+  src?: string;
+  width?: number;
+  height?: number;
 };
 
 export type Insight = {
@@ -144,6 +147,7 @@ export type CaseStudy = {
   tools: string[];
   nda: boolean;
   thumbnail?: string;
+  sectionOrder?: string[];
   overview: string;
   problem: string[];
   problemIntro?: string;
@@ -244,13 +248,26 @@ export const caseStudies: CaseStudy[] = [
     title: 'Redesigning Session Replay List',
     subtitle:
       'Optimizing the developer debugging flow for enterprise adoption. The redesign doubled active enterprise customers from 7 to 14 within four months.',
-    company: 'Instabug',
+    company: 'Luciq / Instabug',
     category: 'Developer Tool / SaaS',
     year: '2024',
     role: 'Product Designer',
-    timeline: '3 weeks · 1 cycle, 2 sprints',
+    timeline: '2 sprints',
     thumbnail: '/case studies/session-replay-ui.png',
-    team: ['PM', 'Researcher', 'EM', 'Developers', 'Marketing'],
+    sectionOrder: [
+      'overview',
+      'process',
+      'timeline',
+      'insights',
+      'problem',
+      'goals',
+      'dataAnalysis',
+      'solution',
+      'finalSolution',
+      'chart',
+      'reflection',
+    ],
+    team: ['PM', 'Researcher', 'EM', 'Developers'],
     tools: ['Figma', 'FigJam'],
     nda: false,
     overview:
@@ -278,7 +295,7 @@ export const caseStudies: CaseStudy[] = [
         detail: 'Research',
         items: [
           'Dig into complaints, logs, usability data',
-          'PM sync — define problems from customer insights or competitive gaps',
+          'PM sync, define problems from customer insights or competitive gaps',
         ],
       },
       {
@@ -286,7 +303,7 @@ export const caseStudies: CaseStudy[] = [
         detail: 'Problem Framing',
         items: [
           'Frame the problem space and clarify scope',
-          'Technical alignment — early check with EM to avoid blockers',
+          'Technical alignment, early check with EM to avoid blockers',
         ],
       },
       {
@@ -294,7 +311,7 @@ export const caseStudies: CaseStudy[] = [
         detail: 'Squad Pre-planning',
         items: [
           'Refinement and sync with PM and squad',
-          'Design Chapter feedback — share with designers for cross-product impact',
+          'Design Chapter feedback, share with designers for cross-product impact',
         ],
       },
       {
@@ -302,7 +319,7 @@ export const caseStudies: CaseStudy[] = [
         detail: 'Usability Testing',
         items: [
           'Run light tests in customer sync calls',
-          'Product Review — present to PMs, EMs, CPO, CTO for feedback',
+          'Product Review, present to PMs, EMs, CPO, CTO for feedback',
         ],
       },
       {
@@ -415,10 +432,16 @@ export const caseStudies: CaseStudy[] = [
       overview: {
         label: 'Session Replay List (Before)',
         caption: 'Original list view — ambiguous labels and badges',
+        src: '/case studies/session-replay-overview.png',
+        width: 2766,
+        height: 1984,
       },
       insights: {
         label: 'Annotated Session Replay List',
         caption: 'Problem callouts captured from customer interviews',
+        src: '/case studies/session-replay-insights.png',
+        width: 2800,
+        height: 1398,
       },
       solution: {
         label: 'Iteration #1 — Restructured table',
@@ -449,11 +472,6 @@ export const caseStudies: CaseStudy[] = [
         value: '2×',
         label: 'Enterprise customer growth',
         context: '7 → 14 active customers in 4 months',
-      },
-      {
-        value: '4–5',
-        label: 'Max badges per session',
-        context: 'Data-validated cap from 1 month of sessions',
       },
     ],
     reflection:
