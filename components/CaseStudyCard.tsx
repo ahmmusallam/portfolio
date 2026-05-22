@@ -10,21 +10,24 @@ import { VoisLogo, LuciqLogo, SuperPayLogo } from '@/components/CompanyLogos';
 type CompanyMeta = {
   Logo?: ComponentType<{ className?: string }>;
   logoClass?: string;
-  label: string;
+  label?: string;
 };
 
-// Maps a case study's company to its logo for the card badge (logo-only).
-// `label` is the text fallback for companies without a logo.
+// Keyed by slug so editing a study's `company` text (shown inside the case
+// study) never changes the card's brand badge. `label` is the text fallback
+// for studies without a logo.
 const companyMeta: Record<string, CompanyMeta> = {
-  VOIS: { Logo: VoisLogo, logoClass: 'h-3.5', label: 'VOIS' },
-  Instabug: { Logo: LuciqLogo, logoClass: 'h-4', label: 'Instabug' },
-  'e& (Etisalat Egypt)': { Logo: SuperPayLogo, logoClass: 'h-4', label: 'SuperPay' },
-  'Personal Project': { label: 'Personal Project' },
+  'tender-assist': { Logo: VoisLogo, logoClass: 'h-3.5' },
+  'session-replay': { Logo: LuciqLogo, logoClass: 'h-4' },
+  smartresolve: { Logo: LuciqLogo, logoClass: 'h-4' },
+  'superpay-dashboard': { Logo: SuperPayLogo, logoClass: 'h-4' },
+  'superpay-website': { Logo: SuperPayLogo, logoClass: 'h-4' },
+  'bits-and-pixels': { label: 'Personal Project' },
 };
 
 export default function CaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {
   const types = study.category.split('/').map((t) => t.trim()).filter(Boolean);
-  const company = companyMeta[study.company] ?? { label: study.company };
+  const company = companyMeta[study.slug] ?? { label: study.company };
 
   return (
     <motion.div
