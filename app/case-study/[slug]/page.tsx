@@ -156,30 +156,33 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
     problem: (
       <section className={SECTION}>
         <div className="container-x">
-          <div className="grid md:grid-cols-12 gap-8">
-            <div className="md:col-span-3">
-              <p className="mono-label sticky top-32">Problem</p>
-            </div>
-            <div className="md:col-span-9">
-              {study.problemIntro && (
-                <p className="text-ink-300 mb-6 leading-relaxed">{study.problemIntro}</p>
-              )}
-              <ul className="space-y-5">
-                {study.problem.map((p, i) => (
-                  <li key={i} className="flex items-start gap-5 group">
-                    <span className="mono-label text-ink-600 mt-1.5 shrink-0">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <p className="text-lg md:text-xl text-ink-200 text-pretty leading-relaxed">{p}</p>
-                  </li>
-                ))}
-              </ul>
-              {study.problemOutro && (
-                <p className="mt-8 text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light">
-                  {study.problemOutro}
-                </p>
-              )}
-            </div>
+          <div className="mb-10 md:mb-12 max-w-3xl">
+            <p className="mono-label mb-3">Problem</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              The problem.
+            </h2>
+          </div>
+          <div className="max-w-3xl">
+            {study.problemIntro && (
+              <p className="text-lg md:text-xl text-ink-300 mb-8 leading-relaxed text-pretty">
+                {study.problemIntro}
+              </p>
+            )}
+            <ul className="space-y-5">
+              {study.problem.map((p, i) => (
+                <li key={i} className="flex items-start gap-5 group">
+                  <span className="mono-label text-ink-600 mt-1.5 shrink-0">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <p className="text-lg md:text-xl text-ink-200 text-pretty leading-relaxed">{p}</p>
+                </li>
+              ))}
+            </ul>
+            {study.problemOutro && (
+              <p className="mt-8 text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light">
+                {study.problemOutro}
+              </p>
+            )}
           </div>
         </div>
       </section>

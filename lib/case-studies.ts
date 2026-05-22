@@ -257,7 +257,6 @@ export const caseStudies: CaseStudy[] = [
     sectionOrder: [
       'overview',
       'process',
-      'timeline',
       'insights',
       'problem',
       'goals',
