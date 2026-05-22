@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Fragment } from 'react';
 import { caseStudies, getCaseStudy } from '@/lib/case-studies';
 import ProcessDiagram from '@/components/ProcessDiagram';
@@ -738,19 +739,36 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
         sections[key] ? <Fragment key={key}>{sections[key]}</Fragment> : null
       )}
 
-      {/* NEXT CASE */}
-      <section className={SECTION}>
+      {/* NEXT CASE — light */}
+      <section className="py-20 md:py-28 bg-ink-50 text-ink-950">
         <div className="container-x">
-          <Link href={`/case-study/${nextStudy.slug}`} className="group block">
-            <p className="mono-label mb-4">Next case study</p>
-            <div className="flex items-center justify-between gap-6 flex-wrap">
-              <h3 className="text-3xl md:text-5xl font-medium text-ink-50 tracking-tight text-balance group-hover:text-ink-200 transition-colors">
+          <Link
+            href={`/case-study/${nextStudy.slug}`}
+            className="group grid md:grid-cols-2 gap-8 md:gap-12 items-center"
+          >
+            <div>
+              <p className="mono-label text-ink-500 mb-4">Next case study</p>
+              <h3 className="text-3xl md:text-5xl font-medium text-ink-950 tracking-tight text-balance group-hover:text-ink-600 transition-colors">
                 {nextStudy.title}
-                <span className="text-ink-500 ml-3">· {nextStudy.number}</span>
               </h3>
-              <span className="font-mono text-2xl text-ink-100 transition-transform duration-500 group-hover:translate-x-2">→</span>
+              <p className="mt-3 text-ink-600 max-w-xl">{nextStudy.subtitle}</p>
+              <div className="mt-6 inline-flex items-center gap-2 font-sans text-sm font-medium text-ink-950">
+                View case study
+                <span className="transition-transform duration-500 group-hover:translate-x-1">→</span>
+              </div>
             </div>
-            <p className="mt-3 text-ink-400 max-w-2xl">{nextStudy.subtitle}</p>
+
+            {nextStudy.thumbnail && (
+              <div className="relative aspect-[16/10] rounded-[1.75rem] overflow-hidden ring-1 ring-ink-200 bg-ink-100">
+                <Image
+                  src={nextStudy.thumbnail}
+                  alt={`${nextStudy.title} thumbnail`}
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+              </div>
+            )}
           </Link>
         </div>
       </section>

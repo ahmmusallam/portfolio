@@ -475,7 +475,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     reflection:
-      'Real data validation early in the process gave the team confidence to make opinionated cuts to the UI without endless debate.',
+      'Real data and insights validation early in the process gave the team confidence to make decisions without endless debate.',
   },
   {
     slug: 'smartresolve',
