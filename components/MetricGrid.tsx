@@ -4,12 +4,18 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import type { Metric } from '@/lib/case-studies';
 
-export default function MetricGrid({ metrics }: { metrics: Metric[] }) {
+export default function MetricGrid({
+  metrics,
+  gridClass = 'grid sm:grid-cols-2 lg:grid-cols-3 gap-4',
+}: {
+  metrics: Metric[];
+  gridClass?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <div ref={ref} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div ref={ref} className={gridClass}>
       {metrics.map((m, i) => (
         <motion.div
           key={i}

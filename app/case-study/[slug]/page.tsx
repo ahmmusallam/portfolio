@@ -246,10 +246,8 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             </div>
           )}
 
-          <InsightsGrid insights={study.insights} />
-
           {study.images?.insights && (
-            <div className="mt-16">
+            <div className="mb-12">
               <ImagePlaceholder
                 label={study.images.insights.label}
                 caption={study.images.insights.caption}
@@ -259,6 +257,8 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
               />
             </div>
           )}
+
+          <InsightsGrid insights={study.insights} />
         </div>
       </section>
     ) : null,
@@ -583,9 +583,14 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
               enterprise customers doubled from 7 to 14 within 4 months.
             </p>
           </div>
-          <AdoptionChart />
-          <div className="mt-12">
-            <MetricGrid metrics={study.metrics} />
+          <div className="grid lg:grid-cols-3 gap-6 items-stretch">
+            <div className="lg:col-span-2">
+              <AdoptionChart />
+            </div>
+            <MetricGrid
+              metrics={study.metrics}
+              gridClass="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 h-full"
+            />
           </div>
         </div>
       </section>

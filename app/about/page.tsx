@@ -42,15 +42,13 @@ const experience = [
 const education = [
   {
     period: 'Oct 2021 — Jun 2022',
-    title: '9-Month Professional Diploma',
+    title: 'Web and User Interface Development Professional Diploma',
     place: 'Information Technology Institute (ITI)',
-    detail: 'Web and User Interface track. Studied the process of designing and developing web and user interfaces.',
   },
   {
     period: 'Sep 2013 — Jun 2018',
     title: 'BSc. of Engineering, Architecture',
     place: 'Tanta University',
-    detail: 'Graduation project: International Media Center at The New Capital.',
   },
 ];
 
@@ -156,7 +154,6 @@ export default function AboutPage() {
                   <div className="md:col-span-8">
                     <h3 className="text-xl md:text-2xl font-medium text-ink-950">{edu.title}</h3>
                     <p className="mono-label mt-1 text-ink-600">{edu.place}</p>
-                    <p className="mt-4 text-ink-700 text-pretty leading-relaxed">{edu.detail}</p>
                   </div>
                 </div>
               ))}
