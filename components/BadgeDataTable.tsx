@@ -30,9 +30,9 @@ export default function BadgeDataTable({
         <table className="w-full text-left tabular-nums">
           <thead>
             <tr className="border-b border-ink-800">
-              <th className="mono-label px-4 md:px-5 py-4 text-ink-400 font-normal">{headers[0]}</th>
-              <th className="mono-label px-4 md:px-5 py-4 text-ink-400 font-normal text-right">{headers[1]}</th>
-              <th className="mono-label px-4 md:px-5 py-4 text-ink-400 font-normal text-right">{headers[2]}</th>
+              <th className="mono-label px-4 md:px-5 py-2.5 text-ink-400 font-normal">{headers[0]}</th>
+              <th className="mono-label px-4 md:px-5 py-2.5 text-ink-400 font-normal text-right">{headers[1]}</th>
+              <th className="mono-label px-4 md:px-5 py-2.5 text-ink-400 font-normal text-right">{headers[2]}</th>
             </tr>
           </thead>
           <tbody>
@@ -44,9 +44,9 @@ export default function BadgeDataTable({
                 transition={{ duration: 0.4, delay: 0.05 * i }}
                 className="border-b border-ink-800/60 last:border-b-0 hover:bg-ink-900/40 transition-colors"
               >
-                <td className="px-4 md:px-5 py-4 text-ink-100 font-mono text-sm">{row.label}</td>
-                <td className="px-4 md:px-5 py-4 text-ink-100 font-mono text-sm text-right">{row.count}</td>
-                <td className="px-4 md:px-5 py-4 text-ink-300 font-mono text-sm text-right">{row.percentage}</td>
+                <td className="px-4 md:px-5 py-2.5 text-ink-100 font-mono text-sm">{row.label}</td>
+                <td className="px-4 md:px-5 py-2.5 text-ink-100 font-mono text-sm text-right">{row.count}</td>
+                <td className="px-4 md:px-5 py-2.5 text-ink-300 font-mono text-sm text-right">{row.percentage}</td>
               </motion.tr>
             ))}
           </tbody>

@@ -413,7 +413,7 @@ export const caseStudies: CaseStudy[] = [
       tableCaption: 'Data from 1 month of sessions',
     },
     finalSolution: {
-      title: 'The Final Solution',
+      title: '✨ The Final Solution',
       intro:
         'Following feedback from the product review and usability testing (including a color-blind participant), we refined the design to improve clarity and accessibility:',
       bullets: [
@@ -445,19 +445,38 @@ export const caseStudies: CaseStudy[] = [
       solution: {
         label: 'Iteration #1 — Restructured table',
         caption: 'Dedicated columns, severity colors, and Anonymous fallback',
-      },
-      postData: {
-        label: 'Updated Session Replay List',
-        caption: 'New SR list view with the 4–5 badge cap applied',
+        src: '/case studies/session-replay-iteration-1.png',
+        width: 2767,
+        height: 1916,
       },
       finalSolution: [
         {
-          label: 'Final design — Combined User Info column',
-          caption: 'User ID + email merged with Anonymous fallback',
+          label: 'Final design — default table',
+          caption: 'The redesigned Session Replay list with combined User Info column',
+          src: '/case studies/session-replay-final-1.png',
+          width: 2880,
+          height: 1800,
         },
         {
-          label: 'Final design — Tooltips on Issues column',
-          caption: 'Accessibility-focused refinements from usability testing',
+          label: 'Final design — session & status tooltips',
+          caption: 'Tooltips explaining session status and issues',
+          src: '/case studies/session-replay-final-2.png',
+          width: 2880,
+          height: 1800,
+        },
+        {
+          label: 'Final design — issue breakdown tooltips',
+          caption: 'Per-issue severity breakdown on hover',
+          src: '/case studies/session-replay-final-3.png',
+          width: 2880,
+          height: 1800,
+        },
+        {
+          label: 'Final design — AI issues tooltip',
+          caption: 'AI issues grouping with accessible tooltips',
+          src: '/case studies/session-replay-final-4.png',
+          width: 2880,
+          height: 1800,
         },
       ],
     },

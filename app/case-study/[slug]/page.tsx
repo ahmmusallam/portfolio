@@ -11,6 +11,7 @@ import ImagePlaceholder from '@/components/ImagePlaceholder';
 import BadgeDataTable from '@/components/BadgeDataTable';
 import CompetitorGrid from '@/components/CompetitorGrid';
 import IADiagram from '@/components/IADiagram';
+import ImageGallery from '@/components/ImageGallery';
 
 export async function generateStaticParams() {
   return caseStudies.map((c) => ({ slug: c.slug }));
@@ -423,7 +424,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
     dataAnalysis: study.dataAnalysis ? (
       <section className={SECTION}>
         <div className="container-x">
-          <div className="grid md:grid-cols-12 gap-8 mb-12">
+          <div className="grid md:grid-cols-12 gap-12 lg:gap-20 mb-12 items-start">
             <div className="md:col-span-5">
               <p className="mono-label mb-3">Data analysis</p>
               <h2 className="text-3xl md:text-4xl font-medium text-ink-50 tracking-tight text-balance">
@@ -507,18 +508,33 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </div>
 
           {study.images?.finalSolution && study.images.finalSolution.length > 0 && (
-            <div className="mt-16 grid md:grid-cols-2 gap-6">
-              {study.images.finalSolution.map((img, i) => (
-                <ImagePlaceholder
-                  key={i}
-                  label={img.label}
-                  caption={img.caption}
-                  src={img.src}
-                  width={img.width}
-                  height={img.height}
+            study.images.finalSolution[0].src ? (
+              <div className="mt-16">
+                <ImageGallery
+                  images={study.images.finalSolution
+                    .filter((img) => img.src)
+                    .map((img) => ({
+                      src: img.src as string,
+                      alt: img.caption || img.label,
+                      width: img.width,
+                      height: img.height,
+                    }))}
                 />
-              ))}
-            </div>
+              </div>
+            ) : (
+              <div className="mt-16 grid md:grid-cols-2 gap-6">
+                {study.images.finalSolution.map((img, i) => (
+                  <ImagePlaceholder
+                    key={i}
+                    label={img.label}
+                    caption={img.caption}
+                    src={img.src}
+                    width={img.width}
+                    height={img.height}
+                  />
+                ))}
+              </div>
+            )
           )}
         </div>
       </section>
