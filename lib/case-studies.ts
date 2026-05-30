@@ -253,7 +253,7 @@ export const caseStudies: CaseStudy[] = [
     year: '2024',
     role: 'Product Designer',
     timeline: '2 sprints',
-    thumbnail: '/case studies/session-replay-ui.png',
+    thumbnail: '/case studies/session-replay-ui.jpg',
     sectionOrder: [
       'overview',
       'process',
@@ -506,7 +506,7 @@ export const caseStudies: CaseStudy[] = [
     year: '2024',
     role: 'Product Designer',
     timeline: '3 weeks · 1 cycle, 2 sprints',
-    thumbnail: '/case studies/smartresolve-ui.png',
+    thumbnail: '/case studies/smartresolve-ui.jpg',
     team: ['PM', 'Researcher', 'EM', 'Developers', 'Marketing'],
     tools: ['Figma', 'FigJam'],
     nda: false,
@@ -738,7 +738,7 @@ export const caseStudies: CaseStudy[] = [
     role: 'Product Designer',
     timeline: '12+ weeks · 3+ weeks research, 9 weeks design',
     team: ['3 Product Designers', '2 Developers', '1 Project Manager'],
-    thumbnail: '/case studies/superpay-dashboard-ui.png',
+    thumbnail: '/case studies/superpay-dashboard-ui.jpg',
     tools: ['Adobe', 'Figma', 'Google Slides'],
     nda: true,
     overview:
