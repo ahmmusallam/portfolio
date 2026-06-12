@@ -621,6 +621,9 @@ export const caseStudies: CaseStudy[] = [
           image: {
             label: 'Sentry AutoFix UI',
             caption: 'Line-level feedback with PR integration',
+            src: '/case studies/competitor-sentry.png',
+            width: 2504,
+            height: 1400,
           },
           features: [
             { label: 'Contextual Feedback', value: 'Line-level feedback', status: 'positive' },
@@ -633,6 +636,9 @@ export const caseStudies: CaseStudy[] = [
           image: {
             label: 'Firebase Gemini UI',
             caption: 'Context-aware insights without inline fixes',
+            src: '/case studies/competitor-firebase.png',
+            width: 2508,
+            height: 1394,
           },
           features: [
             { label: 'Contextual Feedback', value: 'Insights improve with context', status: 'positive' },
@@ -645,6 +651,9 @@ export const caseStudies: CaseStudy[] = [
           image: {
             label: 'Raygun AI UI',
             caption: 'Chat-based fix suggestions',
+            src: '/case studies/competitor-raygun.png',
+            width: 2510,
+            height: 1408,
           },
           features: [
             { label: 'Contextual Feedback', value: 'Chat-based suggestions', status: 'positive' },
