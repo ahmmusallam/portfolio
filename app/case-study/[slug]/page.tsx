@@ -753,13 +753,15 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           <div className="mb-12 md:mb-16">
             <p className="mono-label mb-3">
               {study.nextSteps?.impactLabel ?? 'Outcomes'}
-              {study.nextSteps?.impactNote && (
-                <span className="text-ink-700 ml-3">· {study.nextSteps.impactNote}</span>
-              )}
             </p>
             <h2 className="text-display font-medium text-ink-50 tracking-tight">
               By the numbers.
             </h2>
+            {study.nextSteps?.impactNote && (
+              <p className="mt-5 text-lg md:text-xl text-ink-300 text-pretty">
+                {study.nextSteps.impactNote}
+              </p>
+            )}
           </div>
 
           <MetricGrid metrics={study.metrics} />
