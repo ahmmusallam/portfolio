@@ -739,11 +739,17 @@ export const caseStudies: CaseStudy[] = [
         {
           label: 'Final design — Fix flow with iterations',
           caption: 'Context input, regenerate, thumbs up/down',
+          src: '/case studies/smartresolve-final.jpg',
+          width: 2880,
+          height: 1800,
         },
       ],
       usabilityTesting: {
         label: 'Final agent experience — micro-interactions & reasoning',
         caption: 'Step-by-step reasoning added in the final iteration',
+        src: '/case studies/smartresolve-usability.gif',
+        width: 1424,
+        height: 1396,
       },
       nextSteps: {
         label: 'Future direction — wider code preview',

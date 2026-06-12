@@ -637,55 +637,88 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       </section>
     ) : null,
 
-    usabilityTesting: study.usabilityTesting ? (
-      <section className={SECTION}>
-        <div className="container-x">
-          <div className="grid md:grid-cols-12 gap-8">
-            <div className="md:col-span-3">
-              <p className="mono-label sticky top-32">Validation</p>
-            </div>
-            <div className="md:col-span-9">
-              <h2 className="text-3xl md:text-4xl font-medium text-ink-50 tracking-tight text-balance">
-                {study.usabilityTesting.title}
-              </h2>
-              <p className="mt-6 text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
-                {study.usabilityTesting.intro}
-              </p>
+    usabilityTesting: study.usabilityTesting ? (() => {
+      const usabilityImageSide =
+        study.slug === 'smartresolve' && !!study.images?.usabilityTesting?.src;
 
-              <ul className="mt-8 space-y-5">
-                {study.usabilityTesting.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <span className="font-mono text-ink-50 mt-1 shrink-0">✓</span>
-                    <p className="text-lg text-ink-200 leading-relaxed text-pretty">{item}</p>
-                  </li>
-                ))}
-              </ul>
+      const textBlock = (
+        <>
+          <h2 className="text-3xl md:text-4xl font-medium text-ink-50 tracking-tight text-balance">
+            {study.usabilityTesting!.title}
+          </h2>
+          <p className="mt-6 text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
+            {study.usabilityTesting!.intro}
+          </p>
 
-              <div className="mt-10 border-l-2 border-ink-700 pl-6">
-                {study.usabilityTesting.outcomeLabel && (
-                  <p className="mono-label mb-3">{study.usabilityTesting.outcomeLabel}</p>
-                )}
-                <p className="text-lg text-ink-100 leading-relaxed text-pretty">
-                  {study.usabilityTesting.outcome}
-                </p>
+          <ul className="mt-8 space-y-5">
+            {study.usabilityTesting!.items.map((item, i) => (
+              <li key={i} className="flex items-start gap-4">
+                <span className="font-mono text-ink-50 mt-1 shrink-0">✓</span>
+                <p className="text-lg text-ink-200 leading-relaxed text-pretty">{item}</p>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-10 border-l-2 border-ink-700 pl-6">
+            {study.usabilityTesting!.outcomeLabel && (
+              <p className="mono-label mb-3">{study.usabilityTesting!.outcomeLabel}</p>
+            )}
+            <p className="text-lg text-ink-100 leading-relaxed text-pretty">
+              {study.usabilityTesting!.outcome}
+            </p>
+          </div>
+        </>
+      );
+
+      if (usabilityImageSide) {
+        const img = study.images!.usabilityTesting!;
+        return (
+          <section className={SECTION}>
+            <div className="container-x">
+              <p className="mono-label mb-8 md:mb-10">Validation</p>
+              <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-center">
+                <div className="md:col-span-7">{textBlock}</div>
+                <div className="md:col-span-5">
+                  <ZoomableImage
+                    src={img.src!}
+                    label={img.label}
+                    caption={img.caption}
+                    width={img.width!}
+                    height={img.height!}
+                    containerClassName="rounded-3xl border border-ink-800"
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </section>
+        );
+      }
 
-          {study.images?.usabilityTesting && (
-            <div className="mt-16">
-              <ImagePlaceholder
-                label={study.images.usabilityTesting.label}
-                caption={study.images.usabilityTesting.caption}
-                src={study.images.usabilityTesting.src}
-                width={study.images.usabilityTesting.width}
-                height={study.images.usabilityTesting.height}
-              />
+      return (
+        <section className={SECTION}>
+          <div className="container-x">
+            <div className="grid md:grid-cols-12 gap-8">
+              <div className="md:col-span-3">
+                <p className="mono-label sticky top-32">Validation</p>
+              </div>
+              <div className="md:col-span-9">{textBlock}</div>
             </div>
-          )}
-        </div>
-      </section>
-    ) : null,
+
+            {study.images?.usabilityTesting && (
+              <div className="mt-16">
+                <ImagePlaceholder
+                  label={study.images.usabilityTesting.label}
+                  caption={study.images.usabilityTesting.caption}
+                  src={study.images.usabilityTesting.src}
+                  width={study.images.usabilityTesting.width}
+                  height={study.images.usabilityTesting.height}
+                />
+              </div>
+            )}
+          </div>
+        </section>
+      );
+    })() : null,
 
     chart: study.slug === 'session-replay' ? (
       <section className={SECTION}>
