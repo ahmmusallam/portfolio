@@ -8,6 +8,7 @@ import MetricGrid from '@/components/MetricGrid';
 import InsightsGrid from '@/components/InsightsGrid';
 import AdoptionChart from '@/components/AdoptionChart';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
+import ZoomableImage from '@/components/ZoomableImage';
 import BadgeDataTable from '@/components/BadgeDataTable';
 import CompetitorGrid from '@/components/CompetitorGrid';
 import IADiagram from '@/components/IADiagram';
@@ -346,28 +347,32 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
     improvementOpportunities: study.improvementOpportunities ? (
       <section className={SECTION}>
         <div className="container-x">
-          <div className="grid md:grid-cols-12 gap-8">
-            <div className="md:col-span-3">
-              <p className="mono-label sticky top-32">Opportunities</p>
-            </div>
-            <div className="md:col-span-9">
-              <h2 className="text-3xl md:text-4xl font-medium text-ink-50 tracking-tight text-balance">
-                {study.improvementOpportunities.title}
-              </h2>
-              {study.improvementOpportunities.intro && (
-                <p className="mt-4 text-ink-300 leading-relaxed text-pretty">
-                  {study.improvementOpportunities.intro}
+          <div className="mb-12 md:mb-16">
+            <p className="mono-label mb-3">Opportunities</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              {study.improvementOpportunities.title}.
+            </h2>
+            {study.improvementOpportunities.intro && (
+              <p className="mt-4 text-ink-300 leading-relaxed text-pretty max-w-3xl">
+                {study.improvementOpportunities.intro}
+              </p>
+            )}
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {study.improvementOpportunities.items.map((item, i) => (
+              <div
+                key={i}
+                className="relative rounded-3xl border border-ink-800 bg-ink-900/30 p-8"
+              >
+                <p className="mono-label mb-6">
+                  / {String(i + 1).padStart(2, '0')}
                 </p>
-              )}
-              <ul className="mt-8 space-y-5">
-                {study.improvementOpportunities.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-4">
-                    <span className="font-mono text-ink-50 mt-1 shrink-0">✓</span>
-                    <p className="text-lg text-ink-200 leading-relaxed text-pretty">{item}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                <p className="text-lg md:text-xl text-ink-50 font-medium leading-snug text-pretty">
+                  {item}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -423,58 +428,95 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       </section>
     ) : null,
 
-    solution: (
-      <section className={SECTION}>
-        <div className="container-x">
-          <div className="grid md:grid-cols-12 gap-8">
-            <div className="md:col-span-3">
-              <p className="mono-label sticky top-32">{study.solutionTitle ?? 'The solution'}</p>
-            </div>
-            <div className="md:col-span-9">
-              <p className="text-xl md:text-2xl text-ink-200 text-pretty leading-relaxed">
-                {study.solution}
-              </p>
+    solution: (() => {
+      const solutionImageSide =
+        study.slug === 'smartresolve' && !!study.images?.solution?.src;
 
-              {study.solutionBullets && study.solutionBullets.length > 0 && (
-                <ul className="mt-8 space-y-5">
-                  {study.solutionBullets.map((b, i) => (
-                    <li key={i} className="flex items-start gap-5">
-                      <span className="mono-label text-ink-600 mt-1.5 shrink-0">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      <p className="text-lg text-ink-200 leading-relaxed text-pretty">
-                        {b.text}
-                        {b.ref && (
-                          <span className="ml-2 text-sm font-mono text-ink-500">({b.ref})</span>
-                        )}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              )}
+      const textBlock = (
+        <>
+          <p className="text-xl md:text-2xl text-ink-200 text-pretty leading-relaxed">
+            {study.solution}
+          </p>
 
-              {study.solutionOutro && (
-                <p className="mt-8 text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light">
-                  {study.solutionOutro}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {study.images?.solution && (
-            <div className="mt-16">
-              <ImagePlaceholder
-                label={study.images.solution.label}
-                caption={study.images.solution.caption}
-                src={study.images.solution.src}
-                width={study.images.solution.width}
-                height={study.images.solution.height}
-              />
-            </div>
+          {study.solutionBullets && study.solutionBullets.length > 0 && (
+            <ul className="mt-8 space-y-5">
+              {study.solutionBullets.map((b, i) => (
+                <li key={i} className="flex items-start gap-5">
+                  <span className="mono-label text-ink-600 mt-1.5 shrink-0">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <p className="text-lg text-ink-200 leading-relaxed text-pretty">
+                    {b.text}
+                    {b.ref && (
+                      <span className="ml-2 text-sm font-mono text-ink-500">({b.ref})</span>
+                    )}
+                  </p>
+                </li>
+              ))}
+            </ul>
           )}
-        </div>
-      </section>
-    ),
+
+          {study.solutionOutro && (
+            <p className="mt-8 text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light">
+              {study.solutionOutro}
+            </p>
+          )}
+        </>
+      );
+
+      if (solutionImageSide) {
+        const img = study.images!.solution!;
+        return (
+          <section className={SECTION}>
+            <div className="container-x">
+              <p className="mono-label mb-8 md:mb-10">
+                {study.solutionTitle ?? 'The solution'}
+              </p>
+              <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-center">
+                <div className="md:col-span-7">{textBlock}</div>
+                <div className="md:col-span-5">
+                  <ZoomableImage
+                    src={img.src!}
+                    label={img.label}
+                    caption={img.caption}
+                    width={img.width!}
+                    height={img.height!}
+                    containerClassName="rounded-3xl border border-ink-800"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      return (
+        <section className={SECTION}>
+          <div className="container-x">
+            <div className="grid md:grid-cols-12 gap-8">
+              <div className="md:col-span-3">
+                <p className="mono-label sticky top-32">
+                  {study.solutionTitle ?? 'The solution'}
+                </p>
+              </div>
+              <div className="md:col-span-9">{textBlock}</div>
+            </div>
+
+            {study.images?.solution && (
+              <div className="mt-16">
+                <ImagePlaceholder
+                  label={study.images.solution.label}
+                  caption={study.images.solution.caption}
+                  src={study.images.solution.src}
+                  width={study.images.solution.width}
+                  height={study.images.solution.height}
+                />
+              </div>
+            )}
+          </div>
+        </section>
+      );
+    })(),
 
     dataAnalysis: study.dataAnalysis ? (
       <section className={SECTION}>

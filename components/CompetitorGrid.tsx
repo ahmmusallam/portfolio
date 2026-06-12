@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import ImagePlaceholder from './ImagePlaceholder';
 import type { CompetitorCard, CompetitorFeature } from '@/lib/case-studies';
@@ -77,7 +78,12 @@ export default function CompetitorGrid({ competitors }: { competitors: Competito
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.15 });
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
   const open = openIndex !== null ? competitors[openIndex] : null;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (open === null) return;
@@ -177,13 +183,13 @@ export default function CompetitorGrid({ competitors }: { competitors: Competito
         ))}
       </div>
 
-      {open && open.image.src && (
+      {open && open.image.src && mounted && createPortal(
         <div
           role="dialog"
           aria-modal="true"
           aria-label={`${open.name} screenshot`}
           onClick={() => setOpenIndex(null)}
-          className="fixed inset-0 z-50 grid place-items-center bg-black/85 backdrop-blur-sm p-4 md:p-8 cursor-zoom-out"
+          className="fixed inset-0 z-[60] grid place-items-center bg-black/85 backdrop-blur-sm p-4 md:p-8 cursor-zoom-out"
         >
           <button
             type="button"
@@ -225,7 +231,8 @@ export default function CompetitorGrid({ competitors }: { competitors: Competito
               {open.image.caption && <span className="text-ink-400"> — {open.image.caption}</span>}
             </p>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );

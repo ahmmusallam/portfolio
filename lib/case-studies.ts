@@ -731,6 +731,9 @@ export const caseStudies: CaseStudy[] = [
       solution: {
         label: 'Design Iteration — Inline context input',
         caption: 'Pivoted from a drawer to inline for focus and future automation',
+        src: '/case studies/smartresolve-iteration.jpg',
+        width: 2848,
+        height: 4544,
       },
       finalSolution: [
         {
