@@ -20,26 +20,30 @@ export default function InsightsGrid({ insights }: { insights: Insight[] }) {
           transition={{ duration: 0.6, delay: i * 0.1 }}
           className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8 group hover:bg-ink-900/50 transition-colors duration-500"
         >
-          <div className="flex items-baseline gap-3 mb-4">
-            <span className="mono-label">/ {String(i + 1).padStart(2, '0')}</span>
-            <h4 className="text-sm font-mono uppercase tracking-wider text-ink-100">{insight.title}</h4>
-          </div>
+          <span className="mono-label block mb-3">/ {String(i + 1).padStart(2, '0')}</span>
+          <h4 className="text-xl md:text-2xl text-ink-50 font-medium tracking-tight text-balance mb-6">
+            {insight.title}
+          </h4>
 
           {insight.bullets && insight.bullets.length > 0 && (
-            <ul className="space-y-2 mb-5">
+            <ul className="space-y-3 mb-6">
               {insight.bullets.map((b, j) => (
                 <li key={j} className="flex items-start gap-3">
-                  <span className="text-ink-600 mt-1.5 shrink-0">·</span>
-                  <p className="text-base text-ink-300 leading-relaxed text-pretty">{b}</p>
+                  <span className="text-ink-500 mt-2 shrink-0 h-1 w-1 rounded-full bg-ink-500" aria-hidden />
+                  <p className="text-[15px] md:text-base text-ink-200 leading-relaxed text-pretty">{b}</p>
                 </li>
               ))}
             </ul>
           )}
 
           {insight.quotes && insight.quotes.length > 0 && (
-            <div className="space-y-3 mt-4 border-l border-ink-800 pl-4">
+            <div className="mt-6 pt-6 border-t border-ink-800 space-y-4">
+              <p className="mono-label text-ink-500">Quotes</p>
               {insight.quotes.map((q, j) => (
-                <p key={j} className="text-sm text-ink-400 italic leading-relaxed text-pretty">
+                <p
+                  key={j}
+                  className="text-[13px] md:text-sm text-ink-400 italic leading-relaxed text-pretty border-l-2 border-ink-700 pl-4"
+                >
                   {q}
                 </p>
               ))}

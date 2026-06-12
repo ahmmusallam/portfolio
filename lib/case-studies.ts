@@ -503,12 +503,30 @@ export const caseStudies: CaseStudy[] = [
     title: 'SmartResolve AI Developer Tool',
     subtitle:
       'Designing an autonomous agent that generates fixes for app crashes. The workflow onboarded 12 new customers and facilitated 20 automated pull requests.',
-    company: 'Instabug',
+    company: 'Luciq / Instabug',
     category: 'AI Developer Tool / SaaS',
     year: '2024',
     role: 'Product Designer',
     timeline: '3 weeks · 1 cycle, 2 sprints',
     thumbnail: '/case studies/smartresolve-ui.jpg',
+    sectionOrder: [
+      'overview',
+      'process',
+      'problem',
+      'insights',
+      'competitiveBenchmark',
+      'improvementOpportunities',
+      'goals',
+      'informationArchitecture',
+      'solution',
+      'dataAnalysis',
+      'finalSolution',
+      'usabilityTesting',
+      'chart',
+      'metrics',
+      'nextSteps',
+      'reflection',
+    ],
     team: ['PM', 'Researcher', 'EM', 'Developers', 'Marketing'],
     tools: ['Figma', 'FigJam'],
     nda: false,
@@ -520,22 +538,13 @@ export const caseStudies: CaseStudy[] = [
     ],
     problemOutro:
       'We needed to evolve SmartResolve from static suggestions to an iterative, developer-guided AI workflow.',
-    timelineDetail: {
-      summary:
-        'One cycle, split into 2 sprints (one for design and one for implementation), each one is 3 weeks.',
-      weeks: [
-        'Week 1: Research, define the problem',
-        'Week 2: Ideate, prototype, get feedback',
-        'Week 3: Test, iterate, handoff',
-      ],
-    },
     process: [
       {
         label: 'Empathize',
         detail: 'Research',
         items: [
           'Conduct interviews and competitive analysis',
-          'PM Sync — define problems from interview themes and competitor gaps',
+          'PM Sync, define problems from interview themes and competitor gaps',
         ],
       },
       {
@@ -543,23 +552,23 @@ export const caseStudies: CaseStudy[] = [
         detail: 'Problem Framing',
         items: [
           'Frame the problem space and clarify scope',
-          'Technical Alignment — early check with EM to avoid blockers',
+          'Technical Alignment, early check with EM to avoid blockers',
         ],
       },
       {
         label: 'Ideate',
         detail: 'Squad Pre-planning',
         items: [
-          'Refinement & Squad Pre-planning — apply feedback and sync with PM and squad',
-          'Design Chapter Feedback — share with designers for cross-product impact',
+          'Refinement & Squad Pre-planning, apply feedback and sync with PM and squad',
+          'Design Chapter Feedback, share with designers for cross-product impact',
         ],
       },
       {
         label: 'Test',
         detail: 'Product Review',
         items: [
-          'Product Review — present to PMs, EMs, CPO, CTO for feedback',
-          'Usability Testing — conduct usability testing',
+          'Product Review, present to PMs, EMs, CPO, CTO for feedback',
+          'Usability Testing, conduct usability testing',
         ],
       },
       {
@@ -571,7 +580,7 @@ export const caseStudies: CaseStudy[] = [
     userResearch: {
       headline: '6 Developer Interviews',
       detail:
-        'Roles: Staff & Senior Frontend Engineers, Backend Developers, Android Developers, Engineering Managers',
+        'Staff & Senior Frontend Engineers, Backend Developers, Android Developers, Engineering Managers',
     },
     insights: [
       {
@@ -706,6 +715,9 @@ export const caseStudies: CaseStudy[] = [
       overview: {
         label: 'SmartResolve — Original UI',
         caption: 'List of possible fixes with crash summary (Before)',
+        src: '/case studies/smartresolve-original-ui.jpg',
+        width: 2848,
+        height: 3600,
       },
       solution: {
         label: 'Design Iteration — Inline context input',

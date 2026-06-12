@@ -57,34 +57,65 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
   const nextStudy = caseStudies[(currentIndex + 1) % caseStudies.length];
 
   const sections: Record<string, React.ReactNode> = {
-    overview: (
-      <section className={SECTION}>
-        <div className="container-x">
-          <div className="grid md:grid-cols-12 gap-8">
-            <div className="md:col-span-3">
-              <p className="mono-label sticky top-32">Overview</p>
-            </div>
-            <div className="md:col-span-9">
-              <p className="text-2xl md:text-3xl text-ink-100 text-pretty leading-snug font-light">
-                {study.overview}
-              </p>
-            </div>
-          </div>
+    overview: (() => {
+      const overviewImageSide = study.slug === 'smartresolve';
+      const hasImage = !!study.images?.overview;
 
-          {study.images?.overview && (
-            <div className="mt-16">
-              <ImagePlaceholder
-                label={study.images.overview.label}
-                caption={study.images.overview.caption}
-                src={study.images.overview.src}
-                width={study.images.overview.width}
-                height={study.images.overview.height}
-              />
+      if (overviewImageSide && hasImage) {
+        return (
+          <section className={SECTION}>
+            <div className="container-x">
+              <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-center">
+                <div className="md:col-span-8">
+                  <p className="mono-label mb-6">Overview</p>
+                  <p className="text-xl md:text-2xl text-ink-100 text-pretty leading-relaxed font-light">
+                    {study.overview}
+                  </p>
+                </div>
+                <div className="md:col-span-4">
+                  <ImagePlaceholder
+                    label={study.images!.overview!.label}
+                    caption={study.images!.overview!.caption}
+                    src={study.images!.overview!.src}
+                    width={study.images!.overview!.width}
+                    height={study.images!.overview!.height}
+                  />
+                </div>
+              </div>
             </div>
-          )}
-        </div>
-      </section>
-    ),
+          </section>
+        );
+      }
+
+      return (
+        <section className={SECTION}>
+          <div className="container-x">
+            <div className="grid md:grid-cols-12 gap-8">
+              <div className="md:col-span-3">
+                <p className="mono-label sticky top-32">Overview</p>
+              </div>
+              <div className="md:col-span-9">
+                <p className="text-2xl md:text-3xl text-ink-100 text-pretty leading-snug font-light">
+                  {study.overview}
+                </p>
+              </div>
+            </div>
+
+            {hasImage && (
+              <div className="mt-16">
+                <ImagePlaceholder
+                  label={study.images!.overview!.label}
+                  caption={study.images!.overview!.caption}
+                  src={study.images!.overview!.src}
+                  width={study.images!.overview!.width}
+                  height={study.images!.overview!.height}
+                />
+              </div>
+            )}
+          </div>
+        </section>
+      );
+    })(),
 
     process: (
       <section className={SECTION}>
@@ -94,7 +125,9 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
               From research to <span className="text-ink-400">handoff</span>.
             </h2>
-            <p className="mt-4 text-ink-400 max-w-xl">A {study.process.length}-stage process designed to align research, design, and engineering on shared signals.</p>
+            {study.slug !== 'smartresolve' && (
+              <p className="mt-4 text-ink-400 max-w-xl">A {study.process.length}-stage process designed to align research, design, and engineering on shared signals.</p>
+            )}
           </div>
 
           <ProcessDiagram stages={study.process} />
@@ -154,40 +187,66 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
     ),
 
     // Standalone Problem (used when ordered separately from Timeline)
-    problem: (
-      <section className={SECTION}>
-        <div className="container-x">
-          <div className="mb-10 md:mb-12 max-w-3xl">
-            <p className="mono-label mb-3">Problem</p>
-            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
-              The problem.
-            </h2>
+    problem: (() => {
+      const problemAsCards = study.slug === 'smartresolve';
+      return (
+        <section className={SECTION}>
+          <div className="container-x">
+            <div className="mb-10 md:mb-12 max-w-3xl">
+              <p className="mono-label mb-3">Problem</p>
+              <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+                The problem.
+              </h2>
+            </div>
+            <div className={problemAsCards ? '' : 'max-w-3xl'}>
+              {study.problemIntro && (
+                <p className="text-lg md:text-xl text-ink-300 mb-8 leading-relaxed text-pretty max-w-3xl">
+                  {study.problemIntro}
+                </p>
+              )}
+              {problemAsCards && study.problemOutro && (
+                <p className="text-lg md:text-xl text-ink-100 mb-10 leading-relaxed text-pretty font-light max-w-3xl">
+                  {study.problemOutro}
+                </p>
+              )}
+              {problemAsCards ? (
+                <div className="grid md:grid-cols-2 gap-6">
+                  {study.problem.map((p, i) => (
+                    <div
+                      key={i}
+                      className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8 md:p-10"
+                    >
+                      <p className="mono-label text-ink-500 mb-5">
+                        {String(i + 1).padStart(2, '0')}
+                      </p>
+                      <p className="text-lg md:text-xl text-ink-100 leading-snug text-pretty">
+                        {p}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <ul className="space-y-5">
+                  {study.problem.map((p, i) => (
+                    <li key={i} className="flex items-start gap-5 group">
+                      <span className="mono-label text-ink-600 mt-1.5 shrink-0">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <p className="text-lg md:text-xl text-ink-200 text-pretty leading-relaxed">{p}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {!problemAsCards && study.problemOutro && (
+                <p className="mt-8 text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light max-w-3xl">
+                  {study.problemOutro}
+                </p>
+              )}
+            </div>
           </div>
-          <div className="max-w-3xl">
-            {study.problemIntro && (
-              <p className="text-lg md:text-xl text-ink-300 mb-8 leading-relaxed text-pretty">
-                {study.problemIntro}
-              </p>
-            )}
-            <ul className="space-y-5">
-              {study.problem.map((p, i) => (
-                <li key={i} className="flex items-start gap-5 group">
-                  <span className="mono-label text-ink-600 mt-1.5 shrink-0">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <p className="text-lg md:text-xl text-ink-200 text-pretty leading-relaxed">{p}</p>
-                </li>
-              ))}
-            </ul>
-            {study.problemOutro && (
-              <p className="mt-8 text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light">
-                {study.problemOutro}
-              </p>
-            )}
-          </div>
-        </div>
-      </section>
-    ),
+        </section>
+      );
+    })(),
 
     // Standalone Timeline (used when ordered separately from Problem)
     timeline: study.timelineDetail ? (
@@ -219,13 +278,26 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
     insights: study.insights && study.insights.length > 0 ? (
       <section className={SECTION}>
         <div className="container-x">
-          <div className="mb-12 md:mb-16 max-w-2xl">
+          <div className="mb-12 md:mb-16 max-w-3xl">
             <p className="mono-label mb-3">
               {study.userResearch ? 'User research & themes' : 'Customer insights'}
             </p>
             <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
               {study.userResearch ? 'Voices from the field.' : 'Themes from the field.'}
             </h2>
+            {study.userResearch && (
+              <p className="mt-5 text-lg md:text-xl text-ink-400 leading-relaxed text-pretty">
+                From{' '}
+                <span className="text-ink-50 font-semibold">
+                  {study.userResearch.headline}
+                </span>
+                {' across '}
+                <span className="text-ink-100 font-medium">
+                  {study.userResearch.detail}
+                </span>
+                .
+              </p>
+            )}
             {!study.userResearch && study.slug === 'session-replay' && (
               <p className="mt-4 text-ink-400">
                 Through customer interviews with CarMax, Property Finder, and Cummins, we
@@ -233,23 +305,6 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
               </p>
             )}
           </div>
-
-          {study.userResearch && (
-            <div className="mb-12 grid sm:grid-cols-2 gap-4">
-              <div className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8">
-                <p className="mono-label mb-3">Interviews</p>
-                <p className="text-2xl md:text-3xl text-ink-50 font-medium tracking-tight">
-                  {study.userResearch.headline}
-                </p>
-              </div>
-              <div className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8">
-                <p className="mono-label mb-3">Roles</p>
-                <p className="text-ink-200 leading-relaxed text-pretty">
-                  {study.userResearch.detail}
-                </p>
-              </div>
-            </div>
-          )}
 
           {study.images?.insights && (
             <div className="mb-12">
@@ -721,36 +776,41 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </p>
 
           {/* Metadata grid */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl border-t border-ink-800 pt-8">
-            <div>
-              <p className="mono-label">Company</p>
-              <p className="text-ink-100 mt-1.5">{study.company}</p>
-            </div>
-            <div>
-              <p className="mono-label">Role</p>
-              <p className="text-ink-100 mt-1.5">{study.role}</p>
-            </div>
-            <div>
-              <p className="mono-label">Timeline</p>
-              <p className="text-ink-100 mt-1.5">{study.timeline}</p>
-            </div>
-            {study.slug !== 'session-replay' && (
-              <div>
-                <p className="mono-label">Year</p>
-                <p className="text-ink-100 mt-1.5">{study.year}</p>
+          {(() => {
+            const compactMeta = ['session-replay', 'smartresolve'].includes(study.slug);
+            return (
+              <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl border-t border-ink-800 pt-8">
+                <div>
+                  <p className="mono-label">Company</p>
+                  <p className="text-ink-100 mt-1.5">{study.company}</p>
+                </div>
+                <div>
+                  <p className="mono-label">Role</p>
+                  <p className="text-ink-100 mt-1.5">{study.role}</p>
+                </div>
+                <div>
+                  <p className="mono-label">Timeline</p>
+                  <p className="text-ink-100 mt-1.5">{study.timeline}</p>
+                </div>
+                {!compactMeta && (
+                  <div>
+                    <p className="mono-label">Year</p>
+                    <p className="text-ink-100 mt-1.5">{study.year}</p>
+                  </div>
+                )}
+                <div>
+                  <p className="mono-label">Team</p>
+                  <p className="text-ink-100 mt-1.5 text-sm">{study.team.join(', ')}</p>
+                </div>
+                {!compactMeta && (
+                  <div className="col-span-2">
+                    <p className="mono-label">Tools</p>
+                    <p className="text-ink-100 mt-1.5 text-sm">{study.tools.join(' · ')}</p>
+                  </div>
+                )}
               </div>
-            )}
-            <div>
-              <p className="mono-label">Team</p>
-              <p className="text-ink-100 mt-1.5 text-sm">{study.team.join(', ')}</p>
-            </div>
-            {study.slug !== 'session-replay' && (
-              <div className="col-span-2">
-                <p className="mono-label">Tools</p>
-                <p className="text-ink-100 mt-1.5 text-sm">{study.tools.join(' · ')}</p>
-              </div>
-            )}
-          </div>
+            );
+          })()}
         </div>
       </section>
 
