@@ -43,6 +43,24 @@ export default function CaseStudyCard({ study, index }: { study: CaseStudy; inde
       >
         {/* Thumbnail */}
         <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-ink-800 bg-ink-900/50">
+          {study.locked && (
+            <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-ink-900/80 backdrop-blur border border-ink-700 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-ink-100">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="h-3 w-3"
+              >
+                <rect x="4" y="11" width="16" height="9" rx="2" />
+                <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+              </svg>
+              Locked
+            </span>
+          )}
           {study.thumbnail ? (
             <Image
               src={study.thumbnail}

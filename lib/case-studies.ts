@@ -146,6 +146,7 @@ export type CaseStudy = {
   team: string[];
   tools: string[];
   nda: boolean;
+  locked?: boolean;
   thumbnail?: string;
   sectionOrder?: string[];
   overview: string;
@@ -198,6 +199,7 @@ export const caseStudies: CaseStudy[] = [
     team: ['PM', 'Researcher', 'EM', 'Developers', 'Data/AI'],
     tools: ['Figma', 'FigJam'],
     nda: true,
+    locked: true,
     overview:
       'Tender Assist is an AI-powered bid management platform that helps teams review contractual documents, surface risks, and respond to tenders faster. As Senior Product Designer at VOIS, I shaped the end-to-end experience for an enterprise product projected to drive €5.2M of value at scale.',
     problem: [
