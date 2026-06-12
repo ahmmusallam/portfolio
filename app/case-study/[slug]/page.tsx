@@ -843,6 +843,11 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                   {type}
                 </span>
               ))}
+              {study.year && (
+                <span className="rounded-full border border-ink-50 bg-ink-50 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.15em] text-ink-900">
+                  {study.year}
+                </span>
+              )}
             </div>
           </div>
 
