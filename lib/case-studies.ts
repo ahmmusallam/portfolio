@@ -90,6 +90,62 @@ export type CompetitiveBenchmark = {
   competitors: CompetitorCard[];
 };
 
+export type CompetitiveAnalysis = {
+  title: string;
+  intro: string;
+  screenshots: ImagePlaceholder[];
+};
+
+export type FeatureGroup = {
+  label: string;
+  items: string[];
+};
+
+export type FeatureList = {
+  title: string;
+  intro?: string;
+  groups: FeatureGroup[];
+};
+
+export type IdeationStage = {
+  label: string;
+  description?: string;
+  images: ImagePlaceholder[];
+};
+
+export type Ideation = {
+  title?: string;
+  intro?: string;
+  stages: IdeationStage[];
+};
+
+export type RefinementCard = {
+  label: string;
+  description: string;
+  image: ImagePlaceholder;
+};
+
+export type Refinement = {
+  title?: string;
+  intro?: string;
+  cards: RefinementCard[];
+};
+
+export type OutcomeImpact = {
+  label: string;
+  description: string;
+  link?: { label: string; href: string };
+};
+
+export type OutcomesReflection = {
+  title?: string;
+  /** Body text supports **bold** markers for highlighted spans. */
+  intro: string;
+  impacts: OutcomeImpact[];
+  /** Closing reflection. Supports **bold** markers. */
+  closing?: string;
+};
+
 export type ImprovementOpportunities = {
   title: string;
   intro?: string;
@@ -166,6 +222,11 @@ export type CaseStudy = {
   goals?: Goal[];
   userResearch?: UserResearch;
   competitiveBenchmark?: CompetitiveBenchmark;
+  competitiveAnalysis?: CompetitiveAnalysis;
+  featureList?: FeatureList;
+  ideation?: Ideation;
+  refinement?: Refinement;
+  outcomesReflection?: OutcomesReflection;
   improvementOpportunities?: ImprovementOpportunities;
   dataAnalysis?: DataAnalysis;
   finalSolution?: FinalSolution;
@@ -176,6 +237,7 @@ export type CaseStudy = {
     overview?: ImagePlaceholder;
     insights?: ImagePlaceholder;
     solution?: ImagePlaceholder;
+    solutionGallery?: ImagePlaceholder[];
     postData?: ImagePlaceholder;
     finalSolution?: ImagePlaceholder[];
     usabilityTesting?: ImagePlaceholder;
@@ -764,21 +826,229 @@ export const caseStudies: CaseStudy[] = [
     number: '04',
     title: 'SuperPay Merchant Platform',
     subtitle: 'A fintech dashboard for online merchants, balancing simplicity and scale.',
-    company: 'e& (Etisalat Egypt)',
+    company: 'e& Egypt',
     category: 'Fintech / SaaS',
     year: '2023',
     role: 'Product Designer',
-    timeline: '12+ weeks · 3+ weeks research, 9 weeks design',
-    team: ['3 Product Designers', '2 Developers', '1 Project Manager'],
+    timeline: '12+ weeks',
+    team: ['2 Product Designers', 'PM', 'Developers'],
     thumbnail: '/case studies/superpay-dashboard-ui.jpg',
+    sectionOrder: [
+      'overview',
+      'process',
+      'problem',
+      'competitiveAnalysis',
+      'featureList',
+      'insights',
+      'competitiveBenchmark',
+      'improvementOpportunities',
+      'goals',
+      'informationArchitecture',
+      'ideation',
+      'solution',
+      'refinement',
+      'dataAnalysis',
+      'finalSolution',
+      'usabilityTesting',
+      'chart',
+      'nextSteps',
+      'outcomesReflection',
+    ],
     tools: ['Adobe', 'Figma', 'Google Slides'],
-    nda: true,
+    nda: false,
+    outcomesReflection: {
+      title: 'Outcomes & Reflection',
+      intro:
+        'Despite a **cluttered** and **ambiguous** process, we aligned stakeholders and merchants to deliver a dashboard that met both business goals and user needs.',
+      impacts: [
+        {
+          label: 'Business Impact',
+          description:
+            'The dashboard gained rapid early adoption, giving e& a credible entry into fintech and differentiating it from its legacy telco positioning.',
+          link: { label: 'Check their website', href: 'https://super-pay.com/products/ecommerce' },
+        },
+        {
+          label: 'User Impact',
+          description:
+            'Merchants gained daily visibility into KPIs and transactions without manual exports.',
+        },
+        {
+          label: 'Design Impact',
+          description:
+            'Responsive design and a scalable system ensured long-term consistency and fast iteration.',
+        },
+      ],
+      closing:
+        'This project taught me that designing from scratch means **shaping product vision**, balancing simplicity, collaboration, and scalability to deliver **impact**.',
+    },
+    refinement: {
+      title: 'Refinement',
+      cards: [
+        {
+          label: 'Design System',
+          description:
+            'Established a scalable system of components, typography, and patterns that improved consistency and supported future fintech modules.',
+          image: {
+            label: 'Design system — component anatomy',
+            src: '/case studies/superpay-refinement-design-system.webp',
+            width: 2048,
+            height: 2048,
+          },
+        },
+        {
+          label: 'Responsive Design',
+          description:
+            'Refined the dashboard to work seamlessly across devices, ensuring merchants could track payments and insights on any screen size.',
+          image: {
+            label: 'Responsive layouts across breakpoints',
+            src: '/case studies/superpay-refinement-responsive.webp',
+            width: 4000,
+            height: 4000,
+          },
+        },
+      ],
+    },
+    ideation: {
+      title: 'From sketches to wireframes',
+      stages: [
+        {
+          label: 'Sketching',
+          description:
+            'Quick sketches helped the two designers on the project align on shape and flow before any pixels.',
+          images: [
+            {
+              label: 'Invoices sketch',
+              src: '/case studies/superpay-sketch.webp',
+              width: 2530,
+              height: 1800,
+            },
+          ],
+        },
+        {
+          label: 'Wireframes',
+          description:
+            'Wireframes set the structure for user testing. Across four rounds, we iterated on layout and hierarchy, then moved on to high-fidelity once the patterns held up.',
+          images: [
+            {
+              label: 'Dashboard wireframe',
+              src: '/case studies/superpay-wireframe-dashboard.jpg',
+              width: 1366,
+              height: 1003,
+            },
+            {
+              label: 'Transactions wireframe',
+              src: '/case studies/superpay-wireframe-transactions.jpg',
+              width: 1366,
+              height: 1042,
+            },
+            {
+              label: 'Customers wireframe',
+              src: '/case studies/superpay-wireframe-customers.jpg',
+              width: 1366,
+              height: 1117,
+            },
+          ],
+        },
+      ],
+    },
+    featureList: {
+      title: 'Feature list',
+      intro:
+        'We aligned with stakeholders and engineering on a complete feature list before design started, so scope and priorities were clear to everyone from day one.',
+      groups: [
+        {
+          label: 'Main View',
+          items: [
+            'View Last 5 Transactions',
+            'View Statistics (Monthly Sales / New Customers / Top Customers / Payment Methods)',
+            'Create Invoice',
+            'Add Product',
+            'View Balance',
+            'Guide User On First Time',
+            'View Test / Live Mode',
+          ],
+        },
+        {
+          label: 'Account Settings',
+          items: [
+            'View Account Details',
+            'View / Add Users',
+            'View / Add Roles',
+            'View / Add Branches',
+          ],
+        },
+        {
+          label: 'Invoices',
+          items: [
+            'View Invoices (Create Single / Bulk)',
+            'View Subscriptions (Add)',
+            'View Payment Links (Create)',
+          ],
+        },
+        {
+          label: 'General',
+          items: [
+            'View Notifications',
+            'Chat Support',
+            'Change Language (Arabic / English)',
+            'Favorite Specific Tab',
+            'Logout / Switch Account',
+          ],
+        },
+        {
+          label: 'Customers',
+          items: ['View All Customers (Search)', 'Add New Customer'],
+        },
+        {
+          label: 'Transfers',
+          items: ['View All Transfers'],
+        },
+        {
+          label: 'Reports',
+          items: ['Filter (Date / Report Type)'],
+        },
+        {
+          label: 'Transactions',
+          items: ['View Transactions'],
+        },
+        {
+          label: 'Payouts',
+          items: ['View / Add Payouts', 'View / Add Beneficiary'],
+        },
+        {
+          label: 'Developers',
+          items: ["View Developer's Guide & Documentation"],
+        },
+        {
+          label: 'POS Management',
+          items: ['View / Add POS'],
+        },
+        {
+          label: 'Products',
+          items: [
+            'View All Products (Add / Search / Filter / Edit)',
+            'View Promocodes (Add)',
+          ],
+        },
+      ],
+    },
+    competitiveAnalysis: {
+      title: 'Competitive analysis',
+      intro:
+        "After liaising with stakeholders, we took a proactive approach by conducting thorough research into our competitors' features. It's imperative to stay ahead of the competition, and by doing so, we can ensure that our product or service stands out in the market.",
+      screenshots: [
+        { label: 'Paymob', src: '/case studies/superpay-competitor-paymob.jpg', width: 864, height: 455 },
+        { label: 'PayTabs', src: '/case studies/superpay-competitor-paytabs.jpg', width: 864, height: 455 },
+        { label: 'OPay', src: '/case studies/superpay-competitor-opay.jpg', width: 864, height: 455 },
+        { label: 'Geidea', src: '/case studies/superpay-competitor-geidea.jpg', width: 864, height: 455 },
+        { label: 'Stripe', src: '/case studies/superpay-competitor-stripe.jpg', width: 864, height: 455 },
+      ],
+    },
     overview:
       'e& was shifting from a traditional telco into a software solutions provider. SuperPay was developed as a strategic product to position the company in Egypt\'s rapidly growing fintech sector. The merchant dashboard had to serve small and medium businesses managing online payments, balances, and transactions in one place.',
     problem: [
       'Existing dashboards were either too technical (built for finance pros) or too shallow (surface-level data only)',
       'Merchants needed something simple, insightful, and scalable',
-      'The product had to differentiate e& from its legacy telco positioning',
     ],
     process: [
       {
@@ -925,14 +1195,6 @@ export const caseStudies: CaseStudy[] = [
           ],
         },
         {
-          label: 'Charge-back management',
-          features: [
-            { label: 'View charge-backs' },
-            { label: 'View total amount' },
-            { label: 'Search' },
-          ],
-        },
-        {
           label: 'Product management',
           features: [
             { label: 'Add new products (manually & bulk)' },
@@ -962,10 +1224,30 @@ export const caseStudies: CaseStudy[] = [
           ],
         },
       ],
-      note: 'Payment share links can also be generated from the Invoices and Products contexts — cross-linked entry points support the same primary task surface.',
     },
-    solution:
-      'Established a scalable design system of components, typography, and patterns. The dashboard surfaces KPI cards at the top (Due Transfers, Sales Today, Balance, New Customers) for at-a-glance performance. A payment progress chart shows monthly income vs expenses for spotting trends. Top Customers & Products sections support upselling. Recent Transactions stays clean with clear status indicators (Completed, Pending, Refund). The system supports responsive layouts across desktop and mobile.',
+    solution: '',
+    images: {
+      solutionGallery: [
+        {
+          label: 'Dashboard',
+          src: '/case studies/superpay-solution-dashboard.jpg',
+          width: 2732,
+          height: 1800,
+        },
+        {
+          label: 'Transactions',
+          src: '/case studies/superpay-solution-transactions.jpg',
+          width: 1366,
+          height: 900,
+        },
+        {
+          label: 'Customers',
+          src: '/case studies/superpay-solution-customers.jpg',
+          width: 2732,
+          height: 1800,
+        },
+      ],
+    },
     metrics: [
       { value: 'Live', label: 'Product launched', context: 'Live in market' },
       { value: '12+', label: 'Weeks end-to-end', context: 'Research to handoff' },
@@ -985,7 +1267,7 @@ export const caseStudies: CaseStudy[] = [
     role: 'Product Designer',
     timeline: '12+ weeks · 3+ weeks research, 9 weeks design',
     thumbnail: '/case studies/superpay-website-ui.png',
-    team: ['3 Product Designers', '2 Developers', '1 Project Manager'],
+    team: ['3 Product Designers', '2 Developers', '1 Product Manager'],
     tools: ['Adobe', 'Figma', 'Google Slides'],
     nda: true,
     overview:

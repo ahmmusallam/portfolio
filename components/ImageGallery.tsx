@@ -43,7 +43,7 @@ export default function ImageGallery({
           fill
           sizes="(min-width: 768px) 80vw, 100vw"
           priority={i === 0}
-          className={`object-cover transition-opacity duration-700 ease-in-out ${
+          className={`object-cover object-top transition-opacity duration-700 ease-in-out ${
             i === active ? 'opacity-100' : 'opacity-0'
           }`}
         />

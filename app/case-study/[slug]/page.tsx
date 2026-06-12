@@ -34,19 +34,37 @@ const DEFAULT_ORDER = [
   'process',
   'problemTimeline',
   'insights',
+  'competitiveAnalysis',
+  'featureList',
   'competitiveBenchmark',
   'improvementOpportunities',
   'goals',
   'informationArchitecture',
+  'ideation',
   'solution',
+  'refinement',
   'dataAnalysis',
   'finalSolution',
   'usabilityTesting',
   'chart',
   'metrics',
   'nextSteps',
+  'outcomesReflection',
   'reflection',
 ];
+
+// Parse **bold** segments out of plain text into ink-50 emphasis spans.
+function renderRich(text: string): React.ReactNode {
+  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+    i % 2 === 1 ? (
+      <span key={i} className="text-ink-50 font-semibold">
+        {part}
+      </span>
+    ) : (
+      <span key={i}>{part}</span>
+    ),
+  );
+}
 
 const SECTION = 'py-20 md:py-28 border-t border-ink-800';
 
@@ -127,7 +145,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
               From research to <span className="text-ink-400">handoff</span>.
             </h2>
-            {study.slug !== 'smartresolve' && (
+            {!['smartresolve', 'superpay-dashboard'].includes(study.slug) && (
               <p className="mt-4 text-ink-400 max-w-xl">A {study.process.length}-stage process designed to align research, design, and engineering on shared signals.</p>
             )}
           </div>
@@ -190,7 +208,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
     // Standalone Problem (used when ordered separately from Timeline)
     problem: (() => {
-      const problemAsCards = study.slug === 'smartresolve';
+      const problemAsCards = ['smartresolve', 'superpay-dashboard'].includes(study.slug);
       return (
         <section className={SECTION}>
           <div className="container-x">
@@ -325,6 +343,87 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       </section>
     ) : null,
 
+    competitiveAnalysis: study.competitiveAnalysis ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="mb-12 md:mb-16 max-w-3xl">
+            <p className="mono-label mb-3">Research</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              {study.competitiveAnalysis.title}.
+            </h2>
+            <p className="mt-5 text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
+              {study.competitiveAnalysis.intro}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+            {study.competitiveAnalysis.screenshots.map((s, i) => (
+              <div key={i} className="flex flex-col gap-2">
+                <ZoomableImage
+                  src={s.src!}
+                  label={s.label}
+                  caption={s.caption}
+                  width={s.width!}
+                  height={s.height!}
+                  containerClassName="rounded-xl border border-ink-800"
+                />
+                <p className="mono-label text-ink-500">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ) : null,
+
+    featureList: study.featureList ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="mb-12 md:mb-16 max-w-3xl">
+            <p className="mono-label mb-3">Scope</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              {study.featureList.title}.
+            </h2>
+            {study.featureList.intro && (
+              <p className="mt-5 text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
+                {study.featureList.intro}
+              </p>
+            )}
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+            {study.featureList.groups.map((group, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-ink-800 bg-ink-900/30 p-5 flex flex-col"
+              >
+                <div className="flex items-baseline gap-3 mb-3">
+                  <span className="mono-label text-ink-600">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="text-base md:text-lg text-ink-50 font-medium tracking-tight">
+                    {group.label}
+                  </h3>
+                </div>
+                <ul className="space-y-1.5">
+                  {group.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-2.5">
+                      <span
+                        className="mt-1.5 h-1 w-1 rounded-full bg-ink-500 shrink-0"
+                        aria-hidden="true"
+                      />
+                      <p className="text-sm text-ink-300 leading-relaxed text-pretty">
+                        {item}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ) : null,
+
     competitiveBenchmark: study.competitiveBenchmark ? (
       <section className={SECTION}>
         <div className="container-x">
@@ -413,11 +512,6 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
               Mapping the surface.
             </h2>
-            <p className="mt-4 text-ink-400 text-pretty leading-relaxed">
-              A merchant-first IA structured around the core jobs — sign-in, onboarding,
-              dashboards, payments, and management modules — with cross-linked entry points
-              where tasks overlap.
-            </p>
           </div>
 
           <IADiagram
@@ -429,7 +523,109 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       </section>
     ) : null,
 
+    ideation: study.ideation ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="mb-12 md:mb-16 max-w-3xl">
+            <p className="mono-label mb-3">Ideation</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              {study.ideation.title ?? 'From sketches to wireframes'}.
+            </h2>
+            {study.ideation.intro && (
+              <p className="mt-5 text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
+                {study.ideation.intro}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-16 md:space-y-20">
+            {study.ideation.stages.map((stage, i) => {
+              const single = stage.images.length === 1;
+              const gridCols = single
+                ? ''
+                : stage.images.length === 2
+                ? 'grid sm:grid-cols-2 gap-4 md:gap-5'
+                : 'grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5';
+              return (
+                <div key={i}>
+                  <div className="mb-8 md:mb-10 max-w-3xl">
+                    <p className="mono-label">
+                      / {String(i + 1).padStart(2, '0')}
+                    </p>
+                    <h3 className="mt-2 text-2xl md:text-3xl text-ink-50 font-medium tracking-tight">
+                      {stage.label}
+                    </h3>
+                    {stage.description && (
+                      <p className="mt-4 text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
+                        {stage.description}
+                      </p>
+                    )}
+                  </div>
+
+                  {single ? (
+                    <div className="mx-auto max-w-4xl">
+                      <ZoomableImage
+                        src={stage.images[0].src!}
+                        label={stage.images[0].label}
+                        caption={stage.images[0].caption}
+                        width={stage.images[0].width!}
+                        height={stage.images[0].height!}
+                        containerClassName="rounded-3xl border border-ink-800"
+                      />
+                    </div>
+                  ) : (
+                    <div className={gridCols}>
+                      {stage.images.map((img, j) => (
+                        <ZoomableImage
+                          key={j}
+                          src={img.src!}
+                          label={img.label}
+                          caption={img.caption}
+                          width={img.width!}
+                          height={img.height!}
+                          previewAspect="aspect-[4/3]"
+                          objectPosition="object-top"
+                          containerClassName="rounded-2xl border border-ink-800"
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    ) : null,
+
     solution: (() => {
+      const gallery = study.images?.solutionGallery;
+      if (gallery && gallery.length > 0) {
+        return (
+          <section className={SECTION}>
+            <div className="container-x">
+              <div className="mb-12 md:mb-16 max-w-3xl">
+                <p className="mono-label mb-3">Solution</p>
+                <h2 className="text-display font-medium text-ink-50 tracking-tight">
+                  The solution.
+                </h2>
+              </div>
+
+              <ImageGallery
+                images={gallery
+                  .filter((img) => img.src)
+                  .map((img) => ({
+                    src: img.src as string,
+                    alt: img.caption || img.label,
+                    width: img.width,
+                    height: img.height,
+                  }))}
+              />
+            </div>
+          </section>
+        );
+      }
+
       const solutionImageSide =
         study.slug === 'smartresolve' && !!study.images?.solution?.src;
 
@@ -518,6 +714,54 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
         </section>
       );
     })(),
+
+    refinement: study.refinement ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="mb-12 md:mb-16 max-w-3xl">
+            <p className="mono-label mb-3">Refinement</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight">
+              {study.refinement.title ?? 'Refinement'}.
+            </h2>
+            {study.refinement.intro && (
+              <p className="mt-5 text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
+                {study.refinement.intro}
+              </p>
+            )}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+            {study.refinement.cards.map((card, i) => (
+              <div
+                key={i}
+                className="rounded-3xl border border-ink-800 bg-ink-900/30 overflow-hidden flex flex-col"
+              >
+                <ZoomableImage
+                  src={card.image.src!}
+                  label={card.image.label}
+                  caption={card.image.caption}
+                  width={card.image.width!}
+                  height={card.image.height!}
+                  previewAspect="aspect-[4/3]"
+                  objectPosition="object-top"
+                />
+                <div className="p-6 md:p-8 border-t border-ink-800 flex-1">
+                  <p className="mono-label mb-3">
+                    / {String(i + 1).padStart(2, '0')}
+                  </p>
+                  <h3 className="text-xl md:text-2xl text-ink-50 font-medium tracking-tight mb-3">
+                    {card.label}
+                  </h3>
+                  <p className="text-base md:text-lg text-ink-300 leading-relaxed text-pretty">
+                    {card.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ) : null,
 
     dataAnalysis: study.dataAnalysis ? (
       <section className={SECTION}>
@@ -802,6 +1046,62 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       </section>
     ) : null,
 
+    outcomesReflection: study.outcomesReflection ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="mb-12 md:mb-16 max-w-3xl">
+            <p className="mono-label mb-3">Outcomes & reflection</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              {study.outcomesReflection.title ?? 'Outcomes & Reflection'}.
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-8 md:gap-12">
+            <div className="md:col-span-8 md:col-start-3">
+              <p className="text-xl md:text-2xl text-ink-200 leading-relaxed text-pretty font-light">
+                {renderRich(study.outcomesReflection.intro)}
+              </p>
+
+              <ul className="mt-10 space-y-6">
+                {study.outcomesReflection.impacts.map((impact, i) => (
+                  <li key={i} className="flex items-start gap-5">
+                    <span className="mono-label text-ink-600 mt-2 shrink-0">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <p className="text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
+                      <span className="text-ink-50 font-semibold">
+                        {impact.label}:
+                      </span>{' '}
+                      {impact.description}
+                      {impact.link && (
+                        <>
+                          {' '}
+                          <a
+                            href={impact.link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-ink-100 underline decoration-ink-600 underline-offset-4 hover:decoration-ink-100 transition-colors"
+                          >
+                            {impact.link.label}
+                          </a>
+                        </>
+                      )}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+
+              {study.outcomesReflection.closing && (
+                <p className="mt-12 text-xl md:text-2xl text-ink-100 leading-relaxed text-pretty font-light border-t border-ink-800 pt-10">
+                  {renderRich(study.outcomesReflection.closing)}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    ) : null,
+
     reflection: study.reflection ? (
       <section className={SECTION}>
         <div className="container-x">
@@ -860,7 +1160,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
           {/* Metadata grid */}
           {(() => {
-            const compactMeta = ['session-replay', 'smartresolve'].includes(study.slug);
+            const compactMeta = ['session-replay', 'smartresolve', 'superpay-dashboard'].includes(study.slug);
             return (
               <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl border-t border-ink-800 pt-8">
                 <div>
