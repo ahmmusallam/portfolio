@@ -188,7 +188,7 @@ export const caseStudies: CaseStudy[] = [
     number: '01',
     title: 'AI Tender Assist Bid Management',
     subtitle:
-      'AI-powered bid management platform for contractual review and team collaboration. Anchoring a product with €5.2M of projected value at scale.',
+      'AI-powered bid management platform for contractual review and team collaboration. Anchoring a product with €5M of projected value at scale.',
     company: 'VOIS',
     category: 'AI Platform / SaaS',
     year: '2026',
