@@ -74,12 +74,13 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                   </p>
                 </div>
                 <div className="md:col-span-4">
-                  <ImagePlaceholder
+                  <ZoomableImage
+                    src={study.images!.overview!.src!}
                     label={study.images!.overview!.label}
                     caption={study.images!.overview!.caption}
-                    src={study.images!.overview!.src}
-                    width={study.images!.overview!.width}
-                    height={study.images!.overview!.height}
+                    width={study.images!.overview!.width!}
+                    height={study.images!.overview!.height!}
+                    containerClassName="rounded-3xl border border-ink-800"
                   />
                 </div>
               </div>
