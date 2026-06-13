@@ -18,6 +18,8 @@ export type Goal = {
 export type SolutionBullet = {
   text: string;
   ref?: string;
+  /** Optional bold lead-in rendered before the body text. */
+  highlight?: string;
 };
 
 export type DataTableRow = {
@@ -43,8 +45,11 @@ export type FinalSolutionBullet = {
 
 export type FinalSolution = {
   title: string;
+  /** Intro paragraph(s). Use `\n\n` to separate paragraphs. */
   intro: string;
   bullets: FinalSolutionBullet[];
+  /** Optional closing paragraph(s) after the bullets. Use `\n\n` to separate. */
+  outro?: string;
 };
 
 export type TimelineDetail = {
@@ -131,6 +136,58 @@ export type Refinement = {
   cards: RefinementCard[];
 };
 
+/** Large single-metric callout placed inline within the Problem section. */
+export type ProblemCallout = {
+  value: string;
+  caption: string;
+};
+
+/** Richer problem-section card with a topic label above the body text. */
+export type ProblemCard = {
+  label: string;
+  /** Body text. Supports `**bold**` and `*italic*` markers. */
+  text: string;
+};
+
+/** One phase of a research workflow journey map. */
+export type WorkflowPhase = {
+  label: string;
+  description?: string;
+  /** Step bodies. Each supports `**bold**` and `*italic*` markers. */
+  steps: string[];
+};
+
+/** Journey-map style research section showing an end-to-end workflow. */
+export type WorkflowResearch = {
+  title?: string;
+  /** Intro paragraph(s). Supports `\n\n` paragraph splits and rich markers. */
+  intro?: string;
+  phases: WorkflowPhase[];
+  /** Closing paragraph(s). Supports `\n\n` splits and rich markers. */
+  outro?: string;
+  /** Optional artifact image rendered at the bottom (e.g., the original Miro board). */
+  image?: ImagePlaceholder;
+};
+
+/**
+ * Block-based content used by Chapter sections to express long-form prose
+ * mixing paragraphs, pull quotes, asides, lists, and images.
+ */
+export type ChapterBlock =
+  | { kind: 'paragraph'; text: string }
+  | { kind: 'quote'; text: string }
+  | { kind: 'aside'; label: string }
+  | { kind: 'list'; intro?: string; items: string[] }
+  | { kind: 'image'; image: ImagePlaceholder }
+  | { kind: 'imageGrid'; images: ImagePlaceholder[] };
+
+export type Chapter = {
+  /** Section mono label. */
+  mono: string;
+  title: string;
+  blocks: ChapterBlock[];
+};
+
 export type OutcomeImpact = {
   label: string;
   description: string;
@@ -154,9 +211,14 @@ export type ImprovementOpportunities = {
 
 export type UsabilityTesting = {
   title: string;
+  /** Intro paragraph(s). Use `\n\n` to separate paragraphs. Supports **bold** and *italic* markers. */
   intro: string;
+  /** Bullet items. Each string supports **bold** and *italic* markers. */
   items: string[];
+  /** Optional pull quotes rendered between intro and items. */
+  quotes?: string[];
   outcomeLabel?: string;
+  /** Outcome paragraph(s). Use `\n\n` to separate. Supports **bold** and *italic* markers. */
   outcome: string;
 };
 
@@ -206,9 +268,28 @@ export type CaseStudy = {
   thumbnail?: string;
   sectionOrder?: string[];
   overview: string;
+  /** Optional pull-card rendered to the right of the overview prose. */
+  overviewHighlight?: {
+    /** Big hero value, e.g., "€5.2M". */
+    value: string;
+    /** Short caption shown beneath the value. */
+    caption?: string;
+    /** Supporting paragraph(s). Supports `**bold**`, `*italic*`, and `\n\n` splits. */
+    detail?: string;
+  };
+  /** Optional role/scope section rendered right after Overview. Supports `\n\n` paragraph splits. */
+  myRole?: string;
   problem: string[];
+  /** Optional intro paragraph(s) before the problem list. Supports `\n\n` paragraph splits. */
   problemIntro?: string;
+  /** Optional outro paragraph(s) after the problem list. Supports `\n\n` paragraph splits. */
   problemOutro?: string;
+  /** Inline big-number callout rendered inside the Problem section. */
+  problemCallout?: ProblemCallout;
+  /** Optional richer cards (label + body) rendered in place of `problem` strings. */
+  problemCards?: ProblemCard[];
+  /** Optional journey-map research section, typically between Problem and Solution. */
+  workflowResearch?: WorkflowResearch;
   process: ProcessStage[];
   insights?: Insight[];
   solution: string;
@@ -227,6 +308,8 @@ export type CaseStudy = {
   ideation?: Ideation;
   refinement?: Refinement;
   outcomesReflection?: OutcomesReflection;
+  /** Block-based long-form chapters, e.g., extended iterations like UC3. */
+  chapters?: Chapter[];
   improvementOpportunities?: ImprovementOpportunities;
   dataAnalysis?: DataAnalysis;
   finalSolution?: FinalSolution;
@@ -238,6 +321,8 @@ export type CaseStudy = {
     insights?: ImagePlaceholder;
     solution?: ImagePlaceholder;
     solutionGallery?: ImagePlaceholder[];
+    /** Image grid rendered after the solution text/bullets (does not hide the prose). */
+    solutionGrid?: ImagePlaceholder[];
     postData?: ImagePlaceholder;
     finalSolution?: ImagePlaceholder[];
     usabilityTesting?: ImagePlaceholder;
@@ -249,62 +334,295 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'tender-assist',
     number: '01',
-    title: 'AI Tender Assist Bid Management',
+    title: 'Designing AI that experts will trust.',
     subtitle:
-      'AI-powered bid management platform for contractual review and team collaboration. Anchoring a product with €5M of projected value at scale.',
-    company: 'VOIS',
-    category: 'AI Platform / SaaS',
+      'Turning hundreds of pages of contractual chaos into something bid teams can actually act on.',
+    company: 'VOIS · Vodafone Germany',
+    category: 'Enterprise AI / Tender Management',
     year: '2026',
     role: 'Senior Product Designer',
-    timeline: 'Ongoing · 2025–present',
+    timeline: '9 months',
     thumbnail: '/case studies/tender-assist.svg',
-    team: ['PM', 'Researcher', 'EM', 'Developers', 'Data/AI'],
+    team: ['PM', 'Engineering', 'Bid stakeholders'],
     tools: ['Figma', 'FigJam'],
     nda: true,
     locked: true,
+    sectionOrder: [
+      'overview',
+      'myRole',
+      'problem',
+      'workflowResearch',
+      'solution',
+      'usabilityTesting',
+      'finalSolution',
+      'chapters',
+      'outcomesReflection',
+    ],
     overview:
-      'Tender Assist is an AI-powered bid management platform that helps teams review contractual documents, surface risks, and respond to tenders faster. As Senior Product Designer at VOIS, I shaped the end-to-end experience for an enterprise product projected to drive €5.2M of value at scale.',
-    problem: [
-      'Contractual review was manual, slow, and error-prone across large bid documents',
-      'Risk and compliance signals were buried, making them easy to miss',
-      'Teams lacked a single, structured workspace to manage tenders end to end',
-    ],
-    process: [
+      "Tender documents are how Vodafone Germany wins (or loses) tens of millions of euros in business. Each tender can contain over 100 documents (contracts, price sheets, technical annexes, scanned PDFs) that legal, finance, sales, operations, and bid management teams must reconcile under tight deadlines. Miss a contradiction in a service-level clause, and the cost is real.\n\nTender Assistant is an AI-powered web product I designed at VOIS to help these teams do this work faster and with more confidence. It analyzes hundreds of pages, extracts critical commercial points, surfaces contradictions across documents, and now, in its third use case, helps teams turn the answers they receive into strategy: what changed, what's risky, and what to ask next.",
+    overviewHighlight: {
+      value: '€5.2M',
+      caption: 'Projected value at scale',
+      detail:
+        'Use cases 1 and 2 launched and have been adopted by **100+ users**. Use case 3 was design-complete at handoff.',
+    },
+    myRole:
+      "I joined Tender Assistant at kickoff as the sole product designer, working alongside the product owner and engineering team within VOIS, Vodafone's tech delivery organization. The project ran for 9 months across three use cases, with weekly stakeholder syncs with Vodafone Germany's bid teams.\n\nI owned the end-to-end design: research, user flows, interaction design, AI patterns, prototyping, and usability testing.",
+    problemIntro:
+      "A tender at Vodafone Germany is shaped by three forces. Each is manageable alone; together, they break the manual workflow bid teams had relied on for years.",
+    problem: [],
+    problemCards: [
       {
-        label: 'Empathize',
-        detail: 'Research',
-        items: ['Stakeholder and user interviews', 'Map the current bid-review workflow'],
+        label: 'Volume',
+        text:
+          'A single tender can run to **100+ documents**: contracts, annexes, pricing sheets, scanned PDFs with handwritten notes. Hundreds of pages to read before anyone can take a position.',
       },
       {
-        label: 'Define',
-        detail: 'Problem Framing',
-        items: ['Frame risk & compliance pain points', 'Technical alignment with EM and the data/AI team'],
+        label: 'Cross-functional review',
+        text:
+          'Five or six departments read the same tender, each from a different angle. Legal scans for liability clauses. Finance reads payment terms and SLAs. Bid management has to make all of it agree.',
       },
       {
-        label: 'Ideate',
-        detail: 'Concepts',
-        items: ['Explore AI-assisted review flows', 'Squad and Design Chapter feedback'],
-      },
-      {
-        label: 'Test',
-        detail: 'Validation',
-        items: ['Usability testing with bid teams', 'Product reviews with stakeholders'],
-      },
-      {
-        label: 'Implement',
-        detail: 'Iteration & Handoff',
-        items: ['Refine, handoff to devs, and support delivery'],
+        label: 'Cost of contradiction',
+        text:
+          "Contradictions sit across files, written by different people, sometimes months apart. A clash between a contract clause and a pricing line, easy to miss across hundreds of pages, could translate into **millions of euros of exposure**.",
       },
     ],
+    problemOutro:
+      "Bid teams handled this manually: read, take notes, meet for hours to align, copy-paste between documents, and hope nothing slipped through.\n\nAI changes the math. It can read every document at once and compare every clause to every other clause. But the teams who would use it aren't AI-native. They're legal experts and bid managers, mostly 40+, working under high stakes, and they need to *trust* what the system gives them before they'll act on it.",
+    workflowResearch: {
+      title: 'Mapping the real workflow',
+      intro:
+        "Before any wireframes, I worked with bid managers, legal, and finance to map the full tender lifecycle. What came out wasn't a clean linear process. It was a multi-month cycle of independent reading, cross-functional drafting, public Q&A rounds, and re-analysis. The map became the spine of every design decision that followed.",
+      phases: [
+        {
+          label: 'Independent reading',
+          description: 'Everyone reads the tender on their own, in their own way.',
+          steps: [
+            'The awarding organization opens the tender and sends the documents, including an Excel template where bidders enter their questions.',
+            'The whole team works through every document and every Tender Assist report.',
+            'Each person flags passages or topics they have questions about, in their own style and notation.',
+          ],
+        },
+        {
+          label: 'Drafting questions together',
+          description: 'Cross-functional alignment turns notes into submitted questions.',
+          steps: [
+            'The bid manager runs the Q&A round like a project manager. Timelines, deadlines, internal meetings are all tracked.',
+            "Cross-functional meetings: legal, finance, bid management draft questions together. The goal is to push the awarding organization to change the documents in Vodafone's favor, without revealing strategic weaknesses to competitors.",
+            "Agreed questions go into the awarding organization's Excel and get submitted. Competitors do the same, in parallel.",
+          ],
+        },
+        {
+          label: 'Public consolidation',
+          description: 'The awarding org republishes one consolidated sheet to all bidders.',
+          steps: [
+            "The awarding organization collects every bidder's questions, anonymizes them, adds answers, and republishes one consolidated Excel.",
+            'Every bidder, Vodafone and competitors alike, receives the same sheet. You read answers to questions you never asked.',
+          ],
+        },
+        {
+          label: 'Strategic analysis & next round',
+          description: 'Answers reshape the tender, and the cycle can repeat.',
+          steps: [
+            'The team analyzes every answer for risks, opportunities, and competitive signals. **Answers legally supersede the original tender documents**, even when no new documents are sent out.',
+            "If conditions changed, the bid manager updates SharePoint, retriggers Tender Assist's report generation, and informs the team.",
+            'New findings can spawn new questions. The cycle repeats across multiple rounds, each with hard deadlines.',
+          ],
+        },
+        {
+          label: 'Final bid',
+          description: 'Once Q&A closes, the team assembles and submits.',
+          steps: [
+            'The team puts together the final bid (offer) and submits it to the awarding organization.',
+          ],
+        },
+      ],
+      outro:
+        "Three takeaways from this map shaped the product. The cycle is **bursty, not linear**: multiple Q&A rounds, deadlines that compress. **Answers legally supersede documents**, so the system has to treat them as ground truth and reflow the analysis. And **every question Vodafone submits becomes information competitors can read**, which is what later reframed UC3 from Q&A management into strategic communications.",
+      image: {
+        label: 'Fig 3.1: Tender lifecycle journey map',
+        caption: 'End-to-end workflow uncovered during stakeholder research. High-level summary of the original Miro board.',
+        src: '/case studies/tender-workflow-map.svg',
+        width: 1600,
+        height: 900,
+      },
+    },
+    process: [],
+    solutionTitle: 'First release',
     solution:
-      'Placeholder — the detailed solution write-up is in progress.',
-    metrics: [
-      { value: '€5.2M', label: 'Projected value at scale', context: 'Enterprise bid management' },
-      { value: 'AI', label: 'Assisted contractual review', context: 'Automated risk surfacing' },
-      { value: 'Live', label: 'In active development', context: 'VOIS · Vodafone' },
+      "The first vision was a split-screen product: an AI chat on the left, a structured report on the right. The user reads the AI's analysis, asks follow-up questions, and the system answers.\n\n**We didn't build it that way.**\n\nTechnical constraints meant we couldn't deliver both chat and reports in the first release without compromising either. So we made a call: ship the reports first, hold the chat. The reasoning was about more than scope. Bid teams would only trust a chat answer if they already trusted the underlying analysis. If the static reports weren't credible, the chat would inherit that lack of trust on day one.\n\nMVP1 had three things: a tender project list, a project creation wizard, and the report covering Use Case 1 (a summary of key commercial points) and Use Case 2 (contradictions across documents), presented in a single, scannable view.\n\nA few design choices carried the trust scaffolding:",
+    solutionBullets: [
+      {
+        highlight: 'Confidence labels (High / Medium / Low)',
+        text: 'on every finding, color-coded but conservative. The pill sits next to the finding, not after it, so users see how sure the AI is at the same time they read what it\'s saying.',
+      },
+      {
+        highlight: 'AI Reasoning, expandable inline.',
+        text: 'A collapsible row under each finding that explains *why* the confidence is what it is: whether the answer came directly from the source documents or relied on inference. We added this after stakeholders asked how they\'d know why the AI was confident.',
+      },
+      {
+        highlight: 'Source citations as first-class chips',
+        text: 'under each finding, with a "+1" overflow so a finding could cite many documents without breaking the layout. Every claim ties back to specific source files.',
+      },
+      {
+        highlight: 'Versioning surfaced in the UI.',
+        text: '"Project name v1" and last-updated timestamp at the top of every report. When SharePoint changes, a new version regenerates overnight, so the report you\'re reading is always datable.',
+      },
     ],
-    reflection:
-      'Placeholder — reflection to be added as the project matures.',
+    solutionOutro:
+      "The deeper principle: AI output had to be *legible*, not just accurate. Bid teams aren't going to read a clean, confident paragraph and act on it. They want to know how the system got there.",
+    usabilityTesting: {
+      title: 'Testing with four bid managers.',
+      intro:
+        'We tested MVP1 with four bid team members in a moderated Figma prototype session. All were 40+. The tasks covered the critical path: create a project, analyze a tender, find a specific clause, assess the trustworthiness of the AI, find contradictions, download the report.\n\nThe headline result was strong. On a 1–10 scale of *"would you use this daily,"* both scored users landed at 9 or 10. They called out "bundled info at a glance," "summary," and "confidence level" as the things they liked most.\n\nBut the structure was right while the experience wasn\'t legible enough yet. Three patterns came back:',
+      items: [
+        "**Trust didn't fully land.** Users understood the confidence labels directionally (green good, red careful), but couldn't always explain *why* a label was what it was. One user said they'd cross-check with the documents anyway because they \"didn't fully trust the AI.\"",
+        '**They wanted a TL;DR before the detail.** Multiple users asked, in different words, for "a summary of the summary," "what is the case anyway?", "a one-pager tailored to my department, right at the top."',
+        '**They wanted to ask follow-up questions.** One user unprompted: *"It would be nice to search in the text, or build a chat field to analyze the results."* On follow-up: *"Sure, why not. Can\'t hurt."*',
+      ],
+      outcomeLabel: 'What we took forward',
+      outcome:
+        "That shrug was the moment the chat earned its way back into the product. Not because we'd planned it for v2, but because users named the need.\n\nSmaller findings filled out the iteration backlog: source citations were found but took a few seconds (suggestion: add an icon), the layout felt cramped (\"is this for mobile?\"), separator lines were too thin, and mandatory fields in the project creation wizard weren't marked.",
+    },
+    finalSolution: {
+      title: 'MVP2: iterating on what testing told us.',
+      intro:
+        'We responded to testing with four changes, ranging from small polish to a major architectural shift.',
+      bullets: [
+        {
+          highlight: 'The chat came back.',
+          text: 'The split-screen vision from day one, but now earned. The chat sits on the left and the report on the right, both visible at once. The chat answers carry the same trust scaffolding as the static reports: numbered source citations, the same content patterns, copy / thumbs up / thumbs down for feedback. Same AI, two surfaces, one standard of explainability.',
+        },
+        {
+          highlight: 'Executive Summary at the top of every report.',
+          text: 'The "TL;DR" users asked for. A short, plain-language overview that sits above the detailed findings, summarizing the tender\'s overall state and pointing at where the risks are.',
+        },
+        {
+          highlight: 'UC1 and UC2 share the same accordion pattern.',
+          text: 'In MVP1, the summary view (UC1) used one layout and the contradiction view (UC2) used another. In MVP2, both use the same expandable-row pattern with the same confidence pills, the same AI Reasoning row, the same source chips. Visual and behavioral consistency reduces cognitive load, especially for users in the 40+ range who scan rather than explore.',
+        },
+        {
+          highlight: 'Smaller iterations on the foundations.',
+          text: 'Source citations got document icons so they wouldn\'t be mistaken for prose. Required fields in the wizard got asterisks. The greyed-out / in-progress / ready states on the project dashboard moved from dots-only to dot + label so state was readable at a glance, not symbolic.',
+        },
+      ],
+      outro:
+        'We went live with MVP2 without a second round of formal usability testing. The trade-off was real: another round would have validated the iterations, but the team had committed to a delivery date and our changes were grounded in clear, specific feedback. We mitigated by working with stakeholders in weekly syncs and designing UC3 in parallel, keeping the feedback channel open through co-creation rather than a formal test cycle.\n\nUse cases 1 and 2 are now in production and have been adopted by **100+ users**. A small post-launch enhancement added pagination to the project list once real usage showed teams accumulating tender portfolios faster than the original layout assumed.',
+    },
+    chapters: [
+      {
+        mono: 'In design',
+        title: 'UC3: strategic communications, not Q&A management.',
+        blocks: [
+          { kind: 'paragraph', text: "The third use case is the one I'm most proud of, and it's the one I handed off at the design stage." },
+          { kind: 'paragraph', text: 'UC3 began as "let users manage bidder questions and answers." That framing was too narrow. In weekly stakeholder sessions and Miro brainstorms with Vodafone bid managers, a different shape emerged.' },
+          { kind: 'paragraph', text: 'The Q&A phase of a tender works like this: the awarding organization sends an Excel template. Bidders type their questions into it. The organization collects every bidder\'s questions, anonymizes them, adds answers, and republishes the whole consolidated sheet back to everyone, including the competitors. Multiple rounds. Hard deadlines. And the answers, once given, legally supersede the original tender documents.' },
+          { kind: 'paragraph', text: 'Two things stood out:' },
+          { kind: 'quote', text: 'Questions need to be asked in a strategic way to not give away strategic information to the other bidders.' },
+          { kind: 'quote', text: "Erkan's brain is the database." },
+          { kind: 'paragraph', text: "The first comment reframed the design problem entirely. UC3 isn't a Q&A management tool. It's a strategic communications product where every question Vodafone submits becomes information the competitors can read. The tool has to help bid teams ask questions that get useful answers *without revealing what they don't know.*" },
+          { kind: 'paragraph', text: "The second comment, about the team's senior domain expert holding institutional knowledge in his head, became the long-term vision: a knowledge layer that captures lessons learned across tenders. It was scoped as a future use case, outside of UC3." },
+          {
+            kind: 'image',
+            image: {
+              label: 'Fig 7.1: UC3 Miro boards',
+              caption: 'Detailed assessment and bidder Q&A user journey. Real stakeholder co-creation drove the design.',
+            },
+          },
+          { kind: 'aside', label: 'Features' },
+          {
+            kind: 'list',
+            intro: 'The features that came out of this:',
+            items: [
+              '**A standalone canvas, anchored on rounds.** Bidder Q&A got its own canvas, separate from Summary and Contradictions, because it follows a different clock. The round selector lives in the canvas header: switch the round, and everything below it (insights and answers) switches context with it.',
+              '**Descoping the workbench.** The original UC3 scope included a full question-authoring flow: drafting, AI-suggested questions, collaborative editing. Mid-design, I cut it. Teams already draft questions in workshops and notes; the unmet need was making sense of what comes back. The canvas now does two things well instead of four things adequately: AI insights and the Q&A record.',
+              '**Two tabs, two altitudes.** The Insights tab is the synthesis: a strategy viability verdict after each round (*"viable with 2 caveats"*), and AI insight cards across all answers: risks, opportunities, calculation inputs, timeline impacts, competitor signals. The Questions tab is the evidence: every question with its answer, source links back to the tender documents, and a per-question AI analysis. Each level links to the other: insights cite their related answers; answers show which insight they feed.',
+              '**Impact on existing analysis.** Because customer answers legally supersede the original documents, every answer can change the underlying reports. The system surfaces which UC1/UC2 reports are affected and lets the user re-run analysis with the new answer. It\'s a change-management layer most AI products don\'t acknowledge needs to exist.',
+              '**Competitor Q&A as intelligence.** The consolidated sheet from the awarding authority includes every bidder\'s questions. The canvas treats this as signal, not noise: a source filter separates Vodafone\'s questions from competitors\', and cross-round pattern detection flags what competitors keep asking about, which hints at their weaknesses.',
+              '**Suggested follow-ups close the loop.** Where an answer is non-binding or evasive, the AI drafts a follow-up question for the next round, shown both at the insight level and on the individual answer.',
+            ],
+          },
+          {
+            kind: 'imageGrid',
+            images: [
+              { label: 'Fig 7.2: Insights tab', caption: 'Strategy viability check and AI insight cards across all answers' },
+              { label: 'Fig 7.3: Impact on existing analysis', caption: 'Answers supersede documents, reports re-run' },
+              { label: 'Fig 7.4: Questions tab', caption: 'Q&A record with per-question AI analysis and source links' },
+            ],
+          },
+          { kind: 'aside', label: 'Design handoff' },
+          { kind: 'paragraph', text: 'A note on width: UC1 and UC2 are read-heavy. UC3 is read-and-decide heavy: scanning insights, jumping to evidence, deciding what to re-run. The final design makes the canvas wider than the chat by default, on the principle that width should follow the dominant mode of work. Users can still stretch the chat if they want.' },
+          {
+            kind: 'image',
+            image: {
+              label: 'Fig 7.5: Standalone canvas',
+              caption: 'Round selector in the header, two-tab structure.',
+            },
+          },
+          { kind: 'aside', label: 'Process note' },
+          { kind: 'paragraph', text: 'UC3 prototypes were built rapidly with Figma Make and AI assistance, then refined through stakeholder reaction in weekly syncs. The tooling let me move faster between an idea and stakeholder validation, but the product decisions (the round model, the descope of the authoring workbench, the two-altitude structure of insights and evidence, the change-management layer) came from translating real stakeholder pain into a coherent architecture.' },
+        ],
+      },
+    ],
+    outcomesReflection: {
+      title: "What I'm taking from this",
+      intro: '',
+      impacts: [
+        {
+          label: 'Earn features instead of assuming them',
+          description: "De-scoping the chat in MVP1 wasn't a compromise. It was a better product decision. Users were more credible than the original vision in deciding when the chat was ready.",
+        },
+        {
+          label: 'AI output has to be legible, not just accurate',
+          description: "Confidence labels, AI Reasoning, source citations, traceability: these aren't nice-to-haves for an enterprise AI product. They're the load-bearing structure of trust.",
+        },
+        {
+          label: 'Persona constraints are an opportunity',
+          description: "Designing for users in their 40s and above, working under high stakes, forced clarity I might not have pushed for otherwise. The discipline made the product better for everyone.",
+        },
+        {
+          label: 'Stakeholder co-creation is design research',
+          description: 'A stakeholder saying *"questions need to be asked in a strategic way"* reframed UC3 from Q&A management to strategic communications, the most important shift in the project. Strategic Check was designed for the drafting flow; when I descoped the authoring workbench, its core question, *"will this hurt you?"*, migrated into the post-answer analysis, where the strategy viability check now asks it of the whole round instead of a single draft. The feature changed; the framing stayed.',
+        },
+      ],
+      closing:
+        'Tender Assistant taught me that designing AI products is less about *the AI* than it is about the humans next to it: what they need to believe before they\'ll act, what they need to see before they\'ll trust, and what they need to control before they\'ll let the machine do its work.',
+    },
+    images: {
+      solutionGrid: [
+        {
+          label: 'Fig 4.1: Project dashboard',
+          caption: 'Project list with status indicators',
+        },
+        {
+          label: 'Fig 4.2: Project creation wizard',
+          caption: 'SharePoint as source of truth',
+        },
+        {
+          label: 'Fig 4.3: Report view',
+          caption: 'Confidence labels, AI Reasoning, source citation chips',
+        },
+      ],
+      usabilityTesting: {
+        label: 'Fig 5.1: Miro board, sticky-note testing notes',
+        caption: 'Color-coded positive / negative / neutral / verbatim from the moderated session.',
+        src: '/case studies/tender-usability-testing.png',
+        width: 2800,
+        height: 931,
+      },
+      finalSolution: [
+        {
+          label: 'Fig 6.1: MVP2 split-screen with chat',
+          caption: 'Numbered source citations, executive summary at the top',
+        },
+      ],
+    },
+    metrics: [
+      { value: '€5.2M', label: 'Projected value at scale' },
+      { value: '100+', label: 'Users on UC1 & UC2' },
+      { value: '9 months', label: 'End to end design' },
+    ],
   },
   {
     slug: 'session-replay',

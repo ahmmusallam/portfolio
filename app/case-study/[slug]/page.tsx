@@ -13,6 +13,7 @@ import BadgeDataTable from '@/components/BadgeDataTable';
 import CompetitorGrid from '@/components/CompetitorGrid';
 import IADiagram from '@/components/IADiagram';
 import ImageGallery from '@/components/ImageGallery';
+import WorkflowPhases from '@/components/WorkflowPhases';
 
 export async function generateStaticParams() {
   return caseStudies.map((c) => ({ slug: c.slug }));
@@ -31,6 +32,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 // `sectionOrder` in lib/case-studies.ts. Keys with no data render nothing.
 const DEFAULT_ORDER = [
   'overview',
+  'myRole',
+  'workflowResearch',
   'process',
   'problemTimeline',
   'insights',
@@ -46,6 +49,7 @@ const DEFAULT_ORDER = [
   'dataAnalysis',
   'finalSolution',
   'usabilityTesting',
+  'chapters',
   'chart',
   'metrics',
   'nextSteps',
@@ -53,17 +57,47 @@ const DEFAULT_ORDER = [
   'reflection',
 ];
 
-// Parse **bold** segments out of plain text into ink-50 emphasis spans.
+// Parse **bold** and *italic* segments out of plain text into emphasis spans.
 function renderRich(text: string): React.ReactNode {
-  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
-    i % 2 === 1 ? (
-      <span key={i} className="text-ink-50 font-semibold">
-        {part}
-      </span>
-    ) : (
-      <span key={i}>{part}</span>
-    ),
-  );
+  // Split on **bold** first.
+  return text.split(/\*\*(.+?)\*\*/g).map((boldPart, i) => {
+    if (i % 2 === 1) {
+      return (
+        <strong key={i} className="text-ink-50 font-semibold">
+          {boldPart}
+        </strong>
+      );
+    }
+    // Within non-bold segments, split on *italic*.
+    return (
+      <Fragment key={i}>
+        {boldPart.split(/\*(.+?)\*/g).map((part, j) =>
+          j % 2 === 1 ? (
+            <em key={j} className="italic">
+              {part}
+            </em>
+          ) : (
+            <span key={j}>{part}</span>
+          ),
+        )}
+      </Fragment>
+    );
+  });
+}
+
+// Render text with `\n\n`-separated paragraphs. Each paragraph supports
+// `renderRich` markers. Wrap in the caller's preferred <p> element via `as`.
+function renderParagraphs(
+  text: string,
+  className: string,
+  spacing: string = 'mt-6',
+): React.ReactNode {
+  const paras = text.split(/\n\n+/).filter(Boolean);
+  return paras.map((p, i) => (
+    <p key={i} className={`${className} ${i === 0 ? '' : spacing}`}>
+      {renderRich(p)}
+    </p>
+  ));
 }
 
 const SECTION = 'py-20 md:py-28 border-t border-ink-800';
@@ -79,6 +113,51 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
     overview: (() => {
       const overviewImageSide = study.slug === 'smartresolve';
       const hasImage = !!study.images?.overview;
+      const hasHighlight = !!study.overviewHighlight;
+
+      if (hasHighlight) {
+        return (
+          <section className={SECTION}>
+            <div className="container-x">
+              <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+                Overview
+              </h2>
+
+              <div className="mt-12 md:mt-16 grid md:grid-cols-12 gap-8 md:gap-12 items-stretch">
+                <div className="md:col-span-7">
+                  {renderParagraphs(
+                    study.overview,
+                    'text-base md:text-lg text-ink-300 text-pretty leading-relaxed',
+                    'mt-5',
+                  )}
+                </div>
+                <aside className="md:col-span-5 md:justify-self-end w-full md:max-w-md h-full">
+                  <div className="h-full rounded-3xl border border-ink-800 bg-ink-900/30 p-6 md:p-8 flex flex-col">
+                    <p className="mono-label text-ink-500">At a glance</p>
+                    <div className="mt-auto pt-10">
+                      <p className="text-6xl md:text-7xl text-ink-50 font-medium tracking-tight leading-none">
+                        {study.overviewHighlight!.value}
+                      </p>
+                      {study.overviewHighlight!.caption && (
+                        <p className="mt-3 text-sm text-ink-400">
+                          {study.overviewHighlight!.caption}
+                        </p>
+                      )}
+                    </div>
+                    {study.overviewHighlight!.detail && (
+                      <div className="mt-8 pt-6 border-t border-ink-800">
+                        <p className="text-sm md:text-base text-ink-300 text-pretty leading-relaxed">
+                          {renderRich(study.overviewHighlight!.detail)}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </section>
+        );
+      }
 
       if (overviewImageSide && hasImage) {
         return (
@@ -115,9 +194,11 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                 <p className="mono-label sticky top-32">Overview</p>
               </div>
               <div className="md:col-span-9">
-                <p className="text-2xl md:text-3xl text-ink-100 text-pretty leading-snug font-light">
-                  {study.overview}
-                </p>
+                {renderParagraphs(
+                  study.overview,
+                  'text-2xl md:text-3xl text-ink-100 text-pretty leading-snug font-light',
+                  'mt-8',
+                )}
               </div>
             </div>
 
@@ -136,6 +217,25 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
         </section>
       );
     })(),
+
+    myRole: study.myRole ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="grid md:grid-cols-12 gap-8">
+            <div className="md:col-span-3">
+              <p className="mono-label sticky top-32">My role</p>
+            </div>
+            <div className="md:col-span-9">
+              {renderParagraphs(
+                study.myRole,
+                'text-lg md:text-xl text-ink-300 text-pretty leading-relaxed',
+                'mt-6',
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    ) : null,
 
     process: (
       <section className={SECTION}>
@@ -208,7 +308,10 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
     // Standalone Problem (used when ordered separately from Timeline)
     problem: (() => {
-      const problemAsCards = ['smartresolve', 'superpay-dashboard'].includes(study.slug);
+      const problemAsCards = ['smartresolve', 'superpay-dashboard', 'tender-assist'].includes(study.slug);
+      const cards = study.problemCards;
+      const cardCount = cards?.length ?? study.problem.length;
+      const cardsGridClass = cardCount === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2';
       return (
         <section className={SECTION}>
           <div className="container-x">
@@ -220,30 +323,55 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             </div>
             <div className={problemAsCards ? '' : 'max-w-3xl'}>
               {study.problemIntro && (
-                <p className="text-lg md:text-xl text-ink-300 mb-8 leading-relaxed text-pretty max-w-3xl">
-                  {study.problemIntro}
-                </p>
+                <div className="mb-8 max-w-3xl">
+                  {renderParagraphs(
+                    study.problemIntro,
+                    'text-lg md:text-xl text-ink-300 leading-relaxed text-pretty',
+                    'mt-6',
+                  )}
+                </div>
               )}
               {problemAsCards && study.problemOutro && (
-                <p className="text-lg md:text-xl text-ink-100 mb-10 leading-relaxed text-pretty font-light max-w-3xl">
-                  {study.problemOutro}
-                </p>
+                <div className="mb-10 max-w-3xl">
+                  {renderParagraphs(
+                    study.problemOutro,
+                    'text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light',
+                    'mt-6',
+                  )}
+                </div>
               )}
               {problemAsCards ? (
-                <div className="grid md:grid-cols-2 gap-6">
-                  {study.problem.map((p, i) => (
-                    <div
-                      key={i}
-                      className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8 md:p-10"
-                    >
-                      <p className="mono-label text-ink-500 mb-5">
-                        {String(i + 1).padStart(2, '0')}
-                      </p>
-                      <p className="text-lg md:text-xl text-ink-100 leading-snug text-pretty">
-                        {p}
-                      </p>
-                    </div>
-                  ))}
+                <div className={`grid gap-6 ${cardsGridClass}`}>
+                  {cards
+                    ? cards.map((c, i) => (
+                        <div
+                          key={i}
+                          className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8 md:p-10 h-full flex flex-col"
+                        >
+                          <p className="mono-label text-ink-500">
+                            {String(i + 1).padStart(2, '0')}
+                          </p>
+                          <h3 className="mt-5 text-xl md:text-2xl text-ink-50 font-medium tracking-tight">
+                            {c.label}
+                          </h3>
+                          <p className="mt-4 text-base md:text-lg text-ink-300 leading-relaxed text-pretty">
+                            {renderRich(c.text)}
+                          </p>
+                        </div>
+                      ))
+                    : study.problem.map((p, i) => (
+                        <div
+                          key={i}
+                          className="rounded-3xl border border-ink-800 bg-ink-900/30 p-8 md:p-10"
+                        >
+                          <p className="mono-label text-ink-500 mb-5">
+                            {String(i + 1).padStart(2, '0')}
+                          </p>
+                          <p className="text-lg md:text-xl text-ink-100 leading-snug text-pretty">
+                            {p}
+                          </p>
+                        </div>
+                      ))}
                 </div>
               ) : (
                 <ul className="space-y-5">
@@ -258,15 +386,75 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                 </ul>
               )}
               {!problemAsCards && study.problemOutro && (
-                <p className="mt-8 text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light max-w-3xl">
-                  {study.problemOutro}
-                </p>
+                <div className="mt-8 max-w-3xl">
+                  {renderParagraphs(
+                    study.problemOutro,
+                    'text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light',
+                    'mt-6',
+                  )}
+                </div>
+              )}
+              {study.problemCallout && (
+                <div className="mt-16 md:mt-20 border-y border-ink-800 py-16 md:py-20 text-center">
+                  <p className="text-ink-50 font-medium tracking-tight tabular-nums text-[clamp(96px,18vw,240px)] leading-[0.85]">
+                    {study.problemCallout.value}
+                  </p>
+                  <p className="mt-8 mx-auto max-w-2xl text-base md:text-lg text-ink-300 leading-relaxed text-pretty">
+                    {study.problemCallout.caption}
+                  </p>
+                </div>
               )}
             </div>
           </div>
         </section>
       );
     })(),
+
+    workflowResearch: study.workflowResearch ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="mb-12 md:mb-16 max-w-3xl">
+            <p className="mono-label mb-3">Research</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              {study.workflowResearch.title ?? 'Mapping the real workflow'}
+            </h2>
+            {study.workflowResearch.intro && (
+              <div className="mt-6">
+                {renderParagraphs(
+                  study.workflowResearch.intro,
+                  'text-lg md:text-xl text-ink-300 leading-relaxed text-pretty',
+                  'mt-5',
+                )}
+              </div>
+            )}
+          </div>
+
+          {study.workflowResearch.image && (
+            <div className="mb-16 md:mb-20">
+              <ImagePlaceholder
+                label={study.workflowResearch.image.label}
+                caption={study.workflowResearch.image.caption}
+                src={study.workflowResearch.image.src}
+                width={study.workflowResearch.image.width}
+                height={study.workflowResearch.image.height}
+              />
+            </div>
+          )}
+
+          <WorkflowPhases phases={study.workflowResearch.phases} />
+
+          {study.workflowResearch.outro && (
+            <div className="mt-16 md:mt-20 max-w-3xl">
+              {renderParagraphs(
+                study.workflowResearch.outro,
+                'text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light',
+                'mt-6',
+              )}
+            </div>
+          )}
+        </div>
+      </section>
+    ) : null,
 
     // Standalone Timeline (used when ordered separately from Problem)
     timeline: study.timelineDetail ? (
@@ -628,12 +816,21 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
       const solutionImageSide =
         study.slug === 'smartresolve' && !!study.images?.solution?.src;
+      const solutionBigTitle = study.slug === 'tender-assist';
+
+      const proseClass = solutionBigTitle
+        ? 'text-lg md:text-xl text-ink-300 text-pretty leading-relaxed'
+        : 'text-xl md:text-2xl text-ink-200 text-pretty leading-relaxed';
+      const bulletClass = solutionBigTitle
+        ? 'text-base md:text-lg text-ink-300 leading-relaxed text-pretty'
+        : 'text-lg text-ink-200 leading-relaxed text-pretty';
+      const outroClass = solutionBigTitle
+        ? 'text-base md:text-lg text-ink-200 leading-relaxed text-pretty font-light'
+        : 'text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light';
 
       const textBlock = (
         <>
-          <p className="text-xl md:text-2xl text-ink-200 text-pretty leading-relaxed">
-            {study.solution}
-          </p>
+          {renderParagraphs(study.solution, proseClass, 'mt-6')}
 
           {study.solutionBullets && study.solutionBullets.length > 0 && (
             <ul className="mt-8 space-y-5">
@@ -642,8 +839,13 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                   <span className="mono-label text-ink-600 mt-1.5 shrink-0">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <p className="text-lg text-ink-200 leading-relaxed text-pretty">
-                    {b.text}
+                  <p className={bulletClass}>
+                    {b.highlight && (
+                      <>
+                        <span className="text-ink-50 font-semibold">{b.highlight}</span>{' '}
+                      </>
+                    )}
+                    {renderRich(b.text)}
                     {b.ref && (
                       <span className="ml-2 text-sm font-mono text-ink-500">({b.ref})</span>
                     )}
@@ -654,12 +856,50 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           )}
 
           {study.solutionOutro && (
-            <p className="mt-8 text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light">
-              {study.solutionOutro}
-            </p>
+            <div className="mt-8">
+              {renderParagraphs(study.solutionOutro, outroClass, 'mt-6')}
+            </div>
           )}
         </>
       );
+
+      if (solutionBigTitle) {
+        return (
+          <section className={SECTION}>
+            <div className="container-x">
+              <div className="mb-12 md:mb-16 max-w-3xl">
+                <p className="mono-label mb-3">Solution</p>
+                <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+                  {study.solutionTitle ?? 'The solution'}
+                </h2>
+              </div>
+              <div className="max-w-3xl">{textBlock}</div>
+
+              {study.images?.solutionGrid && study.images.solutionGrid.length > 0 && (
+                <div
+                  className={`mt-16 grid gap-4 md:gap-5 ${
+                    study.images.solutionGrid.length === 2
+                      ? 'sm:grid-cols-2'
+                      : 'sm:grid-cols-2 lg:grid-cols-3'
+                  }`}
+                >
+                  {study.images.solutionGrid.map((img, i) => (
+                    <ImagePlaceholder
+                      key={i}
+                      label={img.label}
+                      caption={img.caption}
+                      src={img.src}
+                      width={img.width}
+                      height={img.height}
+                      aspect="aspect-[4/3]"
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        );
+      }
 
       if (solutionImageSide) {
         const img = study.images!.solution!;
@@ -708,6 +948,28 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                   width={study.images.solution.width}
                   height={study.images.solution.height}
                 />
+              </div>
+            )}
+
+            {study.images?.solutionGrid && study.images.solutionGrid.length > 0 && (
+              <div
+                className={`mt-16 grid gap-4 md:gap-5 ${
+                  study.images.solutionGrid.length === 2
+                    ? 'sm:grid-cols-2'
+                    : 'sm:grid-cols-2 lg:grid-cols-3'
+                }`}
+              >
+                {study.images.solutionGrid.map((img, i) => (
+                  <ImagePlaceholder
+                    key={i}
+                    label={img.label}
+                    caption={img.caption}
+                    src={img.src}
+                    width={img.width}
+                    height={img.height}
+                    aspect="aspect-[4/3]"
+                  />
+                ))}
               </div>
             )}
           </div>
@@ -827,9 +1089,13 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
               <h2 className="text-3xl md:text-4xl font-medium text-ink-50 tracking-tight text-balance">
                 {study.finalSolution.title}
               </h2>
-              <p className="mt-6 text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
-                {study.finalSolution.intro}
-              </p>
+              <div className="mt-6">
+                {renderParagraphs(
+                  study.finalSolution.intro,
+                  'text-lg md:text-xl text-ink-300 leading-relaxed text-pretty',
+                  'mt-5',
+                )}
+              </div>
 
               <ul className="mt-8 space-y-5">
                 {study.finalSolution.bullets.map((b, i) => (
@@ -839,13 +1105,23 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                     </span>
                     <p className="text-lg text-ink-200 leading-relaxed text-pretty">
                       {b.highlight && (
-                        <span className="text-ink-50 font-medium">{b.highlight}: </span>
+                        <span className="text-ink-50 font-medium">{b.highlight} </span>
                       )}
-                      {b.text}
+                      {renderRich(b.text)}
                     </p>
                   </li>
                 ))}
               </ul>
+
+              {study.finalSolution.outro && (
+                <div className="mt-10">
+                  {renderParagraphs(
+                    study.finalSolution.outro,
+                    'text-lg md:text-xl text-ink-100 leading-relaxed text-pretty font-light',
+                    'mt-6',
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
@@ -891,15 +1167,34 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           <h2 className="text-3xl md:text-4xl font-medium text-ink-50 tracking-tight text-balance">
             {study.usabilityTesting!.title}
           </h2>
-          <p className="mt-6 text-lg md:text-xl text-ink-300 leading-relaxed text-pretty">
-            {study.usabilityTesting!.intro}
-          </p>
+          <div className="mt-6">
+            {renderParagraphs(
+              study.usabilityTesting!.intro,
+              'text-lg md:text-xl text-ink-300 leading-relaxed text-pretty',
+              'mt-5',
+            )}
+          </div>
+
+          {study.usabilityTesting!.quotes && study.usabilityTesting!.quotes.length > 0 && (
+            <div className="mt-8 space-y-4">
+              {study.usabilityTesting!.quotes.map((q, i) => (
+                <blockquote
+                  key={i}
+                  className="border-l-2 border-ink-600 pl-5 text-lg md:text-xl text-ink-100 italic leading-relaxed text-pretty"
+                >
+                  {renderRich(q)}
+                </blockquote>
+              ))}
+            </div>
+          )}
 
           <ul className="mt-8 space-y-5">
             {study.usabilityTesting!.items.map((item, i) => (
               <li key={i} className="flex items-start gap-4">
                 <span className="font-mono text-ink-50 mt-1 shrink-0">✓</span>
-                <p className="text-lg text-ink-200 leading-relaxed text-pretty">{item}</p>
+                <p className="text-lg text-ink-200 leading-relaxed text-pretty">
+                  {renderRich(item)}
+                </p>
               </li>
             ))}
           </ul>
@@ -908,9 +1203,11 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             {study.usabilityTesting!.outcomeLabel && (
               <p className="mono-label mb-3">{study.usabilityTesting!.outcomeLabel}</p>
             )}
-            <p className="text-lg text-ink-100 leading-relaxed text-pretty">
-              {study.usabilityTesting!.outcome}
-            </p>
+            {renderParagraphs(
+              study.usabilityTesting!.outcome,
+              'text-lg text-ink-100 leading-relaxed text-pretty',
+              'mt-5',
+            )}
           </div>
         </>
       );
@@ -951,13 +1248,21 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
             {study.images?.usabilityTesting && (
               <div className="mt-16">
-                <ImagePlaceholder
-                  label={study.images.usabilityTesting.label}
-                  caption={study.images.usabilityTesting.caption}
-                  src={study.images.usabilityTesting.src}
-                  width={study.images.usabilityTesting.width}
-                  height={study.images.usabilityTesting.height}
-                />
+                {study.images.usabilityTesting.src ? (
+                  <ZoomableImage
+                    src={study.images.usabilityTesting.src}
+                    label={study.images.usabilityTesting.label}
+                    caption={study.images.usabilityTesting.caption}
+                    width={study.images.usabilityTesting.width!}
+                    height={study.images.usabilityTesting.height!}
+                    containerClassName="rounded-3xl border border-ink-800"
+                  />
+                ) : (
+                  <ImagePlaceholder
+                    label={study.images.usabilityTesting.label}
+                    caption={study.images.usabilityTesting.caption}
+                  />
+                )}
               </div>
             )}
           </div>
@@ -1044,6 +1349,121 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </div>
         </div>
       </section>
+    ) : null,
+
+    chapters: study.chapters && study.chapters.length > 0 ? (
+      <>
+        {study.chapters.map((chapter, ci) => (
+          <section key={ci} className={SECTION}>
+            <div className="container-x">
+              <div className="grid md:grid-cols-12 gap-8">
+                <div className="md:col-span-3">
+                  <p className="mono-label sticky top-32">{chapter.mono}</p>
+                </div>
+                <div className="md:col-span-9">
+                  <h2 className="text-3xl md:text-4xl font-medium text-ink-50 tracking-tight text-balance mb-10">
+                    {chapter.title}
+                  </h2>
+
+                  {chapter.blocks.map((block, bi) => {
+                    if (block.kind === 'paragraph') {
+                      return (
+                        <p
+                          key={bi}
+                          className="text-lg md:text-xl text-ink-200 leading-relaxed text-pretty mb-6 last:mb-0"
+                        >
+                          {renderRich(block.text)}
+                        </p>
+                      );
+                    }
+                    if (block.kind === 'quote') {
+                      return (
+                        <blockquote
+                          key={bi}
+                          className="border-l-2 border-ink-600 pl-5 my-6 text-lg md:text-xl text-ink-100 italic leading-relaxed text-pretty"
+                        >
+                          {renderRich(block.text)}
+                        </blockquote>
+                      );
+                    }
+                    if (block.kind === 'aside') {
+                      return (
+                        <p
+                          key={bi}
+                          className="mono-label mt-12 mb-6 border-t border-ink-800 pt-8"
+                        >
+                          {block.label}
+                        </p>
+                      );
+                    }
+                    if (block.kind === 'list') {
+                      return (
+                        <div key={bi} className="my-6">
+                          {block.intro && (
+                            <p className="text-lg md:text-xl text-ink-200 leading-relaxed text-pretty mb-6">
+                              {renderRich(block.intro)}
+                            </p>
+                          )}
+                          <ul className="space-y-5">
+                            {block.items.map((item, ii) => (
+                              <li key={ii} className="flex items-start gap-5">
+                                <span className="mono-label text-ink-600 mt-1.5 shrink-0">
+                                  {String(ii + 1).padStart(2, '0')}
+                                </span>
+                                <p className="text-lg text-ink-200 leading-relaxed text-pretty">
+                                  {renderRich(item)}
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    }
+                    if (block.kind === 'image') {
+                      return (
+                        <div key={bi} className="my-10">
+                          <ImagePlaceholder
+                            label={block.image.label}
+                            caption={block.image.caption}
+                            src={block.image.src}
+                            width={block.image.width}
+                            height={block.image.height}
+                          />
+                        </div>
+                      );
+                    }
+                    if (block.kind === 'imageGrid') {
+                      const cols =
+                        block.images.length === 2
+                          ? 'sm:grid-cols-2'
+                          : 'sm:grid-cols-2 lg:grid-cols-3';
+                      return (
+                        <div
+                          key={bi}
+                          className={`my-10 grid gap-4 md:gap-5 ${cols}`}
+                        >
+                          {block.images.map((img, ii) => (
+                            <ImagePlaceholder
+                              key={ii}
+                              label={img.label}
+                              caption={img.caption}
+                              src={img.src}
+                              width={img.width}
+                              height={img.height}
+                              aspect="aspect-[4/3]"
+                            />
+                          ))}
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
+                </div>
+              </div>
+            </div>
+          </section>
+        ))}
+      </>
     ) : null,
 
     outcomesReflection: study.outcomesReflection ? (
@@ -1160,7 +1580,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
           {/* Metadata grid */}
           {(() => {
-            const compactMeta = ['session-replay', 'smartresolve', 'superpay-dashboard'].includes(study.slug);
+            const compactMeta = ['tender-assist', 'session-replay', 'smartresolve', 'superpay-dashboard'].includes(study.slug);
             return (
               <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl border-t border-ink-800 pt-8">
                 <div>
@@ -1183,7 +1603,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                 )}
                 <div>
                   <p className="mono-label">Team</p>
-                  <p className="text-ink-100 mt-1.5 text-sm">{study.team.join(', ')}</p>
+                  <p className="text-ink-100 mt-1.5">{study.team.join(', ')}</p>
                 </div>
                 {!compactMeta && (
                   <div className="col-span-2">
