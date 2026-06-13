@@ -883,17 +883,40 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                       : 'sm:grid-cols-2 lg:grid-cols-3'
                   }`}
                 >
-                  {study.images.solutionGrid.map((img, i) => (
-                    <ImagePlaceholder
-                      key={i}
-                      label={img.label}
-                      caption={img.caption}
-                      src={img.src}
-                      width={img.width}
-                      height={img.height}
-                      aspect="aspect-[4/3]"
-                    />
-                  ))}
+                  {study.images.solutionGrid.map((img, i) =>
+                    img.src ? (
+                      <figure key={i} className="flex flex-col gap-3">
+                        <ZoomableImage
+                          src={img.src}
+                          label={img.label}
+                          caption={img.caption}
+                          width={img.width!}
+                          height={img.height!}
+                          previewAspect="aspect-[4/3]"
+                          objectPosition="object-top"
+                          containerClassName="rounded-3xl border border-ink-800"
+                        />
+                        <figcaption className="text-center">
+                          <p className="mono-label">{img.label}</p>
+                          {img.caption && (
+                            <p className="text-ink-500 text-sm mt-1.5 max-w-md mx-auto">
+                              {img.caption}
+                            </p>
+                          )}
+                        </figcaption>
+                      </figure>
+                    ) : (
+                      <ImagePlaceholder
+                        key={i}
+                        label={img.label}
+                        caption={img.caption}
+                        src={img.src}
+                        width={img.width}
+                        height={img.height}
+                        aspect="aspect-[4/3]"
+                      />
+                    ),
+                  )}
                 </div>
               )}
             </div>

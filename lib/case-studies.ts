@@ -342,7 +342,7 @@ export const caseStudies: CaseStudy[] = [
     year: '2026',
     role: 'Senior Product Designer',
     timeline: '9 months',
-    thumbnail: '/case studies/tender-assist.svg',
+    thumbnail: '/case studies/tender-assist.jpg',
     team: ['PM', 'Engineering', 'Bid stakeholders'],
     tools: ['Figma', 'FigJam'],
     nda: true,
@@ -594,14 +594,23 @@ export const caseStudies: CaseStudy[] = [
         {
           label: 'Fig 4.1: Project dashboard',
           caption: 'Project list with status indicators',
+          src: '/case studies/tender-mvp1-projects.jpg',
+          width: 2880,
+          height: 1800,
         },
         {
           label: 'Fig 4.2: Project creation wizard',
           caption: 'SharePoint as source of truth',
+          src: '/case studies/tender-mvp1-create-project.jpg',
+          width: 2880,
+          height: 1800,
         },
         {
           label: 'Fig 4.3: Report view',
           caption: 'Confidence labels, AI Reasoning, source citation chips',
+          src: '/case studies/tender-mvp1-summary.jpg',
+          width: 2880,
+          height: 1800,
         },
       ],
       usabilityTesting: {
