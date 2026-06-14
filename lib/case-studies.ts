@@ -523,13 +523,6 @@ export const caseStudies: CaseStudy[] = [
           { kind: 'quote', text: "Erkan's brain is the database." },
           { kind: 'paragraph', text: "The first comment reframed the design problem entirely. UC3 isn't a Q&A management tool. It's a strategic communications product where every question Vodafone submits becomes information the competitors can read. The tool has to help bid teams ask questions that get useful answers *without revealing what they don't know.*" },
           { kind: 'paragraph', text: "The second comment, about the team's senior domain expert holding institutional knowledge in his head, became the long-term vision: a knowledge layer that captures lessons learned across tenders. It was scoped as a future use case, outside of UC3." },
-          {
-            kind: 'image',
-            image: {
-              label: 'Fig 7.1: UC3 Miro boards',
-              caption: 'Detailed assessment and bidder Q&A user journey. Real stakeholder co-creation drove the design.',
-            },
-          },
           { kind: 'aside', label: 'Features' },
           {
             kind: 'list',
@@ -544,20 +537,35 @@ export const caseStudies: CaseStudy[] = [
             ],
           },
           {
-            kind: 'imageGrid',
-            images: [
-              { label: 'Fig 7.2: Insights tab', caption: 'Strategy viability check and AI insight cards across all answers' },
-              { label: 'Fig 7.3: Impact on existing analysis', caption: 'Answers supersede documents, reports re-run' },
-              { label: 'Fig 7.4: Questions tab', caption: 'Q&A record with per-question AI analysis and source links' },
-            ],
+            kind: 'image',
+            image: {
+              label: 'Fig 7.1: Standalone canvas',
+              caption: 'The canvas with the round selector in the header and the two-tab structure (Insights / Questions).',
+              src: '/case studies/tender-uc3-canvas.jpg',
+              width: 2880,
+              height: 1800,
+            },
           },
           { kind: 'aside', label: 'Design handoff' },
           { kind: 'paragraph', text: 'A note on width: UC1 and UC2 are read-heavy. UC3 is read-and-decide heavy: scanning insights, jumping to evidence, deciding what to re-run. The final design makes the canvas wider than the chat by default, on the principle that width should follow the dominant mode of work. Users can still stretch the chat if they want.' },
           {
             kind: 'image',
             image: {
-              label: 'Fig 7.5: Standalone canvas',
-              caption: 'Round selector in the header, two-tab structure.',
+              label: 'Fig 7.2: Insights tab',
+              caption: 'Strategy viability verdict, then AI insight cards across all answers: risks, opportunities, calculation inputs, timeline impacts, competitor signals. Each insight cites the related answers, surfaces impact on existing UC1 / UC2 reports, and drafts a suggested follow-up.',
+              src: '/case studies/tender-uc3-insights.jpg',
+              width: 1440,
+              height: 3368,
+            },
+          },
+          {
+            kind: 'image',
+            image: {
+              label: 'Fig 7.3: Questions tab',
+              caption: 'The Q&A record: every question with its answer, source links back to the tender documents, per-question AI analysis, and suggested follow-ups for non-binding or evasive responses.',
+              src: '/case studies/tender-uc3-questions.jpg',
+              width: 2880,
+              height: 1800,
             },
           },
           { kind: 'aside', label: 'Process note' },
@@ -623,7 +631,19 @@ export const caseStudies: CaseStudy[] = [
       finalSolution: [
         {
           label: 'Fig 6.1: MVP2 split-screen with chat',
-          caption: 'Numbered source citations, executive summary at the top',
+          caption:
+            'Chat and the static report carry the same trust scaffolding: source chips, AI Reasoning, executive summary at the top.',
+          src: '/case studies/tender-mvp2-chat.jpg',
+          width: 2880,
+          height: 1800,
+        },
+        {
+          label: 'Fig 6.2: Contradictions view',
+          caption:
+            'Findings expand to show source quotes side by side and a confidence rationale; the chat is available but not in focus.',
+          src: '/case studies/tender-mvp2-contradictions.jpg',
+          width: 2880,
+          height: 1800,
         },
       ],
     },

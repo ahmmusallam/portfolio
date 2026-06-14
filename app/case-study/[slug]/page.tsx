@@ -892,8 +892,6 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                           caption={img.caption}
                           width={img.width!}
                           height={img.height!}
-                          previewAspect="aspect-[4/3]"
-                          objectPosition="object-top"
                           containerClassName="rounded-3xl border border-ink-800"
                         />
                         <figcaption className="text-center">
@@ -1149,7 +1147,47 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </div>
 
           {study.images?.finalSolution && study.images.finalSolution.length > 0 && (
-            study.images.finalSolution[0].src ? (
+            study.slug === 'tender-assist' ? (
+              <div
+                className={`mt-16 grid gap-6 ${
+                  study.images.finalSolution.length === 1
+                    ? ''
+                    : 'sm:grid-cols-2'
+                }`}
+              >
+                {study.images.finalSolution.map((img, i) =>
+                  img.src ? (
+                    <figure key={i} className="flex flex-col gap-3">
+                      <ZoomableImage
+                        src={img.src}
+                        label={img.label}
+                        caption={img.caption}
+                        width={img.width!}
+                        height={img.height!}
+                        containerClassName="rounded-3xl border border-ink-800"
+                      />
+                      <figcaption className="text-center">
+                        <p className="mono-label">{img.label}</p>
+                        {img.caption && (
+                          <p className="text-ink-500 text-sm mt-1.5 max-w-md mx-auto">
+                            {img.caption}
+                          </p>
+                        )}
+                      </figcaption>
+                    </figure>
+                  ) : (
+                    <ImagePlaceholder
+                      key={i}
+                      label={img.label}
+                      caption={img.caption}
+                      src={img.src}
+                      width={img.width}
+                      height={img.height}
+                    />
+                  ),
+                )}
+              </div>
+            ) : study.images.finalSolution[0].src ? (
               <div className="mt-16">
                 <ImageGallery
                   images={study.images.finalSolution
@@ -1443,16 +1481,38 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                       );
                     }
                     if (block.kind === 'image') {
+                      const img = block.image;
                       return (
-                        <div key={bi} className="my-10">
-                          <ImagePlaceholder
-                            label={block.image.label}
-                            caption={block.image.caption}
-                            src={block.image.src}
-                            width={block.image.width}
-                            height={block.image.height}
-                          />
-                        </div>
+                        <figure key={bi} className="my-10 flex flex-col gap-3">
+                          {img.src ? (
+                            <ZoomableImage
+                              src={img.src}
+                              label={img.label}
+                              caption={img.caption}
+                              width={img.width!}
+                              height={img.height!}
+                              containerClassName="rounded-3xl border border-ink-800"
+                            />
+                          ) : (
+                            <ImagePlaceholder
+                              label={img.label}
+                              caption={img.caption}
+                              src={img.src}
+                              width={img.width}
+                              height={img.height}
+                            />
+                          )}
+                          {img.src && (
+                            <figcaption className="text-center">
+                              <p className="mono-label">{img.label}</p>
+                              {img.caption && (
+                                <p className="text-ink-500 text-sm mt-1.5 max-w-2xl mx-auto">
+                                  {img.caption}
+                                </p>
+                              )}
+                            </figcaption>
+                          )}
+                        </figure>
                       );
                     }
                     if (block.kind === 'imageGrid') {
@@ -1465,17 +1525,38 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                           key={bi}
                           className={`my-10 grid gap-4 md:gap-5 ${cols}`}
                         >
-                          {block.images.map((img, ii) => (
-                            <ImagePlaceholder
-                              key={ii}
-                              label={img.label}
-                              caption={img.caption}
-                              src={img.src}
-                              width={img.width}
-                              height={img.height}
-                              aspect="aspect-[4/3]"
-                            />
-                          ))}
+                          {block.images.map((img, ii) =>
+                            img.src ? (
+                              <figure key={ii} className="flex flex-col gap-3">
+                                <ZoomableImage
+                                  src={img.src}
+                                  label={img.label}
+                                  caption={img.caption}
+                                  width={img.width!}
+                                  height={img.height!}
+                                  containerClassName="rounded-3xl border border-ink-800"
+                                />
+                                <figcaption className="text-center">
+                                  <p className="mono-label">{img.label}</p>
+                                  {img.caption && (
+                                    <p className="text-ink-500 text-sm mt-1.5 max-w-md mx-auto">
+                                      {img.caption}
+                                    </p>
+                                  )}
+                                </figcaption>
+                              </figure>
+                            ) : (
+                              <ImagePlaceholder
+                                key={ii}
+                                label={img.label}
+                                caption={img.caption}
+                                src={img.src}
+                                width={img.width}
+                                height={img.height}
+                                aspect="aspect-[4/3]"
+                              />
+                            ),
+                          )}
                         </div>
                       );
                     }
