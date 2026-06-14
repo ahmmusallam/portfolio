@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
-import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
+import AnalyticsExcludable from '@/components/AnalyticsExcludable';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -44,7 +44,7 @@ export default function RootLayout({
         <Nav />
         <main className="relative z-10">{children}</main>
         <Footer />
-        <Analytics />
+        <AnalyticsExcludable />
       </body>
     </html>
   );
