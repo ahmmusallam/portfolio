@@ -279,6 +279,12 @@ export type CaseStudy = {
   };
   /** Optional role/scope section rendered right after Overview. Supports `\n\n` paragraph splits. */
   myRole?: string;
+  /** Optional closing-style section for style guides / design system writeups. */
+  designSystem?: {
+    title?: string;
+    /** Body paragraph(s). Supports `\n\n` paragraph splits and `**bold**` / `*italic*` markers. */
+    body: string;
+  };
   problem: string[];
   /** Optional intro paragraph(s) before the problem list. Supports `\n\n` paragraph splits. */
   problemIntro?: string;
@@ -1608,17 +1614,154 @@ export const caseStudies: CaseStudy[] = [
     number: '05',
     title: 'SuperPay Website',
     subtitle: 'A marketing site to launch e&\'s fintech entry into the Egyptian market',
-    company: 'e& (Etisalat Egypt)',
+    company: 'e& Egypt',
     category: 'Fintech / Marketing Website',
     year: '2023',
     role: 'Product Designer',
-    timeline: '12+ weeks · 3+ weeks research, 9 weeks design',
+    timeline: '4 weeks',
     thumbnail: '/case studies/superpay-website-ui.png',
-    team: ['3 Product Designers', '2 Developers', '1 Product Manager'],
+    team: ['2 Product Designers', 'PM', 'Developers'],
     tools: ['Adobe', 'Figma', 'Google Slides'],
     nda: true,
+    sectionOrder: [
+      'overview',
+      'competitiveAnalysis',
+      'informationArchitecture',
+      'ideation',
+      'solution',
+      'designSystem',
+    ],
+    designSystem: {
+      title: 'Style Guides & Design System',
+      body: 'In the process of designing the product, we created a series of visual styles comprising of colors, typefaces, and imagery. Moreover, we established a design system that consists of reusable functional elements, including components and interaction patterns. This system ensures that all digital products produced by the organization have a coherent and unified experience.',
+    },
+    ideation: {
+      title: 'From IA to wireframes',
+      intro:
+        'Once the architecture was settled, we sketched the key pages end-to-end before any visual design. The wireframes locked the structure, navigation, and content density across the marketing surface.',
+      stages: [
+        {
+          label: 'Wireframes',
+          description: 'Three representative pages from the wireframe set: the landing page, a product detail page, and the careers list.',
+          images: [
+            {
+              label: 'Home page',
+              caption: 'Hero, Our Payment Solutions, Why Super Pay?, What Next, Merchants, Offer, News, FAQ.',
+              src: '/case studies/superpay-website-wireframe-home.jpg',
+              width: 1366,
+              height: 5351,
+            },
+            {
+              label: 'Product page',
+              caption: 'Product hero, feature grid, three feature stories with imagery, Partners, customer stories, CTA, FAQ.',
+              src: '/case studies/superpay-website-wireframe-product.jpg',
+              width: 1366,
+              height: 5943,
+            },
+            {
+              label: 'Careers page',
+              caption: 'Hero, search and department filters, role cards grouped by department with apply CTAs.',
+              src: '/case studies/superpay-website-wireframe-careers.jpg',
+              width: 1366,
+              height: 3090,
+            },
+          ],
+        },
+      ],
+    },
+    competitiveAnalysis: {
+      title: 'Studying the market',
+      intro:
+        "We audited regional and global payment providers. Hero promises, navigation patterns, who they speak to, and how much they show before the fold to see where SuperPay could differentiate and what merchants had come to expect.",
+      screenshots: [
+        {
+          label: 'Geidea',
+          caption: 'Regional acquirer · merchant-first hero, product nav at the top.',
+          src: '/case studies/superpay-website-competitor-geidea.jpg',
+          width: 864,
+          height: 381,
+        },
+        {
+          label: 'Paymob',
+          caption: 'MENA fintech · payments-everywhere hero, dual CTA.',
+          src: '/case studies/superpay-website-competitor-paymob.jpg',
+          width: 864,
+          height: 428,
+        },
+        {
+          label: 'Stripe',
+          caption: 'Global benchmark · bold typography, product-in-context hero.',
+          src: '/case studies/superpay-website-competitor-stripe.jpg',
+          width: 864,
+          height: 455,
+        },
+        {
+          label: 'OPay',
+          caption: 'Africa-focused · solution-led hero with a product preview.',
+          src: '/case studies/superpay-website-competitor-opay.jpg',
+          width: 864,
+          height: 428,
+        },
+      ],
+    },
+    informationArchitecture: {
+      root: 'SuperPay · Landing page',
+      sections: [
+        {
+          label: 'Sign In / Start Now',
+          features: [
+            { label: 'Sign in for merchants (Mobile / Email + Password)' },
+            { label: 'Merchant registration (Name, Email, Mobile)' },
+          ],
+        },
+        {
+          label: 'Home',
+          features: [
+            { label: 'Header (logo, menu, login, language)' },
+            { label: 'About SuperPay' },
+            { label: 'Success partners' },
+            { label: 'Our Solutions' },
+            { label: 'Why SuperPay? (risk & fraud, real-time reporting, fast integration, security)' },
+            { label: 'Offers' },
+            { label: 'Numbers (Statistics)' },
+            { label: 'Our merchants' },
+            { label: 'Latest news' },
+            { label: 'Support form (Contact us)' },
+            { label: 'Footer' },
+          ],
+        },
+        {
+          label: 'Our Solutions',
+          features: [
+            { label: 'Billing app' },
+            { label: 'POS' },
+            { label: 'Acceptance POS' },
+            { label: 'Online Acceptance' },
+            { label: 'Prepaid Cards' },
+            { label: 'Soft POS' },
+            { label: 'Payouts & Consumer app' },
+          ],
+        },
+        {
+          label: 'Company',
+          features: [
+            { label: 'About us' },
+            { label: 'Careers (We are hiring)' },
+            { label: 'News' },
+          ],
+        },
+        {
+          label: 'Developer',
+          features: [{ label: 'Integration documents for merchant tech teams' }],
+        },
+        {
+          label: 'Pricing',
+          features: [{ label: 'Standard rate on POS and Online' }],
+        },
+      ],
+    },
     overview:
-      'The public-facing SuperPay site needed to introduce e&\'s fintech vision to small and medium businesses across Egypt — communicating credibility, payment solutions, and developer resources in one cohesive experience.',
+      'The public-facing SuperPay site needed to introduce e&\'s fintech vision to small and medium businesses across Egypt, communicating credibility, payment solutions, and developer resources in one cohesive experience.',
     problem: [
       'e&\'s legacy telco brand made fintech positioning a credibility challenge',
       'Competitive sites were either too dense or too generic for merchants',
@@ -1652,7 +1795,25 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     solution:
-      'Built a marketing site with clear payment solution sections, merchant testimonials, partner logos, developer documentation entry points, and pricing. Style guide and design system ensured consistency with the SuperPay dashboard and other e& digital products.',
+      'Building a marketing site with clear payment solution sections, merchant testimonials, partner logos, developer documentation entry points, and pricing. Style guide and design system ensured consistency with the SuperPay dashboard and other e& digital products.',
+    images: {
+      solutionGrid: [
+        {
+          label: 'Home page',
+          caption: 'Hero, success partners, payment solutions, Why Super Pay?, What Next, merchants, exclusive offer, news, FAQ.',
+          src: '/case studies/superpay-website-ui-home.jpg',
+          width: 2160,
+          height: 10534,
+        },
+        {
+          label: 'Acceptance POS page',
+          caption: 'Product hero, POS solution features, customer stories, supported payment methods, cross-sell CTA, FAQ.',
+          src: '/case studies/superpay-website-ui-product.jpg',
+          width: 2160,
+          height: 6547,
+        },
+      ],
+    },
     metrics: [
       { value: '5', label: 'Process stages', context: 'From research to launch' },
       { value: '4', label: 'Usability tests', context: 'Drove key iterations' },

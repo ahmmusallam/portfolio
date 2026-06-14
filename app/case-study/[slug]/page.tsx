@@ -54,6 +54,7 @@ const DEFAULT_ORDER = [
   'metrics',
   'nextSteps',
   'outcomesReflection',
+  'designSystem',
   'reflection',
 ];
 
@@ -544,21 +545,28 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
-            {study.competitiveAnalysis.screenshots.map((s, i) => (
-              <div key={i} className="flex flex-col gap-2">
-                <ZoomableImage
-                  src={s.src!}
-                  label={s.label}
-                  caption={s.caption}
-                  width={s.width!}
-                  height={s.height!}
-                  containerClassName="rounded-xl border border-ink-800"
-                />
-                <p className="mono-label text-ink-500">{s.label}</p>
+          {(() => {
+            const uniformHeight = study.slug === 'superpay-website';
+            return (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+                {study.competitiveAnalysis.screenshots.map((s, i) => (
+                  <div key={i} className="flex flex-col gap-2">
+                    <ZoomableImage
+                      src={s.src!}
+                      label={s.label}
+                      caption={s.caption}
+                      width={s.width!}
+                      height={s.height!}
+                      previewAspect={uniformHeight ? 'aspect-[2/1]' : undefined}
+                      objectPosition={uniformHeight ? 'object-top' : undefined}
+                      containerClassName="rounded-xl border border-ink-800"
+                    />
+                    <p className="mono-label text-ink-500">{s.label}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            );
+          })()}
         </div>
       </section>
     ) : null,
@@ -771,7 +779,11 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                           caption={img.caption}
                           width={img.width!}
                           height={img.height!}
-                          previewAspect="aspect-[4/3]"
+                          previewAspect={
+                            study.slug === 'superpay-website'
+                              ? 'aspect-[2/3]'
+                              : 'aspect-[4/3]'
+                          }
                           objectPosition="object-top"
                           containerClassName="rounded-2xl border border-ink-800"
                         />
@@ -980,17 +992,44 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                     : 'sm:grid-cols-2 lg:grid-cols-3'
                 }`}
               >
-                {study.images.solutionGrid.map((img, i) => (
-                  <ImagePlaceholder
-                    key={i}
-                    label={img.label}
-                    caption={img.caption}
-                    src={img.src}
-                    width={img.width}
-                    height={img.height}
-                    aspect="aspect-[4/3]"
-                  />
-                ))}
+                {study.images.solutionGrid.map((img, i) =>
+                  img.src ? (
+                    <figure key={i} className="flex flex-col gap-3">
+                      <ZoomableImage
+                        src={img.src}
+                        label={img.label}
+                        caption={img.caption}
+                        width={img.width!}
+                        height={img.height!}
+                        previewAspect={
+                          study.slug === 'superpay-website'
+                            ? 'aspect-[2/3]'
+                            : 'aspect-[4/3]'
+                        }
+                        objectPosition="object-top"
+                        containerClassName="rounded-2xl border border-ink-800"
+                      />
+                      <figcaption className="text-center">
+                        <p className="mono-label">{img.label}</p>
+                        {img.caption && (
+                          <p className="text-ink-500 text-sm mt-1.5 max-w-md mx-auto">
+                            {img.caption}
+                          </p>
+                        )}
+                      </figcaption>
+                    </figure>
+                  ) : (
+                    <ImagePlaceholder
+                      key={i}
+                      label={img.label}
+                      caption={img.caption}
+                      src={img.src}
+                      width={img.width}
+                      height={img.height}
+                      aspect="aspect-[4/3]"
+                    />
+                  ),
+                )}
               </div>
             )}
           </div>
@@ -1638,6 +1677,26 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
         </div>
       </section>
     ) : null,
+
+    designSystem: study.designSystem ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="max-w-3xl">
+            <p className="mono-label mb-3">Design system</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              {study.designSystem.title ?? 'Style Guides & Design System'}
+            </h2>
+            <div className="mt-8">
+              {renderParagraphs(
+                study.designSystem.body,
+                'text-lg md:text-xl text-ink-300 leading-relaxed text-pretty',
+                'mt-5',
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    ) : null,
   };
 
   const order = study.sectionOrder ?? DEFAULT_ORDER;
@@ -1684,7 +1743,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
           {/* Metadata grid */}
           {(() => {
-            const compactMeta = ['tender-assist', 'session-replay', 'smartresolve', 'superpay-dashboard'].includes(study.slug);
+            const compactMeta = ['tender-assist', 'session-replay', 'smartresolve', 'superpay-dashboard', 'superpay-website'].includes(study.slug);
             return (
               <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl border-t border-ink-800 pt-8">
                 <div>
