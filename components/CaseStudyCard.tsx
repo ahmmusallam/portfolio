@@ -22,7 +22,7 @@ const companyMeta: Record<string, CompanyMeta> = {
   smartresolve: { Logo: LuciqLogo, logoClass: 'h-4' },
   'superpay-dashboard': { Logo: SuperPayLogo, logoClass: 'h-4' },
   'superpay-website': { Logo: SuperPayLogo, logoClass: 'h-4' },
-  'bits-and-pixels': { label: 'Personal Project' },
+  'bits-and-pixels': { label: 'Bitsnpixels.io' },
 };
 
 export default function CaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {

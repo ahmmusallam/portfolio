@@ -55,6 +55,8 @@ const DEFAULT_ORDER = [
   'nextSteps',
   'outcomesReflection',
   'designSystem',
+  'visualExploration',
+  'closingNote',
   'reflection',
 ];
 
@@ -484,15 +486,25 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       </section>
     ) : null,
 
-    insights: study.insights && study.insights.length > 0 ? (
+    insights: study.insights && study.insights.length > 0 ? (() => {
+      const isBitsPixels = study.slug === 'bits-and-pixels';
+      const monoLabel = isBitsPixels
+        ? 'Discovery'
+        : study.userResearch
+        ? 'User research & themes'
+        : 'Customer insights';
+      const heading = isBitsPixels
+        ? 'What the founders told us.'
+        : study.userResearch
+        ? 'Voices from the field.'
+        : 'Themes from the field.';
+      return (
       <section className={SECTION}>
         <div className="container-x">
           <div className="mb-12 md:mb-16 max-w-3xl">
-            <p className="mono-label mb-3">
-              {study.userResearch ? 'User research & themes' : 'Customer insights'}
-            </p>
+            <p className="mono-label mb-3">{monoLabel}</p>
             <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
-              {study.userResearch ? 'Voices from the field.' : 'Themes from the field.'}
+              {heading}
             </h2>
             {study.userResearch && (
               <p className="mt-5 text-lg md:text-xl text-ink-400 leading-relaxed text-pretty">
@@ -513,6 +525,11 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                 collected quotes and observations. Here are the themes we made from the insights.
               </p>
             )}
+            {isBitsPixels && (
+              <p className="mt-5 text-lg md:text-xl text-ink-400 leading-relaxed text-pretty">
+                Before any wireframes, we ran a structured brand and product brief with the founder and the marketing director. These are the four things we walked out with.
+              </p>
+            )}
           </div>
 
           {study.images?.insights && (
@@ -530,7 +547,8 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           <InsightsGrid insights={study.insights} />
         </div>
       </section>
-    ) : null,
+      );
+    })() : null,
 
     competitiveAnalysis: study.competitiveAnalysis ? (
       <section className={SECTION}>
@@ -575,7 +593,9 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       <section className={SECTION}>
         <div className="container-x">
           <div className="mb-12 md:mb-16 max-w-3xl">
-            <p className="mono-label mb-3">Scope</p>
+            <p className="mono-label mb-3">
+              {study.slug === 'bits-and-pixels' ? 'Screen architecture' : 'Scope'}
+            </p>
             <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
               {study.featureList.title}.
             </h2>
@@ -737,18 +757,25 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           <div className="space-y-16 md:space-y-20">
             {study.ideation.stages.map((stage, i) => {
               const single = stage.images.length === 1;
+              const sixUpFilmstrip =
+                study.slug === 'bits-and-pixels' && stage.images.length === 6;
               const gridCols = single
                 ? ''
+                : sixUpFilmstrip
+                ? 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4'
                 : stage.images.length === 2
                 ? 'grid sm:grid-cols-2 gap-4 md:gap-5'
                 : 'grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5';
+              const multiStage = study.ideation!.stages.length > 1;
               return (
                 <div key={i}>
                   <div className="mb-8 md:mb-10 max-w-3xl">
-                    <p className="mono-label">
-                      / {String(i + 1).padStart(2, '0')}
-                    </p>
-                    <h3 className="mt-2 text-2xl md:text-3xl text-ink-50 font-medium tracking-tight">
+                    {multiStage && (
+                      <p className="mono-label">
+                        / {String(i + 1).padStart(2, '0')}
+                      </p>
+                    )}
+                    <h3 className={`${multiStage ? 'mt-2' : ''} text-2xl md:text-3xl text-ink-50 font-medium tracking-tight`}>
                       {stage.label}
                     </h3>
                     {stage.description && (
@@ -782,6 +809,8 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
                           previewAspect={
                             study.slug === 'superpay-website'
                               ? 'aspect-[2/3]'
+                              : study.slug === 'bits-and-pixels'
+                              ? undefined
                               : 'aspect-[4/3]'
                           }
                           objectPosition="object-top"
@@ -1186,12 +1215,14 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
           </div>
 
           {study.images?.finalSolution && study.images.finalSolution.length > 0 && (
-            study.slug === 'tender-assist' ? (
+            study.slug === 'tender-assist' || study.slug === 'bits-and-pixels' ? (
               <div
-                className={`mt-16 grid gap-6 ${
+                className={`mt-16 grid ${
                   study.images.finalSolution.length === 1
-                    ? ''
-                    : 'sm:grid-cols-2'
+                    ? 'gap-6'
+                    : study.slug === 'bits-and-pixels'
+                    ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4'
+                    : 'sm:grid-cols-2 gap-6'
                 }`}
               >
                 {study.images.finalSolution.map((img, i) =>
@@ -1678,6 +1709,47 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       </section>
     ) : null,
 
+    visualExploration: study.visualExploration ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="mb-12 md:mb-16 max-w-3xl">
+            <p className="mono-label mb-3">Visual exploration</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              {study.visualExploration.title ?? 'Looking at the field'}.
+            </h2>
+            {study.visualExploration.intro && (
+              <div className="mt-6">
+                {renderParagraphs(
+                  study.visualExploration.intro,
+                  'text-lg md:text-xl text-ink-300 leading-relaxed text-pretty',
+                  'mt-5',
+                )}
+              </div>
+            )}
+          </div>
+
+          {study.visualExploration.image.src ? (
+            <ZoomableImage
+              src={study.visualExploration.image.src}
+              label={study.visualExploration.image.label}
+              caption={study.visualExploration.image.caption}
+              width={study.visualExploration.image.width!}
+              height={study.visualExploration.image.height!}
+              containerClassName="rounded-3xl border border-ink-800"
+            />
+          ) : (
+            <ImagePlaceholder
+              label={study.visualExploration.image.label}
+              caption={study.visualExploration.image.caption}
+              src={study.visualExploration.image.src}
+              width={study.visualExploration.image.width}
+              height={study.visualExploration.image.height}
+            />
+          )}
+        </div>
+      </section>
+    ) : null,
+
     designSystem: study.designSystem ? (
       <section className={SECTION}>
         <div className="container-x">
@@ -1689,6 +1761,26 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
             <div className="mt-8">
               {renderParagraphs(
                 study.designSystem.body,
+                'text-lg md:text-xl text-ink-300 leading-relaxed text-pretty',
+                'mt-5',
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    ) : null,
+
+    closingNote: study.closingNote ? (
+      <section className={SECTION}>
+        <div className="container-x">
+          <div className="max-w-3xl">
+            <p className="mono-label mb-3">{study.closingNote.monoLabel ?? 'Closing'}</p>
+            <h2 className="text-display font-medium text-ink-50 tracking-tight text-balance">
+              {study.closingNote.title}
+            </h2>
+            <div className="mt-8">
+              {renderParagraphs(
+                study.closingNote.body,
                 'text-lg md:text-xl text-ink-300 leading-relaxed text-pretty',
                 'mt-5',
               )}
@@ -1743,7 +1835,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
 
           {/* Metadata grid */}
           {(() => {
-            const compactMeta = ['tender-assist', 'session-replay', 'smartresolve', 'superpay-dashboard', 'superpay-website'].includes(study.slug);
+            const compactMeta = ['tender-assist', 'session-replay', 'smartresolve', 'superpay-dashboard', 'superpay-website', 'bits-and-pixels'].includes(study.slug);
             return (
               <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl border-t border-ink-800 pt-8">
                 <div>

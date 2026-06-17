@@ -142,6 +142,14 @@ export type ProblemCallout = {
   caption: string;
 };
 
+/** Visual exploration / moodboard section: title, intro, and a single artifact image. */
+export type VisualExploration = {
+  title?: string;
+  /** Supports `\n\n` paragraph splits and `**bold**` / `*italic*` markers. */
+  intro?: string;
+  image: ImagePlaceholder;
+};
+
 /** Richer problem-section card with a topic label above the body text. */
 export type ProblemCard = {
   label: string;
@@ -285,6 +293,16 @@ export type CaseStudy = {
     /** Body paragraph(s). Supports `\n\n` paragraph splits and `**bold**` / `*italic*` markers. */
     body: string;
   };
+  /** Optional final closing note (epilogue / "what happened next"). */
+  closingNote?: {
+    /** Overrides the default "Closing" mono label. */
+    monoLabel?: string;
+    title: string;
+    /** Body paragraph(s). Supports `\n\n` paragraph splits and `**bold**` / `*italic*` markers. */
+    body: string;
+  };
+  /** Optional visual exploration / moodboard section. */
+  visualExploration?: VisualExploration;
   problem: string[];
   /** Optional intro paragraph(s) before the problem list. Supports `\n\n` paragraph splits. */
   problemIntro?: string;
@@ -1827,17 +1845,232 @@ export const caseStudies: CaseStudy[] = [
     number: '06',
     title: 'Bits & Pixels',
     subtitle: 'Gamifying coding education for a unique mobile learning experience',
-    company: 'Personal Project',
+    company: 'Bits & Pixels',
     category: 'EdTech / Mobile App',
     year: '2023',
-    role: 'Product Designer',
-    timeline: '4 weeks · 1 week research, 3 weeks design',
+    role: 'Freelance Product Designer',
+    timeline: '4 weeks',
     thumbnail: '/case studies/bits-and-pixels-ui.png',
-    team: ['2 Product Designers', '2 Developers', '1 Project Manager'],
+    team: ['Founder', 'Marketing Director', '2 Product Designers (incl. me)'],
     tools: ['Figma'],
-    nda: true,
+    nda: false,
+    sectionOrder: [
+      'overview',
+      'myRole',
+      'insights',
+      'featureList',
+      'visualExploration',
+      'ideation',
+      'finalSolution',
+      'closingNote',
+    ],
+    finalSolution: {
+      title: 'The Final UIs',
+      intro:
+        'The wireframes went to the founder and the marketing director for review. With their feedback folded back in, we moved into the polished UIs.',
+      bullets: [],
+    },
+    closingNote: {
+      title: 'How it ended',
+      body: 'Shortly after the final UIs were handed off, the team decided to pivot the product from a mobile app to a web platform. The reasoning was practical: a web product meant easier adoption for the audience, and significantly less engineering lift for an early startup team. The Bits & Pixels mobile work closed here.',
+    },
+    ideation: {
+      title: 'The Ideation',
+      stages: [
+        {
+          label: 'Wireframes',
+          description:
+            'Picked from the SQL Fundamentals course because they show every distinct surface in the learning loop, end to end.',
+          images: [
+            {
+              label: 'Sign in',
+              caption: 'Logo lockup over a green hero with three social sign-in options.',
+              src: '/case studies/bits-and-pixels-sign-in.png',
+              width: 750,
+              height: 1624,
+            },
+            {
+              label: 'Home',
+              caption: 'Review-Knowledge prompt at the top, Explore Courses below with instructor, progress, and Continue Learning CTA.',
+              src: '/case studies/bits-and-pixels-home.png',
+              width: 750,
+              height: 1624,
+            },
+            {
+              label: 'Course structure',
+              caption: 'Course title, progress, chapter list with status, expanded chapter showing lessons with View Notes and Take Game CTAs.',
+              src: '/case studies/bits-and-pixels-course-structure.png',
+              width: 750,
+              height: 1624,
+            },
+            {
+              label: 'Course notes',
+              caption: 'Breadcrumb, illustration, plain-language explanation, and a code sample for the lesson.',
+              src: '/case studies/bits-and-pixels-course-notes.png',
+              width: 750,
+              height: 1624,
+            },
+            {
+              label: 'Game question',
+              caption: 'Drag-and-drop tokens to complete a SQL query. Question count badge anchors the top.',
+              src: '/case studies/bits-and-pixels-game-question.png',
+              width: 750,
+              height: 1624,
+            },
+            {
+              label: 'Game finish',
+              caption: 'Confetti celebration with a star rating, correct-answer count, and a Finish CTA.',
+              src: '/case studies/bits-and-pixels-game-finish.png',
+              width: 750,
+              height: 1624,
+            },
+          ],
+        },
+      ],
+    },
+    visualExploration: {
+      title: 'Looking at edtech and gamification',
+      intro:
+        "Before locking the visual language, we pulled together a board of references from edtech and gamification apps. The point wasn't to copy any of them. It was to surface the visual moves that consistently make learning products feel both serious and playful.",
+      image: {
+        label: 'Bits & Pixels visual reference board',
+        caption: 'Mobile UI, landing pages, mascot work, and marketing surfaces, all on one Figma canvas.',
+        src: '/case studies/bits-and-pixels-inspiration.png',
+        width: 3420,
+        height: 2074,
+      },
+    },
     overview:
-      'A mobile-first coding education app explaining complicated coding "bits" with simple animated "pixels". The product needed to feel approachable for learners while being structured enough to support real curriculum.',
+      'Bits & Pixels is a mobile-first coding education startup. Its tagline: *"Explaining complicated coding Bits with simple animated Pixels."* The product\'s edge is **experience**: in-course gaming for retention, a Duolingo-style mobile flow, and assignments tied to real-world cases from professionals in the field.',
+    myRole:
+      "This was a freelance engagement with an early-stage edtech startup. I worked alongside a second product designer. Before any wireframes, the two of us sat down with the founder and the marketing director to define the brand and product positioning.",
+    featureList: {
+      title: 'Mapping every screen, one card at a time',
+      intro:
+        "After the brand brief, we mapped every screen with the content blocks inside it, then walked the founder and the marketing director through it card by card. The point wasn't pixels yet. It was scope alignment: this is the app, and here is everything that has to be in it.",
+      groups: [
+        {
+          label: 'Sign in',
+          items: [
+            'Sign in with Google, LinkedIn, or GitHub',
+            '"Don\'t have an account? Visit our website and purchase a course."',
+          ],
+        },
+        {
+          label: 'Onboarding',
+          items: [
+            'Three-step intro: Review Knowledge, Take Games, View Notes',
+            'Get Started CTA',
+          ],
+        },
+        {
+          label: 'Home',
+          items: [
+            'Review Knowledge module (triggered by finished courses or paused lessons)',
+            'Explore Courses grid: thumbnail, progress, finished lessons, course name, instructor name',
+            'Rating shown only after 5 to 10 feedbacks (two card variants)',
+            'Get Started / Continue Learning CTA',
+          ],
+        },
+        {
+          label: 'Course Structure',
+          items: [
+            'Course title, progress, chapters, lessons',
+            'Per-chapter and per-lesson status',
+            'View Notes shortcut',
+            'Take Game CTA',
+          ],
+        },
+        {
+          label: 'Course Notes',
+          items: [
+            'Course title and chapter / lesson title',
+            'Illustration or image',
+            'Text description',
+            'Bullet points',
+            'Code blocks',
+          ],
+        },
+        {
+          label: 'Take Game',
+          items: [
+            'Game details',
+            'Logos of related topics (next phase)',
+            'Start Game CTA',
+          ],
+        },
+        {
+          label: 'Game',
+          items: [
+            'Question number indicator',
+            'Question types: MCQ, Sorting, Complete',
+            'Check Answer CTA',
+          ],
+        },
+        {
+          label: 'Game Mistakes',
+          items: [
+            'Illustration',
+            "\"Let's review your mistakes\" prompt",
+            'Show the right answer after a second wrong attempt',
+          ],
+        },
+        {
+          label: 'Game Finish',
+          items: [
+            'Performance band: Exceptional [5/5], Perfect [4/5], Good [3/5], Needs Work [2/5]',
+            'Score as stars or correct-answer count',
+            'Lessons to be reviewed (next phase)',
+            'Finish · Take Game Again (when score is under 60%)',
+          ],
+        },
+        {
+          label: 'Course Feedback',
+          items: ['Text field', 'Stars or emojis', 'Submit'],
+        },
+        {
+          label: 'Profile / Knowledge / Notifications',
+          items: [
+            'Shared list-and-section scaffold across three tabs',
+            'Filter by item',
+            'Create new item',
+            'Item list with cards',
+            'Section with items, subitems, and per-section actions',
+          ],
+        },
+      ],
+    },
+    insights: [
+      {
+        title: 'The product',
+        bullets: [
+          'A mobile-first platform for online coding and programming courses.',
+          'The founders called out **experience** as the differentiator: in-course gaming for retention, a Duolingo-style mobile app, and assignments tied to real-world cases or projects from professionals.',
+          'Instructor credibility is surfaced through real-content samples that show the simplification of complicated topics.',
+        ],
+        quotes: ['Explaining complicated coding Bits with simple animated Pixels.'],
+      },
+      {
+        title: 'The audience',
+        bullets: [
+          'Ages 18 to 34, mostly men, interested in tech and online learning.',
+          'Social class C+, B, B+, and A.',
+          'Four archetypes named by the founders: school students, university students, fresh CS grads, and career shifters moving into coding from outside tech.',
+        ],
+      },
+      {
+        title: 'The competitors named',
+        bullets: ['Yanf3.com', 'Elmentor.com', 'Udemy.com'],
+      },
+      {
+        title: 'The brand voice they wanted',
+        quotes: [
+          'One of a kind learning experience that is simple, to the point, and valuable.',
+          'Fully integrated learning solution with a rich user experience.',
+          'Fully integrated experience that is Professional yet simple to understand.',
+        ],
+      },
+    ],
     problem: [
       'Traditional coding education feels intimidating to new learners',
       'Mobile-first coding apps often sacrifice depth for simplicity',
@@ -1879,6 +2112,46 @@ export const caseStudies: CaseStudy[] = [
     ],
     reflection:
       'Designing for a learning audience taught me to lean into clarity — every screen has to teach as well as function.',
+    images: {
+      finalSolution: [
+        {
+          label: 'Home',
+          src: '/case studies/bits-and-pixels-ui-home.png',
+          width: 750,
+          height: 1624,
+        },
+        {
+          label: 'Lesson',
+          src: '/case studies/bits-and-pixels-ui-lesson.png',
+          width: 750,
+          height: 1624,
+        },
+        {
+          label: 'Game tab',
+          src: '/case studies/bits-and-pixels-ui-game-tab.png',
+          width: 750,
+          height: 1624,
+        },
+        {
+          label: 'Game map',
+          src: '/case studies/bits-and-pixels-ui-game-map.png',
+          width: 750,
+          height: 1624,
+        },
+        {
+          label: 'Game question',
+          src: '/case studies/bits-and-pixels-ui-game-question.png',
+          width: 750,
+          height: 1624,
+        },
+        {
+          label: 'Game finish',
+          src: '/case studies/bits-and-pixels-ui-game-finish.png',
+          width: 750,
+          height: 1624,
+        },
+      ],
+    },
   },
 ];
 
