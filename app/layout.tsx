@@ -4,6 +4,7 @@ import './globals.css';
 import Nav from '@/components/Nav';
 import Footer from '@/components/Footer';
 import AnalyticsExcludable from '@/components/AnalyticsExcludable';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -45,6 +46,7 @@ export default function RootLayout({
         <main className="relative z-10">{children}</main>
         <Footer />
         <AnalyticsExcludable />
+        <SpeedInsights />
       </body>
     </html>
   );
